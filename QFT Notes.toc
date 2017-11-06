@@ -1,0 +1,41 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introduction to QFT}{9}{chapter.1}
+\contentsline {section}{\numberline {1.1}Classical and Klein-Gordon Field}{9}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Several Well-Known Results}{9}{subsection.1.1.1}
+\contentsline {subsection}{\numberline {1.1.2}Noether's Theorem}{9}{subsection.1.1.2}
+\contentsline {section}{\numberline {1.2}Canonical Quantization}{10}{section.1.2}
+\contentsline {chapter}{\numberline {2}Relativistic Quantum Mechanics}{13}{chapter.2}
+\contentsline {section}{\numberline {2.1}Lorentz Invariance}{13}{section.2.1}
+\contentsline {section}{\numberline {2.2}Lorentz Transformation}{15}{section.2.2}
+\contentsline {section}{\numberline {2.3}$\mathrm {Poincar\mathaccentV {acute}013{e}}$ Algebra}{18}{section.2.3}
+\contentsline {section}{\numberline {2.4}One-Particle State}{20}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}$M>0$ Particle}{27}{subsection.2.4.1}
+\contentsline {chapter}{\numberline {3}General Scatter Theory}{29}{chapter.3}
+\contentsline {section}{\numberline {3.1}In and Out State}{29}{section.3.1}
+\contentsline {section}{\numberline {3.2}S-Matrix}{36}{section.3.2}
+\contentsline {section}{\numberline {3.3}Symmetry of S-Matrix}{38}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Lorentz Invariance}{38}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Inner Symmetry}{41}{subsection.3.3.2}
+\contentsline {section}{\numberline {3.4}Decay Rates and Cross-Sections}{44}{section.3.4}
+\contentsline {section}{\numberline {3.5}Perturbation Theory}{44}{section.3.5}
+\contentsline {section}{\numberline {3.6}Implication of Unitary}{44}{section.3.6}
+\contentsline {chapter}{\numberline {4}The Cluster Decomposition Principle}{47}{chapter.4}
+\contentsline {section}{\numberline {4.1}Bosons and Fermions}{47}{section.4.1}
+\contentsline {section}{\numberline {4.2}Creation and Annihilation Operator}{50}{section.4.2}
+\contentsline {section}{\numberline {4.3}Cluster Decomposition Principle}{54}{section.4.3}
+\contentsline {section}{\numberline {4.4}The Structure of Interaction}{54}{section.4.4}
+\contentsline {chapter}{\numberline {5}Quantum Field and Antiparticle}{55}{chapter.5}
+\contentsline {section}{\numberline {5.1}Free Fields}{55}{section.5.1}
+\contentsline {section}{\numberline {5.2}Causal Scalar Fields}{67}{section.5.2}
+\contentsline {section}{\numberline {5.3}Causal Vector Fields}{72}{section.5.3}
+\contentsline {section}{\numberline {5.4}The Dirac Formalism}{78}{section.5.4}
+\contentsline {section}{\numberline {5.5}Causal Dirac Fields}{84}{section.5.5}
+\contentsline {section}{\numberline {5.6}$\mathsf {CPT}$ Theorem}{85}{section.5.6}
+\contentsline {section}{\numberline {5.7}Massless Particles Fields}{86}{section.5.7}
+\contentsline {chapter}{\numberline {6}Interaction Fields and Feynmann Diagrams}{87}{chapter.6}
+\contentsline {section}{\numberline {6.1}Overview}{87}{section.6.1}
+\contentsline {section}{\numberline {6.2}Perturbation Expansion of Correlation Function}{87}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Interaction Picture}{87}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}Express two-points Green Function into $|0\delimiter "526930B $}{89}{subsection.6.2.2}
+\contentsline {section}{\numberline {6.3}Wick's Theorem: Bose Cases}{90}{section.6.3}
+\contentsline {section}{\numberline {6.4}Feynmann Diagrams and $S$ Matrix}{91}{section.6.4}

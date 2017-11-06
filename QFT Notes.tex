@@ -1,0 +1,2323 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LaTeX book template
+%% Author:  hu xiaodong
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% !Mode::"TeX:UTF-8"（Suggest xelatex to compile）
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[b5paper,11pt,UTF8]{book}
+\usepackage[Symbol]{upgreek}%使用\up+希腊字母, 可得直立体(如文中的\uppsi)
+\usepackage[space]{ctex}
+\usepackage{mathrsfs,amssymb,amsfonts,amsmath,bm,ntheorem}
+\usepackage{mathbbold}%双线数字
+\usepackage{fancyhdr,titlesec,enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 版面调节 %%%%%%%%%%
+\usepackage[paperwidth=182mm,paperheight=257mm,text={142mm,210mm},left=23mm,includehead,vmarginratio=1:1]{geometry}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{lmodern}
+% Source: http://en.wikibooks.org/wiki/LaTeX/Hyperlinks %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage[english]{babel}
+\usepackage[numbers,sort&compress]{natbib}%修改参考文献
+%\usepackage{feynmf}%%%%%%%%%%%%%%%%%%%费曼图
+\usepackage{simplewick}%%%%%%%%%%%%%%%%%%%%%Wick缩并
+
+%%%%%%%%%%%%%%%%%正体微分%%%%%%%%%%%%%%%%%
+\newcommand*\dd{\mathop{}\!\mathrm{d}}
+\newcommand*\ddd[1]{\mathop{}\!\mathrm{d^#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 'dedication' environment: To add a dedication paragraph at the start of book %
+% Source: http://www.tug.org/pipermail/texhax/2010-June/015184.html            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{dedication}
+{
+   \cleardoublepage
+   \thispagestyle{empty}
+   \vspace*{\stretch{1}}
+   \hfill\begin{minipage}[t]{0.66\textwidth}
+   \raggedright
+}
+{
+   \end{minipage}
+   \vspace*{\stretch{3}}
+   \clearpage
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter quote at the start of chapter        %
+% Source: http://tex.stackexchange.com/a/53380 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\renewcommand{\@chapapp}{}% Not necessary...
+\newenvironment{chapquote}[2][2em]
+  {\setlength{\@tempdima}{#1}%
+   \def\chapquote@author{#2}%
+   \parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+   \itshape}
+  {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% First page of book which contains 'stuff' like: %
+%  - Book title, subtitle                         %
+%  - Book author name                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Book's title and subtitle
+\title{\zihao{0} \textbf{Notes of The Quantum Theory of FieldsⅠ}  %\footnote{This is a footnote.}
+\\[1em] \huge 理论格物论第五卷 %\footnote{This is yet another footnote.}
+}
+% Author
+\author{\textsc{胡啸东}\thanks{\url{cdqz2014@mail.ustc.edu.cn}}}
+
+%%%%%%%%%%%%%%%%%%%%%方程按节编号%%%%%%%%%%%%%%%%%%%%%
+\numberwithin{equation}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+%\begin{fmffile}{fmftemp1}%%%%%%%%费曼图
+\frontmatter
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add a dedication paragraph to dedicate your book to someone %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{dedication}
+Dedicated to Steven Weinberg.
+\end{dedication}
+
+\mainmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %  定理定义等
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{Experiment}[section]
+\newenvironment{Experiment}[1][]{{\par\normalfont\bfseries 实验事实~\stepcounter{Experiment}\arabic{Experiment}#1~~}\kaishu}{\par}
+\newcounter{Axiom}[section]
+\newenvironment{Axiom}[1][]{{\par\normalfont\bfseries 公理~\stepcounter{Axiom}\arabic{Axiom}#1~~}\kaishu}{\par}
+\newcounter{Hypothesis}[section]
+\newenvironment{Hypothesis}[1][]{{\par\normalfont\bfseries 假设~\stepcounter{Hypothesis}\arabic{Hypothesis}#1~~}\kaishu}{\par}
+%%%%%%%%无标号假设%%%%%%%%%%%%%%%
+\newenvironment{Hypothesis*}[1][]{{\par\normalfont\bfseries 假设~#1~~}\kaishu}{\par}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{Proposition}[section]
+\newenvironment{Proposition}[1][]{{\par\normalfont\bfseries 命题~\stepcounter{Proposition}\arabic{Proposition}#1~~}\kaishu}{\par}
+\newcounter{Corollary}[section]
+\newenvironment{Corollary}[1][]{{\par\normalfont\bfseries 推论~\stepcounter{Corollary}\arabic{Corollary}#1~~}\kaishu}{\par}
+\newcounter{Theorem}[section]
+\newenvironment{Theorem}[1][]{{\par\normalfont\bfseries 定理~\stepcounter{Theorem}\arabic{Theorem}#1~~}\kaishu}{\par}
+\newcounter{Lemma}[section]
+\newenvironment{Lemma}[1][]{{\par\normalfont\bfseries 引理~\stepcounter{Lemma}\arabic{Lemma}#1~~}\kaishu}{\par}
+\newcounter{Property}[section]
+\newenvironment{Property}[1][]{{\par\normalfont\bfseries 性质~\stepcounter{Property}\arabic{Property}#1~~}\kaishu}{\par}
+\newcounter{Assertion}[section]
+\newenvironment{Assertion}[1][]{{\par\normalfont\bfseries 断语~\stepcounter{Assertion}\arabic{Assertion}#1~~}\kaishu}{\par}
+\newenvironment{Proof}{{\par{\heiti 证明}~~}}{\hfill $\square$ \par\hfill\par}
+\newcounter{Example}[section]
+\newenvironment{Example}[1][]{{\par\normalfont\bfseries 例~\stepcounter{Example}\arabic{Example}#1~~}\songti}{\hfill\par\hfill\par}
+\newcounter{Def}[section]
+\newenvironment{Def}[1][]{{\par\normalfont\bfseries 定义~\stepcounter{Def}\arabic{Def}#1~~\songti}}{\par}
+%%%%%%%%无标号定义%%%%%%%%%%%%%%%
+\newenvironment{Def*}[1][]{{\par\normalfont\bfseries 定义~#1~~}\kaishu}{\par}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{Note}[section]
+\newenvironment{Note}[1][]{{\par\normalfont\bfseries 注~\stepcounter{Note}\arabic{Note}#1~~}\songti}{\par}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ % 首页后根据奇偶页不同设置页眉页脚
+ % L,C,R分别代表左中右，O,E代表奇偶页
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \pagestyle{fancy}
+ \fancyhf{}
+ %\fancyhead[RE]{第~XX~卷}%%%%%偶数页左上
+ \fancyhead[EC]{\nouppercase{\heiti\leftmark}}%%%%%%偶数页中上
+ \fancyhead[EL,OR]{\thepage}%%%%%%奇数页右上与偶数页左上，页码
+ \fancyhead[OC]{\nouppercase{\heiti\rightmark}}%%%%%奇数页中上
+ \lfoot{}
+ \cfoot{}
+ \rfoot{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%
+% Preface %
+%%%%%%%%%%%
+\chapter*{Preface}
+温伯格量子场论的阅读笔记，兼逻辑重构与内容改写。\par
+\hfill 胡啸东\par
+\hfill 中国科学技术大学\quad 本科二年级下\par
+\hfill 二〇一六年六月廿八
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Give credit where credit is due. %
+% Say thanks!                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgements}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Auto-generated table of contents, list of figures and list of tables %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+\listoffigures
+\listoftables
+
+
+
+%%%%%%%%%%%%%%%%
+% NEW CHAPTER! %
+%%%%%%%%%%%%%%%%
+
+\chapter{Introduction to QFT}
+\section{Classical and Klein-Gordon Field}
+\subsection{Several Well-Known Results}
+\begin{Proposition}[(Eular-Lagrange Equation)]
+\begin{equation}
+\partial_{\mu}\left(\dfrac{\partial\mathcal{L}}{\partial(\partial_{\mu}\phi)}\right)-\dfrac{\partial\mathcal{L}}{\partial\phi}.
+\end{equation}
+\begin{Proof}
+Expand the functional Derivatives $\displaystyle\dfrac{\delta S}{\delta\phi}\equiv0$ and separate the surface term\footnote{One term of this functional derivative is $\displaystyle\int d^{4}x~\partial_{\mu}\dfrac{\partial\mathcal{L}}{\partial(\partial_{\mu}\phi)}$. Like what we do in electromagnetism, this term is corresponding to a surface integration one, which vanishes at $\infty$.} and you'll get the result.
+\end{Proof}
+\end{Proposition}
+As is in classical mechanics, we define the \emph{momentum density }$\displaystyle \pi=\dfrac{\partial\mathcal{L}}{\partial\dot{\phi}}$ and \emph{Hamiltionian density }$\mathcal{H}=\pi\dot{\phi}-\mathcal{L}$.
+\begin{Proposition}[(Klein-Gordon Equation)]
+$$(\partial_{\mu}\partial^{\mu}-m^{2})\phi=0.$$
+\end{Proposition}
+\subsection{Noether's Theorem}
+{\small 【Refer Anold and Srednicki】}\hfill\par
+\hfill\par
+\begin{Def}[(Symmetric Transformation)]
+We say a continuous map is \emph{allowed map}(\emph{Symmetric Transformation}) such that the lagrangian stay unchanged under its pull map, that is, $\forall \bm{v}\in TM, \mathcal{L}(h_{*}\bm{v})=\mathcal{L}(\bm{v})$.
+\end{Def}
+\begin{Theorem}[(Noether)]
+If there is a one-parameter diffeumorphism allowed map $h^{s}:M\rightarrow M$ in a system, then there must be a corresponding conservation.
+\end{Theorem}
+\begin{Proof}
+Allowed map holds the lagrangian. Denote $\varphi(t)$ as the real motion, so $h^{s}\varphi=\Phi(s,t)$ also satisfy E-L equation.
+\end{Proof}
+\begin{Def}
+
+
+
+\end{Def}
+\section{Canonical Quantization}
+\begin{Axiom}[(Canonical commutation relation)]
+In QFT, the status of fields $\phi$ and canonical momentum $\pi$ is the same as $q_{i}$ and $p_{j}$ in QM. In other words, the \emph{canonical commute relation in QFT} is $\displaystyle\left[\phi(\bm{x}),\pi(\bm{y})\right]=i\delta^{3}(\bm{x}-\bm{y})$.
+\end{Axiom}
+Apply Fourier Transformation to $\phi$ in replacment representation $\phi(\bm{x},t)$, i.e.
+$$\phi(\bm{x},t)=\int\dfrac{d^{3}p}{(2\pi)^{3}}e^{i\bm{p}\cdot\bm{x}}\phi(\bm{p},t),$$
+then it can be easily shown that
+\begin{Assertion}[(Klein-Gordon Eq)]
+\begin{align}
+\left[\dfrac{\partial^{2}}{\partial t^{2}}+\omega_{\bm{p}}^{2}\right]\phi(\bm{p},t)=0,\quad\omega({\bm{p}})=\sqrt{|\bm{p}|^{2}+m^{2}}.
+\end{align}
+\end{Assertion}
+In QM, we bring in ladder operators to rewrite $q$ and $p$ in harmonious oscillation problem, whose Hamiltonian is $\displaystyle H=\dfrac{1}{2}p^{2}+\dfrac{1}{2}\omega^{2}q^{2}$. In this way we are able to get the spectrum of Hamiltonian and totally solve the problem with easy\footnote{Let $\displaystyle q=\dfrac{1}{\sqrt{2\omega}}(a+a^{\dagger})$ and $\displaystyle p=-i\sqrt{\dfrac{\omega}{2}}(a-a^{\dagger})$ then $\displaystyle H=\omega(a^{\dagger}a+\dfrac{1}{2})$ and $\displaystyle E_{n}=(n+\dfrac{1}{2})\omega.$(In the representation of particle numbers $|n\rangle$)}.\par
+\begin{Axiom}
+Each Fourier mode of $\phi$ in replacement representation is treated as an independent oscillator with its own $a(\bm{p})$ and $a^{\dagger}(\bm{p})$.
+\end{Axiom}
+Utilize the analogy of QM operators and QFT ones(In momentum representation), that is,
+$$\dfrac{a}{\sqrt{2\omega}}\thicksim\int\dfrac{d^{3}p}{\sqrt{(2\pi)^{3}}}\dfrac{1}{\sqrt{2\omega(\bm{p})}}a(\bm{p})e^{i\bm{p}\cdot\bm{x}}.$$
+So we write\footnote{The second term of the follow eq is derived from dagger of the analogy.}
+\begin{align}
+\phi(\bm{x})&=\int\dfrac{d^{3}p}{\sqrt{(2\pi)^{3}}}\dfrac{1}{\sqrt{2\omega(\bm{p})}}\left(a(\bm{p})e^{i\bm{p}\cdot\bm{x}}+a^{\dagger}(\bm{p})e^{-i\bm{p}\cdot\bm{x}}\right),\nonumber\\
+\pi(\bm{x})&=\int\dfrac{d^{3}p}{\sqrt{(2\pi)^{3}}}(-i)\sqrt{\dfrac{\omega(\bm{p})}{2}}\left(a(\bm{p})e^{i\bm{p}\cdot\bm{x}}-a^{\dagger}(\bm{p})e^{-i\bm{p}\cdot\bm{x}}\right).\nonumber
+\end{align}
+Rearrange (1.3) and (1.4) as follows(change integration variables):
+\begin{align}
+\phi(\bm{x})&=\int\dfrac{d^{3}p}{\sqrt{(2\pi)^{3}}}\dfrac{1}{\sqrt{2\omega(\bm{p})}}(a(\bm{p})+a^{\dagger}(\bm{-p}))e^{i\bm{p}\cdot\bm{x}},\\
+\pi(\bm{x})&=\int\dfrac{d^{3}p}{\sqrt{(2\pi)^{3}}}(-i)\sqrt{\dfrac{\omega(\bm{p})}{2}}(a(\bm{p})-a^{\dagger}(\bm{-p}))e^{i\bm{p}\cdot\bm{x}}.
+\end{align}
+Meanwhile the Bose commutation relation $[a,a^{\dagger}]=1$.
+\begin{Assertion}
+The Hamiltonian of $\phi-2$ field is $\displaystyle\int \dfrac{dx^{3}}{(2\pi)^{3}}\omega_{\bm{p}}\left(a^{\dagger}(\bm{p})a(\bm{p})+\dfrac{1}{2}\left[a(\bm{p},a^{\dagger}(-\bm{p}))\right]\right).$
+\end{Assertion}
+\begin{Proof}
+\begin{align}
+H&=\int d^{3}x\mathcal{H}=\int d^{3}x\left(\dfrac{1}{2}\pi^{2}+\dfrac{1}{2}(\nabla\phi)^{2}+\dfrac{1}{2}m^{2}\phi^{2}\right)\nonumber\\
+&=\int d^{3}x\int\dfrac{d^{3}pd^{3}q}{(2\pi)^{6}}e^{i(\bm{p}+\bm{q})\cdot\bm{x}}\Bigg[-\dfrac{\sqrt{\omega_{\bm{p}}\omega_{\bm{q}}}}{4}\left(a(\bm{p})-a^{\dagger}(\bm{p})\right)\left(a(\bm{q})-a^{\dagger}(-\bm{q})\right)\nonumber\\
+&\quad+\dfrac{-\bm{p}\cdot\bm{q}+m^{2}}{4\sqrt{\omega_{\bm{p}}\omega_{\bm{q}}}}\left(a(\bm{p})+a^{\dagger}(\bm{q})\right)\left(a(\bm{q})+a^{\dagger}(\bm{q})\right)\Bigg]
+\end{align}
+Change the integral order of $x$ and $p,q$ and use the formula
+$$\int d^{3}xe^{i\bm{x}\cdot\bm{p}}=(2\pi)^{3}\delta^{(3)}(p),$$
+we can simplify it to
+$$\text{(See in Notes)}.$$
+Note that $H$ is an Hermitian operator, so $H^{\dagger}=H$, and then we can declare that the term of $a^{\dagger}(-\bm{p})a(\bm{p})$ is equal to $a^{\dagger}(\bm{p})a(-\bm{p})$. Rearrange the commutator and obviously we are done.
+\end{Proof}
+
+
+\chapter{Relativistic Quantum Mechanics}
+\section{Lorentz Invariance}
+QFT is based on quantum mechanics, so we provide only the briefest version of summaries, in the generalized version of Dirac:
+\begin{Def}[(Ray)]
+A \emph{ray} $\mathscr{R}$ is a set of normalized vectors, i.e., $\{\psi|\langle\psi,\psi\rangle=1\}$. Here $\langle\cdot,\cdot\rangle$ is the inner product of Hilbert space, satisfying $\forall\phi\psi\in H,\xi,\eta\in\mathbb{C}$,\par
+1) $\langle\phi,\psi\rangle=\langle\psi,\phi\rangle^{*}$;\par
+2) $\langle\phi,\xi_{1}\psi_{1}+\xi_{2}\psi_{2}\rangle=\xi_{1}\langle\phi,\psi_{1}\rangle+\xi_{2}\langle\phi,\psi_{2}\rangle$;\par
+3) $\langle\eta_{1}\phi_{1}+\eta_{2}\phi_{2},\psi\rangle=\eta_{1}^{*}\langle\phi_{1},\psi\rangle+\eta_{2}\langle\phi_{2},\psi\rangle$;\par
+4) $\langle\psi,\psi\rangle\geqslant0\quad$ and $\langle\psi,\psi\rangle=0\Rightarrow\psi=0$.
+\end{Def}
+\begin{Def}
+The \emph{self-adjoint} operator of one linear operator $A$ of Hilbert space, denoted $A^{\dagger}$, is defined as $\forall\phi,\psi\in H, \langle\phi,A^{\dagger}\psi\rangle:=\langle A\phi,\psi\rangle$.
+\end{Def}
+\begin{Axiom}[(QM)]
+\hfill\par
+1) Physical states are represented by rays in Hilbert space.\par
+2) Observables are represented by Hermitian operators\footnote{More seriously, 'cause the domain of operators involve in some complicated problems, observables in quantum mechanics are essentially \emph{unbounded self-adjoint} operators in Functional Analysis.}, that is, $A=A^{\dagger}$.\par
+3) The probability of finding a state represented by $\mathscr{R}$ in the mutually orthogonal states $\mathscr{R}_{n}$ is $P(\mathscr{R}\rightarrow\mathscr{R}_{n})=|\langle\psi,\psi_{n}\rangle|^{2}$.
+\end{Axiom}
+\begin{Def}
+A \emph{symmetry transformation} $T$ is a change in the point of view that does not change the results of possible experiments. That is, observer $\mathcal{O}$ sees a system in a state represented by ray $\mathscr{R}_{i}$, and observer $\mathcal{O}'$ looking at the same system will observe it in a different state, represented by ray $\mathscr{R}'_{i}$. Then we always have
+$$P(\mathscr{R}\rightarrow\mathscr{R}_{n})=P(\mathscr{R}'\rightarrow\mathscr{R}'_{n})$$
+\end{Def}
+Obviously the set of symmetry transformation $T_{1}:\mathscr{R}\mapsto\mathscr{R}'$ can form a group if we naturally define the trivial transformation $\mathscr{R}\mapsto\mathscr{R}$ as its identity and the group product is defined as $T_{2}T_{1}:\mathscr{R}\mapsto\mathscr{R}''$, where $T_{2}:\mathscr{R}'\mapsto\mathscr{R}''$, and the inverse is $T_{1}^{-1}:\mathscr{R}'\mapsto\mathscr{R}$.
+\begin{Theorem}[(Wigner)]
+Any symmetry transformation $T$ of rays can be represented as operators on Hilbert space, with $U(T)$ either \emph{unitary and linear}:
+$$\langle U\phi,U\psi\rangle=\langle\phi,\psi\rangle,\quad U(\eta\phi+\xi\psi)=\eta U\phi+\xi U\psi,$$
+or \emph{antiunitary and antilinear}:
+$$\langle U\phi,U\psi\rangle=\langle\phi,\psi\rangle^{*},\quad U(\eta\phi+\xi\psi)=\eta^{*} U\phi+\xi^{*} U\psi,$$
+\end{Theorem}
+\begin{Proof}
+skipped.
+\end{Proof}
+Since the set of symmetry transformation $\{T\}$ is a group $G$, we naturally find a map $U:G\rightarrow GL(H), U=U(T)$, in the sense of Wigner theorem. But this map may not be \emph{homomorphism}. In fact, we can only get
+$$U(T_{1})U(T_{2})=e^{\phi(T_{1},T_{2})}U(T_{1}T_{2})$$
+from our former discussion. We call this non-homomorphism map as \emph{projective representation} of the symmetry transformation group.\par
+In order to avoid tedious discussion about the phase of projective representation(we will return to this topic in the end of this chapter), we directly admitted that
+\begin{Assertion}[(non-projective representation)]
+Any representations of symmetry transformation group with phases $\phi$ can be canceled through group enlarging(without changing its physical implications). That is, we choose such a homomorphism map of $U:G\rightarrow GL(H)$ that
+$$U(T_{1})U(T_{2})=U(T_{1}T_{2}).$$
+\end{Assertion}
+\section{Lorentz Transformation}
+By the \emph{Special equivalence principle} of Einstein, the unit distance holds in any inertia coordinates, i.e.,
+\begin{equation}\label{2.2.1}
+\eta_{\mu\nu}\dd x'^{\mu}\dd x^{\nu}=\eta_{\mu\nu}\dd x^{\mu}\dd x^{\nu},
+\end{equation}
+where the metric in our notation is
+$$\eta_{\mu\nu}=\begin{pmatrix}+1&0&0&0\\0&-1&0&0\\0&0&-1&0\\0&0&0&-1\end{pmatrix}.$$
+Any transformations $T:x^{\mu}\mapsto x'^{\mu}$ satisfying \eqref{2.2.1} have the linear form that
+\begin{equation}\label{2.2.2}
+x'^{\mu}=\Lambda^{\mu}_{\nu}x^{\nu}+a^{\mu},
+\end{equation}
+such that
+\begin{equation}\label{2.2.3}
+\eta_{\mu\nu}\Lambda_{\rho}^{\mu}\Lambda_{\sigma}^{\nu}=\eta_{\rho\sigma}.
+\end{equation}
+Precisely denote the transformation as $T(\Lambda,a)$, then from our former discussion, the set of $T$ forms a group(the existence of inverse can be seen from $(\mathrm{det}\Lambda)^{2}=1$), and its group product is
+\begin{Assertion}
+\begin{equation}\label{2.2.4}
+T(\bar{\Lambda},\bar{a})T(\Lambda,a)=T(\bar{\Lambda}\Lambda,\bar{\Lambda}a+\bar{a}).
+\end{equation}
+\end{Assertion}
+\begin{Proof}
+We firstly perform a transformation $x^{\mu}\rightarrow x'^{\mu}$ as \eqref{2.2.2}, then continue to perform another transformation $x'^{\mu}\rightarrow x''^{\mu}$, which gives
+$$x''^{\mu}=\bar{\Lambda}_{\rho}^{\mu}\Lambda_{\nu}^{\rho}x^{\nu}+\left(\bar{\Lambda}_{\rho}^{\mu}a^{\rho}+\bar{a}^{\mu}\right).$$
+And thus $T(\Lambda,a)$ satisfy the claimed relation.
+\end{Proof}
+According to the discussion in the former section, transformation group $\{T(\Lambda,a)\}$ induce a unitary representation $U(T)$ acting on Hilbert space. Homomorphism transfer the product rule of transformation group \eqref{2.2.4} to $GL(H)$, giving
+\begin{equation}\label{2.2.5}
+U(\bar{\Lambda},\bar{a})U(\Lambda,a)=U(\bar{\Lambda}\Lambda,\bar{\Lambda}a+\bar{a}).
+\end{equation}
+From \eqref{2.2.5}, we can easily write down the inverse map $U^{-1}(\Lambda,a)$
+\begin{equation}\label{2.2.6}
+U^{-1}(\Lambda,a)=U(\Lambda^{-1},-\Lambda^{-1}a)
+\end{equation}
+since $U(\Lambda,a)U(\Lambda^{-1},-\Lambda^{-1}a)=U(1,0)=\mathbbold{1}$.\par
+Then we are to introduce an important symmetry group in physics.
+\begin{Def}
+The group of transformation $T(\Lambda,a)$ is called \emph{inhomogeneous Lorentz group}, or $\textit{Poincar}\acute{e}\textit{~group}$.
+\end{Def}
+One of $\mathrm{Poincar\acute{e}}$ group's crucial subgroup $L$ is of the $a^{\mu}=0$ one, specifically,
+$$L=\{T|T(\bar{\Lambda},0)T(\Lambda,0)=T(\bar{\Lambda}\Lambda,0).\}.$$
+We call this \emph{homogeneous Lorentz group}, denoted as $\mathrm{O}(1,3)$.\par
+It is easy to show that group $\mathrm{O}(1,1)$ has four distinct components of the form
+$$\Lambda=\begin{pmatrix}\pm\cosh\theta&\mp\sinh\theta\\ \mp\sinh\theta&\pm\cosh\theta\end{pmatrix}.$$
+Since $\cosh\theta$ is always bigger than zero, these four components are disjoint with each other, indicating that group $\mathrm{O}(1,1)$ is topologically not connected. Basing on our discussion in low-dimension conditions, most of physical textbooks directly claim as their please that so dose group $\mathrm{O}(1,3)$. However, we should not randomly promote the disconnectedness of general Lorentz group because the topology structure of $\mathrm{O}(1,n)$ is entirely different from the simple $\mathrm{O}(1,1)$ case.\par
+\begin{Theorem}[(disconnectedness of $\mathrm{O}(1,3)$)]
+The Lorentz group $L$ has four connected components. They are
+\begin{align*}
+L_{+}^{\uparrow}&=\{\Lambda|\det\Lambda=1,\Lambda_{00}\geqslant1\},\\
+L_{-}^{\uparrow}&=\{\Lambda|\det\Lambda=-1,\Lambda_{00}\geqslant1\},\\
+L_{+}^{\downarrow}&=\{\Lambda|\det\Lambda=1,\Lambda_{00}\leqslant-1\},\\
+L_{-}^{\downarrow}&=\{\Lambda|\det\Lambda=-1,\Lambda_{00}\leqslant-1\}.
+\end{align*}
+Especially, component $L_{+}^{\uparrow}$ is called the \emph{proper chronological Lorentz group}, or mathematically, $\mathrm{SO}_{+}(1,3)$.
+\end{Theorem}
+\begin{Proof}
+Take the determinate of \eqref{2.2.3} immediately gives $\det\Lambda=\pm1$. Also, let indices $\rho=\sigma=0$, \eqref{2.2.3} gives $1=\Lambda_{00}^{2}-\Lambda_{10}^{2}-\Lambda_{20}^{2}-\Lambda_{30}^{2}$. Thus, we have either $\Lambda_{00}\geqslant1$ or $\Lambda_{00}\leqslant-1$, which follows a disjoint union of open set:
+$$L=L_{+}^{\uparrow}\bigcup L_{-}^{\uparrow}\bigcup L_{+}^{\downarrow}\bigcup L_{-}^{\downarrow}.$$
+Moreover, since any Lorentz transformation in the three other set $L_{-}^{\uparrow}, L_{+}^{\downarrow}, L_{-}^{\downarrow}$ can be written as product of discrete transformation($\mathscr{P}\equiv\mathrm{diag}\{-1,1,1,1\}$ or $\mathscr{T}\equiv\mathrm{diag}\{1,-1,-1,-1\}$) and one element of $L_{+}^{\uparrow}$, thus it suffices to show the connectedness of $L_{+}^{\uparrow}$. Let
+$$H=\{x=(x^{0},\cdots,x^{3})^{T}\in\mathbb{R}^{4}|x^{\mu}x_{\mu}=1, x^{0}\geqslant1\},$$
+certainly $(x^{0},\cdots,x^{3})^{T}\mapsto(x^{1},x^{2},x^{3})^{T}$ defines a diffeomorphism(note that $x^{\mu}x_{\mu}$ confines $x^{0}$) of $H$ with $\mathbb{R}^{3}$. If $v_{0}\in H$, we can complete $v_{0}$ to an orthogonal normalized basis of $\mathbb{R}^{4}$ through Gram-Schmidt procedure. Denote the super-vector(as an operator) as $\mathcal{V}=(v_{0},\cdots,v_{3})$. Because by definition $v_{0}^{0}>1$ and all basis are orthogonal to each other, implying that $\det\mathcal{V}=1$, $\mathcal{V}$ should belongs to $L_{+}^{\uparrow}$. And for $e_{0}=(1,0,0,0)^{T}\in H$,
+$$(v_{0},\cdots,v_{3})e_{0}=\sum_{k=0}^{3}v_{i}e_{0}^{i}=v_{1},$$
+thus the map $\pi:L_{+}^{\uparrow}\rightarrow H$ given by $\pi(\Lambda)=\Lambda e_{0}$ is onto(for $v_{0}$ is arbitrary). It can be seen that the element of $\pi^{-1}(e_{0})=\{\Lambda\in L_{+}^{\uparrow}|\Lambda e_{0}=e_{0}\}$ has the form of
+$$\Lambda=\left(v_{0},v_{1},v_{2},v_{3}\right),$$
+where $v_{0}=(1,0,0,0)^{T}$. On the other hand, since the orthogonality demands $\langle v_{0},v_{i}\rangle=0\Rightarrow v_{i}^{0}=0$ and $\langle v_{i},v_{j}\rangle=0$, $\Lambda$ must be an element of $\mathrm{SO}(3)$ and therefore $\pi^{-1}(e_{0})\cong\mathrm{SO}(3)$. It is also easy to see that $\pi^{-1}(v^{0})=\mathcal{V}\pi^{-1}(e^{0})$.\par
+Indeed, note that $L_{+}^{\uparrow}$ is Lie subgroup of $\mathrm{O}(1,3)$, $\mathrm{SO}(3)$ acts on $L_{+}^{\uparrow}$ to the right in such a way that $\pi:L_{+}^{\uparrow}\rightarrow H$ is a principle fiber bundle over $H\cong\mathbb{R}^{3}$ with group $\mathrm{SO}(3)$. Any bundle over $\mathbb{R}^{n}$ is trivial, and so
+$L_{+}^{\uparrow}$ is topologically $\mathbb{R}^{3}\times\mathrm{SO}(3)$, which is obviously connected.
+\end{Proof}
+\indent The pure translation $T(1,a)$ comprises another crucial subgroup of $\mathrm{O}(1,3)$, called \emph{translation group}, with group product rule
+\begin{equation}\label{2.2.8}
+T(1,a_{1})T(1,a_{2})=T(1,a_{1}+a_{2}),
+\end{equation}
+or
+$$U(1,a_{1})U(1,a_{2})=U(1,a_{1}+a_{2}),$$
+which is precisely the homomorphism relation. Thus the image of the homomorphism map $\mathbb{R}^{3}\rightarrow GL(H)\subset U(m)$ forms a one parameter Lie group of $U(m)$, with generator $P^{\mu}$ as is discussed before. So this one-parameter curve can be written by exponential map, i.e.,
+\begin{equation}\label{2.2.9}
+U(1,a)=\exp(-iP^{\mu}a_{\mu}).
+\end{equation}
+%Now that $\mathrm{SO}_{+}(1,3)$ is connected, every element in this group is connected to the identity one with a continuous path described by one real parameter $t$. Denote the group product as $f(\cdot,\cdot)$, and then the product rule can be rewritten as
+%\begin{equation}\label{2.2.6}
+%T(t_{1})T(t_{2})=T\bigg(f(t_{1},t_{2})\bigg),
+%\end{equation}
+%here function $f$ not necessary to be identical map since the path may not be a subgroup of $\mathrm{SO}_{+}(1,3)$ and the homomorphism relation $\mathbb{R}\rightarrow\mathrm{Im}f$ dose not hold. Let $t=0$ denote the identical element, then we must have(easy to check)
+%\begin{equation}\label{2.2.7}
+%f(t,0)=f(0,t)=0.
+%\end{equation}
+%As is mentioned, we can always find a representation of symmetry transformation. In this case, it is unitary operators $U\circ T:\mathbb{R}\rightarrow GL(H)$
+
+\section{$\mathrm{Poincar\acute{e}}$ Algebra}
+We firstly consider the Lie algebra of Lorentz group.\par
+Since $\mathrm{SO}_{+}(1,3)$ has topology $\mathbb{R}^{3}\times\mathrm{SO}(3)$, the proper chronological Lorentz group is of six-dimensional, so is to its Lie algebra.\par
+From the aspect of physics, it is easy to find out six independent classes of group elements: Three rotations and three boosts, i.e.,
+\begin{align*}
+R_{1}&=\begin{bmatrix}1&0&0&0\\0&1&0&0\\0&0&\cos\alpha&-\sin\alpha\\0&0&\sin\alpha&\cos\alpha\end{bmatrix}, ~R_{2}=\begin{bmatrix}1&0&0&0\\0&\cos\alpha&0&\sin\alpha\\0&0&1&0\\0&-\sin\alpha&0&\cos\alpha\end{bmatrix},\\ R_{3}&=\begin{bmatrix}1&0&0&0\\0&\cos\alpha&-\sin\alpha&0\\0&\sin\alpha&\cos\alpha&0\\0&0&0&1\end{bmatrix};\\[1.5em]
+B_{1}&=\begin{bmatrix}\cosh\lambda&-\sinh\lambda&0&0\\-\sinh\lambda&\cosh\lambda&0&0\\0&0&1&0\\0&0&0&1\end{bmatrix}, ~B_{2}=\begin{bmatrix}\cosh\lambda&0&-\sinh\lambda&0\\0&1&0&0\\-\sinh\lambda&0&\cosh\lambda&0\\0&0&0&1\end{bmatrix},\\ B_{3}&=\begin{bmatrix}\cosh\lambda&0&0&-\sinh\lambda\\0&1&0&0\\0&0&1&0\\-\sinh\lambda&0&0&\cosh\lambda\end{bmatrix}.
+\end{align*}
+Since $R_{i}$ and $B_{i}$ satisfy the homomorphism relation $R_{i}(\alpha+\beta)=R_{i}(\alpha)R_{i}(\beta)$, $B_{i}(\lambda+\rho)=B_{i}(\lambda)B_{i}(\rho)$ and are $C^{\infty}$, so each of them forms a one-parameter Lie subgroup $g(\theta)$ of $\mathrm{SO}_{+}(1,3)$. And the tangent vector\footnote{Here we use the physicists' notation of Lie algebra, i.e., multiplying $i$ on the usual mathematical one.} of each one-parameter subgroup at identical element gives one element of the Lie algebra of $\mathrm{SO}_{+}(1,3)$(one generator of Lie group)
+\begin{equation}\label{2.3.1}
+X=\left.\dfrac{\dd}{\dd\theta}\right|_{\theta=0}ig(\theta),
+\end{equation}
+They are
+\begin{align*}
+J_{1}=i\begin{bmatrix}0&0&0&0\\0&0&0&0\\0&0&0&-1\\0&0&1&0\end{bmatrix},~
+&J_{2}=i\begin{bmatrix}0&0&0&0\\0&0&0&1\\0&0&0&0\\0&-1&0&0\end{bmatrix},~
+J_{3}=i\begin{bmatrix}0&0&0&0\\0&0&-1&0\\0&1&0&0\\0&0&0&0\end{bmatrix};\\[1.5em]
+K_{1}=i\begin{bmatrix}0&-1&0&0\\-1&0&0&0\\0&0&0&0\\0&0&0&0\end{bmatrix},~ &K_{2}=i\begin{bmatrix}0&0&-1&0\\0&0&0&0\\-1&0&0&0\\0&0&0&0\end{bmatrix},~ K_{3}=i\begin{bmatrix}0&0&0&-1\\0&0&0&0\\0&0&0&0\\-1&0&0&0\end{bmatrix}.
+\end{align*}
+Because these six generators are linear independent, they form a basis of Lie algebra, with commutation relation
+\begin{equation}\label{2.3.2}
+[J_{i},J_{j}]=i\varepsilon_{ijk}J_{k},~[J_{i},K_{j}]=i\varepsilon_{ijk}K_{k},~[K_{i},K_{j}]=-i\varepsilon_{ijk}J_{k}.
+\end{equation}
+\hfill\par
+
+Now let's return to $\mathrm{Poincar\acute{e}}$ group. First of all, it is valuable to introduce the \emph{semi-direct product group}:
+\begin{Def}[(semi-direct product group)]
+Given a group $K$, a group $G$, and an action $\phi$ of $K$ on $N$ by automorphism $\phi_{k}:n\in N\rightarrow\phi_{k}(n)\in N$, the \emph{semi-direct product} $N\rtimes K$ is the set of pairs $(n,k)\in N\times K$ with group law
+$$(n_{1},k_{1})(n_{2},k_{2})=(n_{1}\psi_{k_{1}}(n_{2}),k_{1}k_{2}).$$
+\end{Def}
+Denote the element of $\mathrm{Poincar\acute{e}}$ as a pair $(\bm{a},\Lambda)$, then the product rule \eqref{2.2.4} can be rewritten as
+$$(\bm{a}_{1},\Lambda_{1})(\bm{a}_{2},\Lambda_{2})=(\bm{a}_{1}+\Lambda_{1}\bm{a}_{1},\Lambda_{1}\Lambda_{2}),$$
+which implies that $\mathrm{Poincar\acute{e}}$ group $\mathcal{P}$ is exactly the semi-direct product group:
+$$\mathcal{P}=\mathbb{R}^{4}\rtimes\mathrm{O}(1,3),$$
+since $\mathrm{SO}_{+}(1,3)$ is isomorphic to the other three subgroups of $\mathrm{O}(1,3)$, it's enough to concentrate on the group
+$$\mathcal{P}'=\mathbb{R}^{4}\rtimes\mathrm{SO}_{+}(1,3).$$
+Take $P'$ as the subgroup of $GL(5,\mathbb{R})$ of the matrix form $\displaystyle\begin{bmatrix}\Lambda&\bm{a}\\\bm{0}&1\end{bmatrix},$
+one can check the multiplication law for $\mathcal{P}'$ from the matrix multiplication rule.\par
+In this way, the Lie algebra of $\mathcal{P}'$ will be given by matrices of the form $\displaystyle\begin{bmatrix}X&\bm{1}\\ \bm{0}&0\end{bmatrix}$, where $X$ is the Lie algebra of $\mathrm{SO}(1,3)$. More explicitly, the ten-dimensional(six $\mathrm{SO}_{+}(1,3)$'s and four $\mathbb{R}^{4}$'s) Lie algebra of $\mathcal{P}'$ are
+\begin{align*}
+J_{1}'=\begin{bmatrix}J_{1}&\bm{0}\\\bm{0}&0\end{bmatrix},
+~J_{2}'&=\begin{bmatrix}J_{2}&\bm{0}\\\bm{0}&0\end{bmatrix},
+~J_{3}'=\begin{bmatrix}J_{3}&\bm{0}\\\bm{0}&0\end{bmatrix},\\
+K_{1}'=\begin{bmatrix}K_{1}&\bm{0}\\\bm{0}&0\end{bmatrix},
+~K_{2}'&=\begin{bmatrix}K_{2}&\bm{0}\\\bm{0}&0\end{bmatrix},
+~K_{3}'=\begin{bmatrix}K_{3}&\bm{0}\\\bm{0}&0\end{bmatrix},\\
+P_{i}&=i\begin{bmatrix}\bm{0}&\bm{v}_{i}\\\bm{0}&0\end{bmatrix},
+\end{align*}
+where $\bm{v}_{i}^{j}=\delta_{ij},~i,j=1,2,3$. Therefore, commutation rule \eqref{2.3.2} still holds for our new $J_{i}'$ and $K_{i}'$, and the whole Lie algebra of $\mathcal{P}$ are list as follow:
+\begin{align}
+[J'_{i},J'_{j}]=i\varepsilon_{ijk}J'_{k},~[J'_{i},K'_{j}]&=i\varepsilon_{ijk}K'_{k},~[K'_{i},K'_{j}]=-i\varepsilon_{ijk}J'_{k}.\label{2.3.3}\\
+[J_{i}',P_{j}]=i\varepsilon_{ijk}P_{k},~[K'_{i},P_{j}]&=-iH\delta_{ij},~[K'_{i},H]=-iP_{i},\label{2.3.4}\\
+[J_{i},H]=[P_{i},H]&=[H,H]=0,\label{2.3.5}
+\end{align}
+where $H=P_{0}$. Another common form of $\mathrm{P}'s$ Lie algebra takes the form of
+\begin{align}
+[J^{\mu\nu},J^{\rho\sigma}]&=i(\eta^{\nu\rho}J^{\mu\sigma}-\eta^{\mu\rho}J^{\nu\sigma}-\eta^{\nu\sigma}J^{\mu\rho}+\eta^{\mu\sigma}J^{\nu\rho})\label{2.3.6}\\
+[P^{\mu},J^{\rho\sigma}]&=i(\eta^{\mu\rho}P^{\sigma}-\eta^{\mu\rho}P^{\rho}),\label{2.3.7}\\
+[P^{\mu},P^{\rho}]&=0,\label{2.3.8}
+\end{align}
+where $J^{ij}=J'_{k}, J^{0i}=K'_{i}, P^{i}=P_{i}$ and $P^{0}=H$.
+\section{One-Particle  State}
+We are to classify different particles in terms of the different behaviors of one-particle state under inhomogeneous Lorentz transformation.
+\begin{Def}[(One-Particle State)]
+Eigenstates of momentum operator $P^{\mu}$ labeled by eigenvalue of $P^{\mu}$, $p$, and eigenvalue of angular momentum $J^{12}$(or $J^{3}$), $\sigma$, are called \emph{one-particle state}, i.e.,
+\begin{equation}\label{2.4.1}
+P^{\mu}\Psi_{p,\sigma}=p^{\mu}\Psi_{p,\sigma}.
+\end{equation}
+\end{Def}
+\begin{Note}
+The reason why we no conclude the eigenvalues of boosts' generator $\bm{K}$ in the definition of one-particle state is because that the third equation of \eqref{2.3.4} shows that $\bm{K}$ do not conserve since it do not commute with the Hamiltonian $H$, while momentum and angular momentum do have this property.
+\end{Note}
+\begin{Lemma}
+For a vector $P^{\mu}$, denoting $U(\Lambda)\equiv U(\Lambda,0)$, we have
+\begin{equation}\label{2.4.2}
+U^{-1}(\Lambda)P^{\mu}U(\Lambda)=(\Lambda^{-1})_{\rho}^{~\mu}P^{\rho}.
+\end{equation}
+\end{Lemma}
+\begin{Proof}
+Operator $P^{\mu}$ can be seen as the Lie algebra of its corresponding group $\exp:P^{\mu}\mapsto\exp(-iP^{\mu}a_{\mu})$, where $a_{\mu}$ is the parameter of one-parameter subgroup, as is done in \eqref{2.2.9},
+$$P^{\mu}=i\left.\dfrac{\dd}{\dd a_{\mu}}\right|_{a_{\mu}=0}\exp\left(-iP^{\mu}a_{\mu}\right)=i\left.\dfrac{\dd}{\dd a_{\mu}}\right|_{a_{\mu}=0}U(1,a).$$
+Thus
+\begin{align*}
+U^{-1}(\Lambda)P^{\mu}U(\Lambda,0)&=i\left.\dfrac{\dd}{\dd a_{\mu}}\right|_{a_{\mu}=0}\bigg(U^{-1}(\Lambda,0)U(1,a)U(\Lambda,0)\bigg)\\
+&=i\left.\dfrac{\dd}{\dd a_{\mu}}\right|_{a_{\mu}=0}\bigg(U^{-1}(\Lambda,0)U(\Lambda,a)\bigg),
+\end{align*}
+Taking in \eqref{2.2.6} gives
+\begin{align*}
+U^{-1}(\Lambda)P^{\mu}U(\Lambda,0)&=i\left.\dfrac{\dd}{\dd a_{\mu}}\right|_{a_{\mu}=0}\bigg(U(\Lambda^{-1},0)U(\Lambda,a)\bigg)=i\left.\dfrac{\dd}{\dd a_{\mu}}\right|_{a_{\mu}=0}U(1,\Lambda^{-1}a)\\
+&=i\left.\dfrac{\dd}{\dd a_{\mu}}\right|_{a_{\mu}=0}\exp\bigg(-iP^{\mu}(\Lambda^{-1}a)_{\mu}\bigg)\\
+&=P^{\mu}(\Lambda^{-1})_{\mu}^{~\nu}.
+\end{align*}
+\end{Proof}
+
+\begin{Proposition}
+The effect of operating a quantum homogenous Lorentz transformation $U(\Lambda,0)\equiv U(\Lambda)$ on a state $\Psi_{p,\sigma}$ is to produce an eigenstate $U(\Lambda)\Psi_{p,\sigma}$ with eigenvalue of $\Lambda p$.
+\end{Proposition}
+\begin{Proof}
+\begin{align*}
+P^{\mu}U(\Lambda)\Psi_{p,\sigma}&=U(\Lambda)\bigg(U^{-1}(\Lambda)P^{\mu}U(\Lambda)\bigg)\Psi_{p,\sigma}=U(\Lambda)\bigg((\Lambda^{-1})_{\rho}^{~\mu}P^{\rho}\bigg)\Psi_{p,\sigma}\\
+&=\Lambda_{~\rho}^{\mu}p^{\rho}U(\Lambda)\Psi_{p,\sigma}.
+\end{align*}
+\end{Proof}
+\begin{Corollary}
+$U(\Lambda)\Psi_{p,\sigma}$ must be a linear combination of the state $\Psi_{\Lambda p,\sigma'}$(note that now $\sigma'$ not necessary to be the same as $\sigma$):
+\begin{equation}\label{2.4.3}
+U(\Lambda)\Psi_{p,\sigma}=\sum_{\sigma'}C_{\sigma'\sigma}(\Lambda,p)\Psi_{\Lambda p,\sigma'}.
+\end{equation}
+\end{Corollary}
+\begin{Note}
+It can be seen that the coefficients matrix $C_{\sigma'\sigma}(\Lambda,p)$ do not form a representation of symmetry transformation $G\rightarrow GL(n,\mathbb{R})$ since homomorphism property is ruined:
+\begin{align*}
+U(\bar{\Lambda})U(\Lambda)\Psi_{p,\sigma}&=\sum_{\sigma'}C_{\sigma\sigma'}U(\Lambda)\Psi_{\Lambda p,\sigma'}\\
+&=\sum_{\sigma'}C_{\sigma\sigma'}(\Lambda p)\sum_{\sigma''}C_{\sigma''\sigma}C_{\sigma''\sigma}(\bar{\Lambda},\Lambda p)\Psi_{\bar{\Lambda}\Lambda p,\sigma''},
+\end{align*}
+on the other hand,
+\begin{align*}
+U(\bar{\Lambda})U(\Lambda)\Psi_{p,\sigma}=U(\bar{\Lambda}\Lambda,p)\Psi_{p,\sigma}=\sum_{\sigma''}C_{\sigma''\sigma}(\bar{\Lambda}\Lambda)\Psi_{\bar{\Lambda}\Lambda p,\sigma''}.
+\end{align*}
+So we have
+$$\sum_{\sigma'}C_{\sigma'\sigma}(\Lambda p,\sigma)C_{\sigma'',\sigma}(\bar{\Lambda},\Lambda p)=C_{\sigma''\sigma}(\bar{\Lambda}\Lambda,p).$$
+However the semi-direct product rule tell us that $(\bar{\Lambda},\Lambda p)\cdot(\Lambda,p)=(\bar{\Lambda}\Lambda,\bar{\Lambda}\Lambda p+p)$. Thus the product rule of coefficients(regarded as elements of $GL(V)$) are not homomorphism.\hfill\\[0.5em]
+\end{Note}
+
+However, if we find some way to modify the coefficients matrix such that it successfully forms a unitary representation, then by the theorem in group theory\footnote{For instance, see B.Hall(2003), $\mathbf{proposition\text{ }4.34}$: Let $G$ be a matrix Lie group, $\Pi$ be a finite-dimensional unitary representation of $G$, acting on a finite-dimensional real or complex Hilbert space. Then, $\Pi$ is completely reducible. That is, $\Pi$ is isomorphic to a direct sum of a finite number of irreducible representation.},$C_{\sigma'\sigma}$ is block-orthogonal, each of which furnish a irreducible representation of the inhomogeneous Lorentz group. So it is natural to identify the states of a specific particle type with one component of irreducible representation.\par
+One the one hand, particles of the same type may have different momenta and distinct particles may have the same momenta, we naturally need to bring in the so-called standard momentum $k$ to re-write the one particle state. On the other hand, since by our assumption particles are classified by group $\mathrm{SO}_{+}(1,3)$ itself, it will change nothing but may decease some unknown indices if we perform some Lorentz transformations $L\in\mathrm{SO}_{+}(1,3)$ on the one-particle state. So we naturally relate momentum and standard one with a Lorentz transformation:
+\begin{Def}[(Standard Momentum)]
+For a particle  of momoentum $p^{\mu}$, its corresponding \emph{standard momentum} $k^{\mu}$ satisfies
+\begin{equation}\label{2.4.4}
+p^{\mu}=L^{\mu}_{~\nu}(p)k^{\nu},\quad L^{\mu}_{~\nu}(p)\in\mathrm{SO}_{+}(1,3).
+\end{equation}
+\end{Def}
+And then
+\begin{equation}\label{2.4.5}
+\Psi_{p,\sigma}=N(p)U(L(p))\Psi_{k,\sigma},
+\end{equation}
+where $N(p)$ is a normalization factor, which will be discussed soon.\par
+From the other aspect, because $\mathrm{O}(1,3)$ preserve the module of momentum $p^{\mu}p_{\mu}\equiv\eta_{\mu\nu}p^{\mu}p^{\nu}$ and $\mathrm{SO}_{+}(1,3)$ holds the sign of $p^{0}$ since by definition the element of $\mathrm{SO}_{+}(1,3)$ has the property $\Lambda_{~0}^{0}>0$, so it can be seen that our bring in of standard momentum has already participate in the classification of particles. Let's witness this now.\par
+Operating on \eqref{2.4.5} with an arbitrary Lorentz transformation, we find
+\begin{align}\label{2.4.6}
+U(\Lambda)\Psi_{p,\sigma}&=N(p)U(\Lambda L(p))\Psi_{k,\sigma}\nonumber\\
+&=N(p)U(L(\Lambda p))U\bigg(L^{-1}(\Lambda p)\Lambda L(p)\bigg)\Psi_{k,\sigma}.
+\end{align}
+The point of the last step is that from \eqref{2.4.5} the Lorentz transformation $L^{-1}(\Lambda p)\Lambda L(p)$ takes $k$ to $L(p)k=p$, and then to $\Lambda p$, and then back to $k$, so it belongs to the subgroup of $\mathrm{SO}_{+}(1,3)$ consisting of Lorentz transformation $W_{~\nu}^{\mu}\equiv\left(L^{-1}(\Lambda p)\Lambda L(p)\right)_{~\nu}^{\mu}$ that leaves $k^{\mu}$ invariant:
+\begin{equation}\label{2.4.7}
+W_{~\nu}^{\mu}k^{\nu}=k^{\mu}.
+\end{equation}
+The subgroup is called the \emph{little group}. For any $W$ satisfying \eqref{2.4.7} we have from \eqref{2.4.3} that
+\begin{equation}\label{2.4.8}
+U(W)\Psi_{k,\sigma}=\sum_{\sigma'}D_{\sigma'\sigma}(W)\Psi_{k,\sigma}.
+\end{equation}
+\indent I will show you that this $D_{\sigma'\sigma}(W)$ is exactly the modified coefficient matrix I mentioned above that forms the unitary representation of little group. But before that, we need some extra limitation of one-particle state.\par
+Note that $\Psi_{p,\sigma}$ has one free parameter $N(p)$ undefined up to now. Considering the first axiom of QM(normalization of the wave function), it's natural for us to choose it such that:
+\begin{Def*}[(Addition of One-particle State)]
+In QFT, we only use one-particle states satisfying the normalization condition:
+\begin{equation}\label{2.4.11}
+\langle\Psi_{p',\sigma'},\Psi_{p,\sigma}\rangle=\delta^{3}(\bm{p'}-\bm{p})\delta_{\sigma'\sigma}.
+\end{equation}
+Particularly, \eqref{2.4.11} holds for standard momentum $k$.
+\end{Def*}
+The existence of this choice(validity of definition) will be proved latter by selecting the normalization factor $N(p)$.
+\begin{Note}
+I would like to give one initial explanation that why do not $\Psi_{p,\sigma}$ normalize to $\delta^{4}({p^{\mu}}'-p^{\mu})$. Recall the normalization condition in non-relativistic quantum mechanics of momentum eigenstate
+$$\int\,\dd\bm{p}\,|\Psi(\bm{p},t)|^{2}=1$$
+is an integral of three-dimensional of momentum. So as a natural promotion in relativistic quantum mechanics, we still retain this property in \eqref{2.4.11}, i.e., normalized to three-dimensional delta function.
+\end{Note}
+Now owning \eqref{2.4.11}, we can complete the proof of the unitarity:
+\begin{Proposition}
+Coefficients $D(W)$ furnish a unitary representation of the little group.
+\end{Proposition}
+\begin{Proof}
+Homomorphism is easy to check: For any $W,W'\in\mathrm{SO}_{+}(1,3)$,
+\begin{align*}
+\sum_{\sigma'}&D_{\sigma'\sigma}(W'W)\Psi_{k,\sigma'}=U(W'W)\Psi_{k,\sigma}=U(W')U(W)\Psi_{k,\sigma}\\
+&U(W')\sum_{\sigma''}D_{\sigma'',\sigma}(W)\Psi_{k,\sigma''}=\sum_{\sigma'\sigma''}D_{\sigma'\sigma''}(W')D_{\sigma''\sigma}(W)\Psi_{k,\sigma'}.
+\end{align*}
+As for unitarity, we utilize \eqref{2.4.11} to prove. One the one hand,
+$$\big\langle\Psi_{\bar{k},\bar{\sigma}},\Psi_{k,\sigma}\big\rangle=\delta^{3}(\bm{\bar{k}}-\bm{k})\delta_{\bar{\sigma},\sigma}.$$
+On the other hand,
+\begin{align*}
+\big\langle U(T)\Psi_{\bar{k},\bar{\sigma}},U(T)\Psi_{k,\sigma}\big\rangle&=\big\langle\Psi_{\bar{k},\bar{\sigma}},U^{\dagger}(T)U(T)\Psi_{k,\sigma}\big\rangle\\
+&=\big\langle\Psi_{\bar{k},\bar{\sigma}},\sum_{\sigma''}D_{\sigma''\sigma}(T)\sum_{\sigma'}D^{\dagger}_{\sigma''\sigma'}(T)\Psi_{k,\sigma'}\big\rangle\\
+&=\delta^{3}(\bar{\bm{k}}-\bm{k})\delta_{\bar{\sigma},\sigma'}\sum_{\sigma''}D_{\sigma''\sigma}D^{\dagger}_{\sigma''\sigma}.
+\end{align*}
+since $\big\langle\Psi_{\bar{k},\bar{\sigma}},\Psi_{k,\sigma}\big\rangle\equiv\big\langle U(T)\Psi_{\bar{k},\bar{\sigma}},U(T)\Psi_{k,\sigma}\big\rangle$ for any transformation $T$, we get $$\sum_{\sigma''}D_{\sigma''\sigma}D^{\dagger}_{\sigma''\bar{\sigma}}=\delta_{\bar{\sigma},\sigma}.$$
+\end{Proof}
+\begin{Note}
+From the proof we can see that if the spin-z component part of normalization did not take the form of $\delta_{\sigma',\sigma}$ timing a constant, we could not get the unitarity of coefficient matrix $DD^{\dagger}=D^{\dagger}D=\mathbbold{1}$. Thus to some extent the demand of unitarity strongly confine our choose of normalization condition \eqref{2.4.11} in QFT.
+\end{Note}
+Now Eq.\eqref{2.4.6} takes the form
+$$U(\Lambda)\Psi_{p,\sigma}=N(p)\sum_{\sigma'}D_{\sigma'\sigma}(W(\Lambda,p))U(L(\Lambda p))\Psi_{k,\sigma'},$$
+Substituting \eqref{2.4.8} into \eqref{2.4.6} gives
+\begin{equation}\label{2.4.10}
+U(\Lambda)\Psi_{p,\sigma}=N(p)\sum_{\sigma'}D_{\sigma'\sigma}(W(\Lambda,p))U(L(\Lambda p))\Psi_{k,\sigma'},
+\end{equation}
+or
+\begin{equation}\label{2.4.9}
+U(\Lambda)\Psi_{p,\sigma}=\left(\dfrac{N(p)}{N(\Lambda p)}\right)\sum_{\sigma'}D_{\sigma'\sigma}(W(\Lambda,p))\Psi_{\Lambda p,\sigma'}.
+\end{equation}
+Apart from the question of normalization, the problem of determining the coefficients $C_{\sigma'\sigma}$ in the transformation rule \eqref{2.4.3} has been reduced to the problem of finding the irreducible representation of the little group. This approach, of deriving representations of a group like the inhomogeneous Lorentz group from the representation of a little group, is called the method of \emph{induced representation}.\par
+Different kinds of standard 4-momenta corresponds to different little group of $\mathrm{SO}_{+}(1,3)$. They are all listed in \autoref{table2.1}.
+%%%%%%%%%%上面的\autoref 好用，前面自动检测生成环境（\label时放宜在\caption 后）%%%%%%%%%
+\begin{table}[!hbp]
+\begin{center}
+\begin{tabular}{c|c|c|c}
+\hline\hline
+Kinds of Particles&Classification&Standard $k^{\mu}$&Little Group\\
+\hline
+$M>0$&$p^{2}=M^{2}>0$ and $p^{0}>0$&$(M,0,0,0)$&$\mathrm{SO}(3)$\\
+Unknown&$p^{2}=M^{2}>0$ and $p^{0}<0$&$(-M,0,0,0)$&$\mathrm{SO}(3)$\\
+$M=0$&$p^{2}=0$ and $p^{0}>0$&$(\kappa,0,0,\kappa)$&$\mathrm{E}(2)$\\
+Unknown&$p^{2}=0$ and $p^{0}<0$&$(-\kappa,0,0,\kappa)$&$\mathrm{E}(2)$\\
+Unknown&$p^{2}=N^{2}>0$ and $p^{0}=0$&$(0,0,0,N)$&$\mathrm{SO}(1,2)$\\
+Vacuum&$p^{\mu}=0$&$(0,0,0,0)$&$\mathrm{SO}(1,3)$\\
+\hline\hline
+\end{tabular}
+\end{center}\caption{Little Groups and Their Corresponding Particles}\label{table2.1}
+\end{table}
+\hfill\par
+ What deserves great attention is the truth tested by all experiments until now that
+\begin{Experiment}[(No Existence of Negative energy state)]
+The energy of all physical particles is no less than zero, i.e., we must have
+\begin{equation}\label{2.4.13}
+p^{0}\geqslant0.
+\end{equation}
+\end{Experiment}
+
+\hfill\par
+Now that we have the normalization condition \eqref{2.4.11}, the corresponding normalization factor $N(p)$ can also be determined as following.
+
+\begin{Proposition}
+If $N(p)$ is chosen to be $N(p)=\sqrt{k^{0}/p^{0}}$, then normalization property \eqref{2.4.11} holds.
+\end{Proposition}
+\begin{Proof}
+\begin{align*}
+\langle\Psi_{p',\sigma'},\Psi_{p,\sigma}\rangle&=N(p)\langle\Psi_{p',\sigma'},U(L(p))\Psi_{k,\sigma}\rangle=N(p)\langle U^{\dagger}(L(p))\Psi_{p',\sigma'},\Psi_{p,\sigma}\rangle\\
+&=N(p)N^{*}(p')D\bigg(W^{-1}(L^{-1}(p),p')\bigg)^{*}_{\sigma\sigma'}\delta^{3}(\bm{k'}-\bm{k}),
+\end{align*}
+Here we substitute the dagger of \eqref{2.4.10} and using the fact that
+$$p=L(p)k\Rightarrow k=L(k)k\Rightarrow L(k)=1,$$
+which gives that $U\bigg(L(L^{-1}(p)p)\bigg)=U(\mathbbold{1})=\mathbbold{1}$. Moreover, by definition for non-zero term $p=p'$,
+$$W(L^{-1}(p),p)=L^{-1}\bigg(L^{-1}(p)p\bigg)L^{-1}(p)L(p)=\mathbbold{1}.$$
+Thus the inner product is
+\begin{equation}\label{2.4.12}
+\langle\Psi_{p'\sigma'},\Psi_{p,\sigma}\rangle=|N(p)|^{2}\delta_{\sigma'\sigma}\delta^{3}(\bm{k'}-\bm{k}).
+\end{equation}
+So the only left trouble is the relation between $\delta^{3}(\bm{p'}-\bm{p})$ and $\delta^{3}(\bm{k'}-\bm{k})$. Note that the Lorentz-invariant integral of an arbitrary scalar function $f(p)$ over four-momenta with physical condition\footnote{This two physical conditions are not necessary for the form of Lorentz-invariant integral because Lorenz transformation do not change $p^{2}$ and the sign of $p^{0}$.} that $p^{2}=M^{2}\geqslant0$ and $p^{0}>0$ may be written as
+\begin{align*}
+\int\,&\dd^{4}p\,\delta(p^{2}-M^{2})\theta(p^{0})f(p)\\
+&=\int\,\dd^{3}\bm{p}\dd p^{0}\,\delta(-(p^{0})^{2}+\bm{p}^{2}-M^{2})\theta(p^{0})f(p^{0},\bm{p})\\
+&=\int\,\dd^{3}\bm{p}\,\dfrac{f(\bm{p},\sqrt{\bm{p}^{2}-M^{2}})}{2\sqrt{\bm{p}^{2}-M^{2}}},
+\end{align*}
+where $\theta(p^{0})$ is the step function. So we see that the invariant volume element is
+\begin{equation}\label{2.4.14}
+\dfrac{\dd^{3}\bm{p}}{\sqrt{\bm{p}^{2}-M^{2}}}.
+\end{equation}
+The definition of delta function tells us that
+\begin{align*}
+F(\bm{p})&=\int\,F(\bm{p}')\delta^{3}(\bm{p}-\bm{p}')\dd^{3}\bm{p}'\\
+&=\int\,F(\bm{p}')\bigg[\sqrt{\bm{p'}^{2}-M^{2}}\delta^{3}(\bm{p}'-\bm{p})\bigg]\dfrac{\dd^{3}\bm{p}'}{\sqrt{\bm{p'}^{2}-M^{2}}}.
+\end{align*}
+So the invariant delta function is $\sqrt{\bm{p'}^{2}-M^{2}}\delta^{3}(\bm{p'}-\bm{p})\equiv p^{0}\delta^{3}(\bm{p'}-\bm{p})$. Since both $p$ and $p'$ are related to $k$ and $k'$ respectively by a Lorentz transformation, we have then
+$$p^{0}\delta^{3}(\bm{p'}-\bm{p})=k^{0}\delta^{3}(\bm{k'}-\bm{k}),$$
+and
+$$\langle\Psi_{p',\sigma'},\Psi_{p,\sigma}\rangle=|N(p)|^{2}\delta_{\sigma'\sigma}\left(\dfrac{p^{0}}{k^{0}}\right)\delta^{3}(\bm{k'}-\bm{k}),$$
+and thus with $N(p)=\sqrt{k^{0}/p^{0}}$ we get the property of normalization.
+\end{Proof}
+\subsection{$M>0$ Particle}
+In this case, the little group is $\mathrm{SO(3)}$, whose unitary representation of $\mathrm{SO(3)}$ can be decomposed as direct sums of irreducible ones $D_{\sigma'\sigma}(R)$ with dimensions of $2j+1$, where $j\in\mathbb{N}$ and $R$ denotes one rotation, as is taught in the quantum mechanics class.
+
+\chapter{General Scatter Theory}
+The paradigmatic experiment(at least in nuclear or elementary particle physics) is one in which several particles approach each other from a macroscopically large distance, and interact in a microscopically small region, after which the products of the interaction travel out again to a macroscopically large distance. The physical states before and after the collision consist of particles that are so far apart that they are effectively non-interacting, so they can be described as direct products of the one-particle states discussed in the previous chapter. In such an experiment, and that is measured is the probability distribution, or \emph{cross sections}, for transitions between the initial and final state of distant and effectively non-interaction particles.
+\section{In and Out State}
+In chapter two we use the representation of little group to classify particles, but this rough classification just determine their categories. As for more precise classification, mass to some extent can undertake this task, while in fact physicists are likely to use decay period instead for their belief of the independence of it. Whatever quantities we choose to classify particles, the fact is we need to bring in other independent indices in our defined states. So we have to define the multi-particle state as:
+\begin{Def}[(Non-interacting Multi-particle State)]
+The direct product of some one-particle state, labeled by their four-momenta $p^{\mu}$, spin z-component $\sigma$(or, for massless particles, helicity), and, since we now deal with more than one species of particle, an additional\footnote{There may be more than one kind of discrete label to label particles, but in convenience we only use one $n$ here.} discrete label $n$, is defined as the \emph{non-interacting multi-particle state}, denoted by $\Phi_{p_{1},\sigma_{1},n_{1};p_{2},\sigma_{2},n_{2};\cdots}$.\\[0.1em]
+\end{Def}
+Transformation of the direct product state under the inhomogeneous Lorentz group is the direct product of the transformed one-particle states. The general transformation rule of the direct product state is the same as what we get in the former chapter(We use the identity $U(\Lambda,a)\equiv U(1,a)U(\Lambda,0)$).
+\begin{align}\label{3.1.1}
+U(&\Lambda,a)\Phi_{p_{1},\sigma_{1},n_{1};p_{2},\sigma_{2},n_{2};\cdots}=\exp\bigg(-ia_{\mu}((\Lambda p_{1})^{\mu}+(\Lambda p_{2})^{\mu}+\cdots)\bigg)\nonumber\\
+&\times\sqrt{\dfrac{(\Lambda p_{1})^{0}(\Lambda p_{2})^{0}\cdots}{p_{1}^{0}p_{2}^{0}\cdots}}\sum_{\sigma_{1}'\sigma_{2}'\cdots}D_{\sigma_{1}'\sigma_{1}}^{(j_{1})}\bigg(W(\Lambda,p_{1})\bigg)D_{\sigma_{2}'\sigma_{2}}^{(j_{2})}\bigg(W(\Lambda,p_{2})\bigg)\cdots\nonumber\\
+&\times\Phi_{\Lambda p_{1},\sigma_{1}',n_{1};\Lambda p_{2},\sigma_{2}',n_{2};\cdots},
+\end{align}
+where $W(\Lambda,p)$ is the Wigner rotation, and $D_{\sigma'\sigma}^{(j_{1})}(W)$ is the usual $(2j+1)$-dimensional unitary representation of $\mathrm{SO}(3)$.(This is for massive particles; for any massless particle, the matrix $D_{\sigma'\sigma}^{(j_{1})}(W(\Lambda,p))$ is replaced with $\delta_{\sigma'\sigma}\exp(i\sigma\theta(\Lambda,p))$, as is defined in the previous chapter). In consideration of the \emph{identity principle}, the states are normalized as follows\footnote{Essentially, we use the inner product defined to determmine the norm of the direct product Hilbert space.}:
+\begin{align}\label{3.1.2}
+\bigg\langle\Phi_{p_{1}',\sigma_{1}',n_{1}';p_{2}',\sigma_{2}',n_{2}';\cdots},\Phi_{p_{1},\sigma_{1},n_{1};p_{2},\sigma_{2},n_{2};\cdots}\bigg\rangle&=\delta^{3}(\bm{p'}_{1}-\bm{p}_{1})\delta_{\sigma_{1}'\sigma_{1}}\delta_{n_{1}'n_{1}}\delta^{3}(\bm{p'}_{2}-\bm{p}_{2})\delta_{\sigma_{2}'\sigma_{2}}\delta_{n_{2}'n_{2}}\nonumber\\
+&\pm\text{permutations}
+\end{align}
+In the following chapter we will see the sign is determined by wether the particle is the \emph{Boson} or \emph{Fermion}, but here we just leave the first term in \eqref{3.1.2} for simplification. We prefer to use an abbreviated notation, letting one Greek letter, say $\alpha$, stand for the whole collection $p_{1},\sigma_{1},n_{1};\cdots$. In this notation the normalization is simply written as
+\begin{equation}\label{3.1.3}
+\langle\Phi_{\alpha'},\Phi_{\alpha}\rangle=\delta(\alpha'-\alpha)
+\end{equation}
+with $\delta(\alpha'-\alpha)$ standing for the sum of products of delta functions and Kronecker deltas. Also, in summing over states, we write
+$$\int\,\dd\alpha\cdots\equiv\sum_{\sigma_{1}n_{1};\sigma_{2}n_{2};\cdots}\int\,\dd^{3}p_{1}\dd^{3}p_{2}\cdots.$$
+That is, we include configurations that do not differ under merely exchange the identical particles.\par
+Set $\Lambda_{~\nu}^{\mu}=\delta_{\mu}^{\nu}$ and $a^{\mu}=(\tau,0,0,0)$, then the corresponding unitary operator $U(\Lambda,a)=\exp(iH\tau)$. \eqref{3.1.1} tells us that $\Phi_{\alpha}$ is the energy eigenstate
+\begin{equation}\label{3.1.4}
+H\Psi_{\alpha}=E_{\alpha}\Phi_{\alpha},
+\end{equation}
+with $E_{\alpha}=p_{1}^{0}+p_{2}^{0}+\cdots$. Since notation $H$ and $U(\Lambda,a)$ are specially used for in and out state, we conventionally use notations with lower indices zero in non-interacting cases. And because $H_{0}$ is unbounded self-adjoint operator, it can be perfectly spectrum decomposed such that for any other state $\Psi$ we must have the complete relation:
+\begin{equation}\label{3.1.12}
+\Psi_{\alpha}=\int\,\dd\alpha\,\Phi_{\alpha}\big\langle\Phi_{\alpha},\Psi\rangle.
+\end{equation}
+
+\indent Now we are to take interaction into account. Here we always work in the Heisenberg picture\footnote{In this picture, what change with time are the operators rather than the state, in comparison of Sch\"{o}dinger one.}.
+\begin{Hypothesis}[(Scattering Postulation)]
+ In the case where the interaction is scattering potential, the generator of time translation, denoted $H$, of the interacting multi-particle state $\Psi_{\alpha}$(undefined ever), tends to $H_{0}$ at $t\rightarrow\infty$ for any observer $\mathcal{O}$ whose time $t$ has been defined.\\[0.5em]
+\end{Hypothesis}
+Although we have not defined $\Psi_{\alpha}$ ever, we can still get some information for its asymptotic behaviors, which we are interested in, i.e., what $\Psi_{\alpha}$ will be at $t\rightarrow\pm\infty$, denoted as $\Psi_{\alpha}^{\pm}$. Moreover, note that our postulation is dependent of the choose of observer, that is, if we choose another observer $\mathcal{O'}$ with his time $t'=t-\tau$, then for state $\Psi_{\alpha}$ in the eye of $\mathcal{O}$ at $t=0$, what $\mathcal{O'}$ will see is $U(1,-\tau)\Psi_{\alpha}=\exp(-iH\tau)\Psi_{\alpha}$. Particularly, the asymptotic states for $\mathcal{O}$ are therefore $\exp(-iH\tau)|_{\tau\rightarrow\pm\infty}\Psi_{\alpha}$. This imperceptible difference will give important information as follows:
+\begin{Assertion}
+Under the postulation, interacting multi-particle state can only be wave packages and particularly cannot be the eigenstate of $H_{0}$.
+\end{Assertion}
+\begin{Proof}
+If $\Psi_{\alpha}$ is only one eigenstate of generator $H(\tau)$, then asymptotic state is $\exp(-iE_{\alpha}\tau)\Psi_{\alpha}$, whose generator of time translation is $\exp(-iE_{\alpha}\tau)H_{0}$, which is acutely oscillating and do not converges to $H_{0}$ and thus violate the postulation. So the asymptotic state must be wave packages as $\displaystyle\int\,\dd\alpha g(\alpha)\Psi_{\alpha}$, with $g(\alpha)$ smooth enough on finite interval of energy $\Delta E$.
+\end{Proof}
+\begin{Def}[(in and out state)]
+The in and out states $\Psi_{\alpha}^{\pm}$ are states satisfying that\footnote{Note that $\Omega(\mp\tau)$ can only act on wave packages, as is shown before. So the precise definition is
+$$\int\,\dd\alpha\,g(\alpha)\Psi_{\alpha}^{\pm}=\Omega(\mp\infty)\int\,\dd\alpha\,g(\alpha)\Psi_{\alpha}.$$}
+\begin{equation}\label{3.1.5}
+\Psi_{\alpha}^{\pm}:=\Omega(\mp\infty)\Psi_{\alpha},
+\end{equation}
+where $\Omega(\tau)\equiv\exp(+iH\tau)\exp(-iH_{0}\tau)$.
+\end{Def}
+\begin{Property}
+The in and out states $\Psi_{\alpha}^{\pm}$ has the property that
+\begin{flalign}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 公式居左且标号妙招
+\label{3.1.6}
+&\qquad\text{1) }H\Psi_{\alpha}^{\pm}=E_{\alpha}\Psi_{\alpha}^{\pm};&\\
+\label{3.1.7}
+&\qquad\text{2) For } \tau\rightarrow\pm\infty, \int\,\dd\alpha\,e^{-i E_{\alpha}\tau}g(\alpha)\Psi_{\alpha}^{\pm}=\int\,\dd\alpha\,e^{-iE_{\alpha}\tau}g(\alpha)\Psi_{\alpha}.&
+\end{flalign}
+\end{Property}
+\begin{Proof}
+\begin{align*}
+H\Psi_{\alpha}^{\pm}&=He^{iH\tau}e^{-iE_{\alpha}\tau}\Phi_{\alpha}\\
+&=\dfrac{1}{i}\dfrac{\dd}{\dd\tau}\bigg(e^{iH\tau}\bigg)e^{-iE_{\alpha}\tau}\Phi_{\alpha}\\
+&=\dfrac{1}{i}\dfrac{\dd}{\dd\tau}\bigg(e^{iH\tau}e^{-iE_{\alpha}\tau}\Phi_{\alpha}\bigg)-\dfrac{1}{i}e^{iH\tau}\dfrac{\dd}{\dd\tau}\bigg(e^{-iE_{\alpha}\tau}\bigg)\Phi_{\alpha}\\
+&=\dfrac{1}{i}\dfrac{\dd}{\dd\tau}\big(\Psi_{\alpha}^{\pm}\big)+E_{\alpha}\Psi_{\alpha}^{\pm}=E_{\alpha}\Psi_{\alpha}^{\pm}.
+\end{align*}
+The third and the last identities comes from the fact that $\Phi_{\alpha}$ and $\Psi_{\alpha}^{\pm}$ do not change with time due to our choose of picture.\par
+As for (2), since by definition of in and out state we have
+$$\exp(-iH\tau)\int\,\dd\alpha\,g(\alpha)\Psi_{\alpha}^{\pm}=\exp(-iH_{0}\tau)\int\,\dd\alpha\,g(\alpha)e^{-iE_{\alpha}\tau}\Phi_{\alpha},$$
+substituting (1) and we are done.
+\end{Proof}
+\begin{Note}
+Note that \eqref{3.1.7} doesn't mean that interacting in and out state $\Psi_{\alpha}^{\pm}$ tends to noninteracting state $\Phi_{\alpha}$ at $\tau\rightarrow\infty$ because they are essentially two distinct kinds of states and in our picture states are not changing with time. What tends to each other is actually wave packages under the action of changing unitary operators, as is shown in the proof.
+\end{Note}
+\begin{Proposition}[(in and out state)]
+Any states $\Psi_{\alpha}^{\pm}$ satisfying the two properties \eqref{3.1.6} and \eqref{3.1.7} must be in and out state.
+\end{Proposition}
+\begin{Proof}
+Since proof of \eqref{3.1.7} in invertible, by substituting \eqref{3.1.6}, it is easy to get the definition \eqref{3.1.5}.
+\end{Proof}
+\begin{Corollary}
+The in and out state normalized as free one-particle state, i.e.,
+\begin{equation}\label{3.1.8}
+\big\langle\Psi_{\beta}^{\pm},\Psi_{\alpha}^{\pm}\big\rangle=\delta(\beta-\alpha).
+\end{equation}
+\end{Corollary}
+\begin{Proof}
+Notice that equation \eqref{3.1.7} is got by acting $\exp(-iH\tau)$ on a state not relevant to time, so its norm is also not relevant to time, which is exactly the norm on the right of \eqref{3.1.7} at $\tau\rightarrow\infty$:
+\begin{align*}
+\int&\,\dd\alpha\dd\beta\,\exp(-i(E_{\alpha}-E_{\beta}))g(\alpha)g^{*}(\beta)\big\langle\Psi_{\beta}^{\pm},\Psi_{\alpha}^{\pm}\big\rangle\\
+&=\int\,\dd\alpha\dd\beta\,\exp(-i(E_{\alpha}-E_{\beta}))g(\alpha)g^{*}(\beta)\big\langle\Phi_{\beta}^{\pm},\Phi_{\alpha}^{\pm}\big\rangle
+\end{align*}
+For this equation holds for any smooth function $g(\alpha)$, so we get the familiar normalization relation.
+\end{Proof}
+\begin{Theorem}[(Lipmann-Schwinger Equation)]
+\begin{equation}\label{3.1.9}
+\Psi_{\alpha}^{\pm}=\Phi_{\alpha}+(E_{\alpha}-H_{0}\pm i\varepsilon)^{-1}V\Psi_{\alpha}^{\pm},\quad\varepsilon\rightarrow0,
+\end{equation}
+where $H=H_{0}+V$.
+\end{Theorem}
+Sometimes we would like to expand $\Psi_{\alpha}^{\pm}$ with the complete free particle state $\Phi_{\alpha}$, so L-S equation has an equivalent form:
+\begin{Theorem}[(Lipmann-Schwinger Equation)]
+\begin{align}
+\Psi_{\alpha}^{\pm}=\Phi_{\alpha}&+\int\,\dd\beta\,\dfrac{T_{\alpha\beta}\Phi_{\beta}}{E_{\alpha}-E_{\beta}\pm i\varepsilon},\label{3.1.10}\\
+T_{\alpha\beta}^{\pm}&\equiv\big\langle\Phi_{\beta},V\Phi_{\alpha}\big\rangle.\label{3.1.11}
+\end{align}
+\end{Theorem}
+\begin{Proof}
+By the proposition of in and out state, we are only to show that this solution satisfying the two properties, \eqref{3.1.6} and \eqref{3.1.7}.\par
+Firstly, acting operator $(E_{\alpha}-H_{0})$ on the right of \eqref{3.1.9}. Since $\varepsilon\rightarrow0$, we have
+$$(E_{\alpha}-H_{0})\Psi_{\alpha}^{\pm}=(E_{\alpha}-H_{0})\Phi_{\alpha}+V\Psi_{\alpha}^{\pm},$$
+which is exactly \eqref{3.1.6}.\par
+As for \eqref{3.1.7}, consider the superposition state
+\begin{align}
+\Psi_{g}^{\pm}(t)&\equiv\int\,\dd\alpha\,e^{-iE_{\alpha}\tau}g(\alpha)\Psi_{\alpha}^{\pm}\label{3.1.13},\\
+\Phi_{g}(t)&\equiv\int\,\dd\alpha\,e^{-iE_{\alpha}\tau}g(\alpha)\Phi_{\alpha}\label{3.1.14},
+\end{align}
+we are to show that when $t\rightarrow-\infty$ and $t\rightarrow+\infty$, wave packages of  $\Psi_{\alpha}^{+}$ and $\Psi_{\alpha}^{-}$ will reduce to wave packages of $\Phi_{\alpha}$, respectively(Here both $\Psi_{g}^{\pm}$ and $\Phi_{g}$ are function of time since we are inspecting the acted wave packages). Substitute \eqref{3.1.10} into \eqref{3.1.13} gives
+$$\Psi_{g}^{\pm}(t)=\Phi_{g}(t)+\int\,\dd\alpha\,\int\,\dd\beta\,\dfrac{e^{-iE_{\alpha}t}g(\alpha)T_{\beta\alpha}^{\pm}\Phi_{\beta}}{E_{\alpha}-E_{\beta}\pm i\varepsilon}.$$
+Let us recklessly interchange the order of integration\footnote{In QFT, we always do this because physicists believe that all physical function is of great properties and integration are always uniformly convergent.}, and consider the integral
+\begin{equation}\label{3.1.15}
+\mathscr{I}_{\beta}^{\pm}=\int\,\dd\alpha\,\dfrac{e^{-iE_{\alpha}t}g(\alpha)T_{\beta\alpha}^{\pm}\Phi_{\beta}}{E_{\alpha}-E_{\beta}\pm i\varepsilon}.
+\end{equation}
+We are to prove that $\mathscr{I}_{\beta}^{\pm}$ goes to zero at $t\rightarrow\mp\infty$. In fact, this is followed by \emph{the lemma of Jordan}\footnote{Proof of \emph{Jordan Lemma}: Let $\displaystyle M(R)=\max\limits_{z\in\gamma_{R}}|f(z)|$, then because $t<0$
+\begin{align*}
+\left|\int_{\gamma_{R}}\,e^{-izt}f(z)\,\dd z\right|&\leqslant 2M(R)\int_{0}^{\pi/2}\,e^{tR\sin\theta}R\,\dd\theta,\\
+&=2M(R)\int_{0}^{\pi/2}\,e^{2tR\theta/\pi}R\,\dd\theta=\dfrac{\pi M(R)}{-t}\left(1-e^{tR}\right).
+\end{align*}
+Since by condition $\displaystyle\lim_{R\rightarrow+\infty}M(R)=0$, so
+$$\lim_{R\rightarrow+\infty}\left|\int_{\gamma_{R}}\,e^{-izt}f(z)\,\dd z\right|=0.$$} in complex variable integral. For $t\rightarrow-\infty$, change the variable form $\alpha$ to $E_{\alpha}$, let the non-degenerate Jacobi to be $J(E_{\alpha})$ and denoted the integral as:
+$$\mathscr{I}_{\beta}^{+}=\int\,\dd E_{\alpha}\,e^{-iE_{\alpha}t}f(E_{\alpha})$$
+with $f(z)$ continuous on $R_{0}\leqslant|z|<+\infty, \mathrm{Im}z\geqslant0$ and
+$$\lim_{\substack{z\rightarrow\infty\\ \mathrm{Im}z\geqslant0}}f(z)=0.$$
+Now by choosing the upper-half plane as the contour, our integral can be calculate as
+\begin{equation}\label{3.1.16}
+\mathscr{I}_{\beta}^{+}+\mathscr{I}_{\gamma_{R}}=2\pi i\mathrm{Res}(f;z_{i})e^{-iE_{\alpha}t},
+\end{equation}
+where
+$$\mathscr{I}_{\gamma_{R}}=\lim_{R\rightarrow+\infty}\int_{\gamma_{R}}\,e^{-izt}f(z)\,\dd z$$
+and $\gamma_{R}:z=Re^{i\theta}, 0\leqslant\theta\leqslant\pi, R>R_{0}$. By Jordan Lemma $\mathscr{I}_{\gamma_{R}}\rightarrow0$, so
+$$\mathscr{I}_{\beta}^{+}\rightarrow0,\text{ }t\rightarrow-\infty.$$
+The  same proof goes to case of $\mathscr{I}_{\beta}^{-}$ at $t\rightarrow+\infty$.
+\end{Proof}
+\begin{Note}
+Let $H=H_{0}+V$, then by the postulation, interactive potential $V$ should has the property\footnote{Although we will not concern about this property here and just deem it as one natural and physical confinement of interactive potential, it is valuable to know that this property is important in the perturbation approach of scatter theory, which is based on Sch\"{o}rdinger equation and methods of Green function. See W.Grenier, \emph{Quantum Electrodynamics} for details.} that
+\[V(\bm{r},t)|_{t\rightarrow\pm\infty}=0,\]
+which is surely true in the scattering experiments(consider the Coulomb potential, for example), so this decomposition is allowed.
+\end{Note}
+\begin{Note}
+It is also valuable to mention the informal and original deviation of Lipmann-Schwinger equation. Now \eqref{3.1.6} becomes
+\[(E_{\alpha}-H_{0})\Psi_{\alpha}^{\pm}=V\Psi_{\alpha}^{\pm}.\]
+Since with $t\rightarrow\infty$, \eqref{3.1.7} shows that $\Psi_{\alpha}^{\pm}$ reduces to $\Phi_{\alpha}^{\pm}$ in sense of unitary operator acting on wave packages and meanwhile $V\rightarrow0$, so we can let the formal solution of $\Psi_{\alpha}^{\pm}$ to be $\Psi_{\alpha}^{\pm}=\Phi_{\alpha}^{\pm}+(F\circ V)\Psi_{\alpha}^{\pm}$ and easily check that
+\[\Psi_{\alpha}^{\pm}=\Phi_{\alpha}+(E_{\alpha}-H_{0}\pm i\varepsilon)^{-1}V\Psi_{\alpha}^{\pm}\]
+satisfying \eqref{3.1.7} if $\varepsilon\rightarrow0$. Here since $H_{0}$ has exactly the spectrum $E_{\alpha}$ (with eigenvectors $\Phi_{\alpha}$), operator $(E_{\alpha}-H_{0})$ is not invertible, and so we use $(E_{\alpha}-H_{0}\pm i\varepsilon)^{-1}$ instead.
+\end{Note}
+\section{S-Matrix}
+\begin{Def}
+In one scattering experiments, suppose we detect the state at $t\rightarrow\infty$, with the result in state $\Psi_{\alpha}^{+}$ and out state $\Psi_{\beta}^{-}$, then the probability of interaction is the inner product
+\begin{equation}\label{3.2.1}
+S_{\beta\alpha}:=\big\langle\Psi_{\beta}^{-},\Psi_{\alpha}^{+}\big\rangle.
+\end{equation}
+This complex matrix is called the \emph{S-matrix}. It is also convenient to work on operator rather than elements of matrix, so we introduce operator $S$ such that
+\begin{equation}\label{3.2.2}
+\big\langle\Phi_{\beta},S\Phi_{\alpha}\big\rangle:=S_{\beta\alpha}.
+\end{equation}
+\end{Def}
+Definition of in and out state \eqref{3.1.5} gives S-matrix a formal expression:
+\begin{equation}\label{3.2.3}
+S=\Omega(\infty)^{\dagger}\Omega(-\infty)=:U(+\infty,\infty),
+\end{equation}
+where
+\begin{equation}\label{3.2.4}
+U(\tau,\tau_{0})\equiv\Omega(\tau)^{\dagger}\Omega(\tau_{0})=e^{iH_{0}\tau}e^{-iH(\tau-\tau_{0})}e^{-iH_{0}\tau_{0}}.
+\end{equation}
+\indent Since $S_{\beta\alpha}$ is a matrix connecting two orthogonal and complete function set, it should be unitary:
+\begin{Proposition}
+Operator $S$ is unitary, that is,
+\begin{equation}\label{3.2.5}
+S^{\dagger}S=SS^{\dagger}=\mathbbold{1}.
+\end{equation}
+\end{Proposition}
+\begin{Proof}
+By definition $H$ is also the generator of unitary operator, so it must be self-adjoint, which can be perfectly spectrum decomposed. Adding \eqref{3.1.10} gives that $\Psi_{\alpha}^{\pm}$ are also set of orthogonal and complete function, just like $H_{0}$ in \eqref{3.1.12}:
+$$\Psi=\int\,\dd\alpha\,\Psi_{\alpha}^{\pm}\big\langle\Psi_{\alpha}^{\pm},\Psi\big\rangle.$$
+So
+$$\int\,\dd\beta\,S_{\beta\gamma}^{*}S_{\beta\alpha}=\int\,\dd\beta\,\big\langle\Psi_{\gamma}^{+},\Psi_{\beta}^{-}\big\rangle\big\langle\Psi_{\beta}^{-},\Psi_{\alpha}^{+}\big\rangle=\big\langle\Psi_{\gamma}^{+},\Psi_{\alpha}^{+}\big\rangle=\delta(\gamma-\alpha).$$
+The same goes to $SS^{\dagger}=\mathbbold{1}$.
+\end{Proof}
+\begin{Lemma}[(Asymptotic Representation)]
+At the limit of $t\rightarrow+\infty$, integral $\mathscr{I}_{\beta}^{+}$ has an asymptotic representation:
+\begin{equation}\label{3.2.6}
+\mathscr{I}_{\beta}^{+}\rightarrow-2\pi ie^{-iE_{\beta}t}\int\,\dd\alpha\,\delta(E_{\alpha}-E_{\beta})g(\alpha)T_{\beta\alpha}^{+}.
+\end{equation}
+\end{Lemma}
+\begin{Proof}
+This time choosing the lower-half plane as the contour at $t\rightarrow+\infty$. By lemma of Jordan, the lower semi-circle has no contribution to the integral, and thus by the residue theorem
+$$\mathscr{I}_{\beta}^{+}=-2\pi ie^{-iE_{\beta}t}\int\,\dd\alpha\,\delta(E_{\alpha}-E_{\beta})g(\alpha)T_{\beta\alpha}^{+}.$$
+\end{Proof}
+\begin{Proposition}
+\begin{equation}\label{3.2.7}
+S_{\beta\alpha}=\delta(\beta-\alpha)-2\pi i\delta(E_{\alpha}-E_{\beta})g(\alpha)T_{\beta\alpha}^{+}
+\end{equation}
+\end{Proposition}
+\begin{Proof}
+Substituting \eqref{3.2.6} into wave packages \eqref{3.1.15} gives
+$$\Psi_{g}^{+}(t)\rightarrow\int\,\dd\beta\,e^{--iE_{\alpha}t}\Psi_{\beta}\left[g(\beta)-2\pi i\int\,\dd\alpha\,\delta(E_{\alpha}-E_{\beta})g(\alpha)T_{\beta\alpha}^{+}\right].$$
+By expanding \eqref{3.1.13} for $\Psi_{g}^{+}$ in a complete set of out state gives
+$$\Psi_{g}^{+}(g)=\int\,\dd\alpha\,e^{-iE_{\alpha}t}g(\alpha)\int\,\dd\beta\,\Psi_{\beta}^{-}S_{\beta\alpha}.$$
+Since $S_{\beta\alpha}$ contains a factor $\delta(E_{\beta}-E_{\alpha})$ from $\mathscr{I}_{\beta}^{+}$, this may be rewritten
+$$\Psi_{g}^{+}=\int\,\dd\beta\,\Psi_{\beta}^{-}e^{-iE_{\alpha}t}\int\,\dd\alpha\,g(\alpha)S_{\beta\alpha}$$
+and, using the asymptotic property for $t\rightarrow+\infty$
+$$\Psi_{g}^{+}\rightarrow\int\,\dd\beta\,\Phi_{\beta}e^{-iE_{\alpha}t}\int\,\dd\alpha\,g(\alpha)S_{\beta\alpha}.$$
+Comparing this with our previous result, we find
+$$\int\,\dd\alpha\,g(\alpha)S_{\beta\alpha}=g(\beta)-2\pi i\int\,\dd\alpha g(\alpha)S_{\beta\alpha},$$
+or \eqref{3.2.7}.
+\end{Proof}
+Ignore the difference between in and free-particle state in \eqref{3.1.11} gives
+\begin{equation}\label{3.2.8}
+S_{\beta\alpha}=\delta(\beta-\alpha)-2\pi i\delta(E_{\alpha}-E_{\beta})g(\alpha)\big\langle\Phi_{\beta},V\Phi_{\alpha}\big\rangle.
+\end{equation}
+This is known as the \emph{Born approximation}.
+%\begin{center}
+%*~*~*
+%\end{center}
+%\indent We can only use the \emph{L-S} equation to prove the unitary property and the orthogonality of in and out state.
+
+\section{Symmetry of S-Matrix}
+\subsection{Lorentz Invariance}
+\indent Until now we have not defined the unitary operator $U(\Lambda,a)$ with interacting Hamiltonian $H$, so before our discussion of symmetries, we need to carefully compare it with our known non-interacting one $U_{0}(\Lambda,a)$ with Hamiltonian $H_{0}$.
+\begin{Proposition}
+\begin{equation}\label{3.3.1}
+U(\Lambda,a)=U_{0}(\Lambda,a).
+\end{equation}
+\end{Proposition}
+\begin{Proof}
+Firstly, by \eqref{3.1.1}
+\begin{align*}
+\Omega(\mp\infty)U_{0}(\Lambda,a)\Phi_{\alpha}=\Omega(\mp\infty)f(\Lambda,p^{\mu}_{i},j_{i})\Phi_{\alpha}=f(\Lambda,p^{\mu}_{i},j_{i})\Psi_{\alpha}^{\pm},
+\end{align*}
+where $f(\Lambda,p^{\mu}_{i},j_{i})$ denotes the coefficients matrices(not operators) on the right of \eqref{3.1.1}. On the other aspect, regard $U_{0}(\Lambda,a)=U_{0}(1,a)U_{0}(\Lambda,0)$ as the product of two one-parameter unitary group, whose Lorentz algebra analyzed in chapter two told us that both $P_{0}^{i}$ and $J_{0}^{ij}$ commute with $H_{0}$, so we conclude that $U_{0}$ commute with $e^{-H_{0}\tau}$ for any $\tau$. Moreover, by scatter postulation we have $H\rightarrow H_{0}$ when $\tau\rightarrow\infty$. Thus
+\begin{align*}
+\Omega(\mp\infty)U_{0}(\Lambda,a)\Phi_{\alpha}&\equiv U_{0}(\Lambda,a)\lim_{\tau\rightarrow\infty} e^{iH\tau}e^{-iH_{0}\tau}\Phi_{\alpha}\\
+&=U_{0}(\Lambda,a)\Psi_{\alpha}^{\pm}=:U(\Lambda,a)\Psi_{\alpha}^{\pm}.
+\end{align*}
+\end{Proof}
+\begin{Note}
+Note that both $\Psi_{\alpha}$ and $\Phi_{\alpha}$ are labeled by momentum and spin(for massive particles), though $\Psi_{\alpha}$ may not be direct product of one-particle state. So both $U(\Lambda,a)$ and $U_{0}(\Lambda,a)$ do not involve in commutation relation between $J^{0i}$(or $\bm{K}^{i}$) and $H$. In fact, recall our original motivation of defining the one-particle, since $\bm{K}^{i}$ do not conserve, no matter for one- or multi-particle states, we never bother to bring in it in the representation of states.
+\end{Note}
+\begin{Note}
+The equivalence of two Lie group dose not mean the equivalence of its Lie algebra. A neat case is that $\mathfrak{so}(3)$ is isomorphic to $\mathfrak{su}(2)$ while $\mathrm{SU}(2)$ is the double cover of $\mathrm{SO}(3)$. In fact, in our case $H=H_{0}+V\rightarrow H_{0}$ only at $t\rightarrow\infty$, let along $\bm{P}$ and $\bm{J}$, of which we have no idea until now.
+\end{Note}
+So we need extra confinement on momentum and angular momentum, which cannot be derived(of course there is still residue freedom of the Lie algebra of $U(\Lambda,a)$)
+\begin{Hypothesis}[(Lie Algebra of $U(\Lambda,a)$ (Not Complete))]
+$$H=H_{0}+V,\quad\bm{P}=\bm{P}_{0},\quad\bm{J}=\bm{J}_{0}.$$
+\end{Hypothesis}
+\begin{Assertion}
+$$[V,\bm{P}_{0}]=[V,\bm{J}_{0}]=0.$$
+\end{Assertion}
+\begin{Proof}
+Very easy.
+\end{Proof}
+Since $U_{0}(\Lambda,a)=U(\Lambda,a)$, what we have done in chapter two still work at here. That is, as one-parameter unitary subgroup of $m$-dimensional unitary group $U(m)$, $U(\Lambda,a)$ has the same commutation relation as $U_{0}(\Lambda,a)$ does:
+\begin{align}
+[J^{i},J^{j}]&=i\varepsilon_{ijk}J^{k},\label{3.3.5}\\
+[J^{i},K^{j}]&=i\varepsilon_{ijk}K^{k},\label{3.3.6}\\
+[K^{i},K^{j}]&=-i\varepsilon_{ijk}J^{k},\label{3.3.7}\\
+[J^{i},P^{j}]&=i\varepsilon_{ijk}P^{k},\label{3.3.8}\\
+[K^{i},P^{j}]&=-i\varepsilon_{ijk}H\delta_{ij},\label{3.3.9}\\
+[J^{i},H]&=[P^{i},H]=[P^{i},P^{j}]=0,\label{3.3.10}\\
+[K^{i},H]&=-iP^{i}.\label{3.3.11}
+\end{align}
+\begin{Theorem}
+S-matrix commute with $U_{0}(\Lambda,a)$
+\begin{equation}\label{3.3.4}
+U_{0}(\Lambda,a)^{-1}SU_{0}(\Lambda,a)=S.
+\end{equation}
+\end{Theorem}
+\begin{Proof}
+The commutation relation with S-matrix and $U_{0}(\Lambda,a)$ is equivalent to the commutation between S-matrix and these generators:
+\begin{equation}
+[H_{0},S]=[\bm{P}_{0},S]=[\bm{J}_{0},S]=[\bm{K}_{0},S]=0.
+\end{equation}
+Similar to our proof above, because when $t\to\infty$ we have $H\to H_{0}$ and by postulation of Lie algebra $\bm{P}$ and $\bm{J}$ stay unchanged, so $\bm{P}_{0}$ and $\bm{J}_{0}$ commute with $S$. Additionally, since the form of $U(+\infty,-\infty)$ make it only involves in $H_{0}$, so $H_{0}$ also commute with $S$. Thus what leaves to prove is $\bm{K}_{0}$.\par
+Suppose $\bm{K}=\bm{K}_{0}+\bm{W}$, then $\bm{W}$ cannot be zero since \eqref{3.3.9} and its corresponding noninteracting equation immediately give $H=H_{0}$, which is certainly not true in the presence of interacting. Of the remaining commutation relations, let we concentrate on \eqref{3.3.11} and its noninteracting corresponding equation, which may now be put in the form:
+\begin{equation}\label{3.3.12}
+[\bm{K}_{0},V]=-[\bm{W},H].
+\end{equation}
+But note that we did not give the whole confinement of Lie algebra in the postulation. At that time, we only concern about $\bm{P}$ and $\bm{J}$. Here we confine $\bm{K}$ such that
+\begin{Hypothesis*}[(Lie Algebra of $U(\Lambda,a)$ (Addition))]
+The matrix element of $\bm{W}$ between $H$-eigenstates $\Psi_{\alpha}$ and $\Psi_{\beta}$ are
+\begin{equation}\label{3.3.13}
+\big\langle\Psi_{\beta},\bm{W}\Psi_{\alpha}\big\rangle=-\dfrac{\big\langle\Psi_{\beta},[\bm{K_{0}},V]\Psi_{\alpha}\big\rangle}{E_{\beta}-E_{\alpha}}.
+\end{equation}
+\end{Hypothesis*}
+Then in this definition \eqref{3.3.12} automatically satisfied, which means that \eqref{3.3.12} is empty and will give no other information\footnote{Note the logic here. Our postulation can deduce \eqref{3.3.12} while \eqref{3.3.12} cannot conversely deduce our postulation. The postulation \eqref{3.3.13} contain more information about the asymptotic property of $\bm{W}$, which is crucial in our proof.}. We shall now show that $[\bm{K}_{0},S]=0$.\par
+To prove this, Using noninteracting form of \eqref{3.3.11} and the fact that $\bm{P}_{0}$ commutes with $H_{0}$ yields
+$$[\bm{K}_{0},\exp(iH_{0}t)]=t\bm{P}_{0}\exp(iH_{0}t)$$
+while \eqref{3.3.11} yields
+$$[\bm{K},\exp(iHt)]=t\bm{P}\exp(iHt)=t\bm{P}_{0}\exp(iHt).$$
+The momentum operator then cancel in the commutator of $\bm{K}_{0}$ with $U$, and we find($S\equiv U(+\infty,-\infty)$)
+\begin{align}\label{3.3.14}
+\lim_{\substack{\tau\rightarrow\infty\\
+\tau_{0}\rightarrow-\infty}}\bigg[\bm{K}_{0},U(\tau\,\tau_{0})\bigg]&=\bigg[\bm{K}_{0},e^{iH_{0}t}e^{-iH(\tau-\tau_{0})}e^{-iH_{0}\tau_{0}}\bigg]\nonumber\\
+&=\lim_{\substack{\tau\rightarrow\infty\\ \tau_{0}\rightarrow-\infty}}\bigg(-\bm{W}(\tau)U(\tau,\tau_{0})+U(\tau,\tau_{0})\bm{W}(\tau_{0})\bigg),
+\end{align}
+where $\bm{W}(t)\equiv\exp(iH_{0}t)\bm{W}\exp(-iH_{0}t)$. But by \eqref{3.3.13} and the asymptotic property of potential $\left.V\right|_{\tau\rightarrow\infty}=0$, so we get $\bm{W}(t)=0$ when $t\rightarrow\pm\infty$, which gives $[\bm{K}_{0},S]=0$ and thus our proof is done.
+\end{Proof}
+\begin{Corollary}
+\begin{align}
+\bm{K}\Omega(\mp\infty)&=\Omega(\mp\infty)\bm{K}_{0},\label{3.3.15}\\
+\bm{P}\Omega(\mp\infty)&=\Omega(\mp\infty)\bm{P}_{0},\label{3.3.16}\\
+\bm{J}\Omega(\mp\infty)&=\Omega(\mp\infty)\bm{J}_{0},\label{3.3.17}\\
+H\Omega(\mp\infty)&=\Omega(\mp\infty)H_{0}.\label{3.3.18}\\
+\end{align}
+\end{Corollary}
+\begin{Proof}
+\eqref{3.3.16} to \eqref{3.3.18} are trivial. We only prove \eqref{3.3.15}. In fact, Substituting $\tau=0$ and $\tau_{0}=\mp\infty$ in \eqref{3.3.14} immediately get this.
+\end{Proof}
+\begin{Theorem}
+S-matrix vanishes unless the four-momentum is conserved, and we can therefore write the part of the S-matrix that represent actual interactions among the particles in the form
+\begin{equation}\label{3.3.2}
+S_{\beta\alpha}=\delta(\beta-\alpha)-2\pi iM_{\beta\alpha}\delta^{4}(p_{\beta}-p_{\alpha}).
+\end{equation}
+\end{Theorem}
+\begin{Proof}
+\begin{align*}
+S_{\beta\alpha}&=\bigg\langle\Psi_{\beta}^{-},\Psi_{\alpha}^{+}\bigg\rangle=\bigg\langle U(\Lambda,a)\Psi_{\beta}^{-},U(\Lambda,a)\Psi_{\alpha}^{+}\bigg\rangle\\
+&=\exp\bigg(ia_{\mu}\Lambda_{\nu}^{\mu}({p'}_{1}^{\nu}+{p'}_{2}^{\nu}+\cdots-p_{1}^{\nu}-p_{2}^{\nu}-\cdots)\bigg)f'(\Lambda,p^{\mu}_{i},j^{i})\\
+&\times S_{\Lambda p_{1}',\bar{\sigma}_{1}',n_{1}';p_{2}',\bar{\sigma}_{2}',n_{2}';\cdots;p_{1},\bar{\sigma}_{1},n_{1};p_{2},\bar{\sigma}_{2},n_{2}\cdots},
+\end{align*}
+where $f'$ denotes the lengthy expression on the right of \eqref{3.1.1} except time translation part. Because the above equality is true for any $a_{\mu}$, so S-matrix vanishes unless the four-momentum is conserved:
+\begin{equation}\label{3.3.3}
+{p'}_{1}^{\nu}+{p'}_{2}^{\nu}+\cdots-p_{1}^{\nu}-p_{2}^{\nu}-\cdots\equiv0
+\end{equation}
+and we can naturally written down \eqref{3.3.2}.
+\end{Proof}
+\subsection{Inner Symmetry}
+As is mentioned in the beginning of chapter three, what we did in chapter two is essentially a rough classification of particles. For physicists, particles of the same momenta, spin-z components but distinct decay period are actually deemed different\footnote{So in other words, particles found in laboratories guarantee the existence of inner symmetries.}. We called these extra parameters \emph{inner symmetries}.
+\begin{Def}[(Inner Symmetry)]
+\emph{Inner symmetry groups} are the group of \emph{symmetric transformations} which have nothing directly to do with Lorentz invariance and induce an linear transformation on free multi-particle states:
+\begin{equation}\label{3.3.19}
+U(T)_{0}\Phi_{p_{1}\sigma_{1}n_{1};p_{2}\sigma_{2}n_{2};\cdots}=\sum_{\bar{n}_{1}\bar{n}_{2}\cdots}\mathscr{D}_{\bar{n}_{1}n_{1}}(T)\mathscr{D}_{\bar{n}_{2}n_{2}}(T)\cdots\Phi_{p_{1}\sigma_{1}\bar{n}_{1};p_{2}\sigma_{2}\bar{n}_{2};\cdots},
+\end{equation}
+where $U_{0}(T)$ is the unitary operator induced by the theorem of Wigner\footnote{Recall that symmetric transformations are those that do not change the probability of experiments. So by theorem of Wigner, we can always find their corresponding non-projective unitary operators acing on Hilbert space.}.
+\end{Def}
+Acting on \eqref{3.3.19} again, we can see that matrices $\mathscr{D}$ satisfy the homomorphism rule
+$$\mathscr{D}(\bar{T})\mathscr{D}(T)=\mathscr{D}(\bar{T}T)$$
+and so $\mathscr{D}$ furnish a representation. Alike what we have done in the section of one-particle state, the given normalization relation make $\mathscr{D}$ unitary representation
+\begin{equation}\label{3.3.20}
+\mathscr{D}^{\dagger}(T)=\mathscr{D}^{-1}(T).
+\end{equation}
+\begin{Note}
+Since inner symmetries has nothing to do with Lorentz group, it does not transform the first generator of translation:
+\begin{equation}\label{3.3.21}
+U_{0}(T)H_{0}U^{-1}_{0}(T)=H_{0}.
+\end{equation}
+\end{Note}
+\begin{Proposition}
+$$U(T)=U_{0}(T)$$
+\end{Proposition}
+\begin{Proof}
+Similar to the proof in symmetry of S-matrix that $U_{0}(\Lambda,a)=U(\Lambda,a)$. On the one hand,
+$$\Omega(\mp\infty)U_{0}(T)=\Omega(\mp\infty)f(\Lambda,p_{i}^{\mu},j_{i})\Phi_{\alpha}=f(\Lambda,p_{i}^{\mu},j_{i})\Psi_{\alpha}^{\pm}.$$
+On the other hand, commutation of $U_{0}$ and $H_{0}$ gives the commutation of $U_{0}$ and $\Omega(\pm t)$ for $t\rightarrow\infty$. Thus we can naturally define $U(T)=U_{0}(T)$.
+\end{Proof}
+\begin{Lemma}[(Abelian Lie Group)]
+If the one-parameter map $\mathbb{R}\rightarrow G$ is a homomorphism
+$$T(\bar{\theta}+\theta)=T(\bar{\theta})T(\theta),$$
+then the corresponding unitary operator of $T$ takes the form of exponential map
+\begin{equation}\label{3.3.22}
+U(T(\theta))=\exp(iQ\theta),
+\end{equation}
+with $Q$ Hermitian operator, as generator of one-parameter unitary group.
+\end{Lemma}
+\begin{Proof}
+Entirely the same as the discussion of \eqref{2.2.9}.
+\end{Proof}
+Likewise the matrices $\mathscr{D}(T)$ take the form
+\begin{equation}\label{3.3.23}
+\mathscr{D}_{n'n}(T(\theta))=\delta_{n'n}\exp(iq_{n}\theta),
+\end{equation}
+where $q_{n}$ are eigenvalues of Hermitian operator $Q$.
+\begin{Corollary}
+If the inner symmetry is \emph{Abelian}\footnote{If not Abelian, the situation become complicated.}, then there exists conserved number $\displaystyle q_{n_{1}}+q_{n_{2}}+\cdots$, each of which is the eigenvalue of the Hermitian operator $Q$.
+\end{Corollary}
+\begin{Proof}
+Since $\displaystyle\big\langle\Psi_{\beta}^{-},\Psi_{\alpha}^{+}\big\rangle=\big\langle U(T)\Psi_{\beta}^{-}, U(T)\Psi_{\alpha}^{+}\big\rangle$, in use of \eqref{3.3.19}, we can see that $\mathscr{D}$ commutes with the S-matrix, in sense that
+\begin{align}
+\sum_{\bar{N}_{1}\bar{N}_{2}\cdots}&\sum_{\bar{N}'_{1}\bar{N}'_{2}\cdots}\,\mathscr{D}_{\bar{N}'_{1}n'_{1}}^{*}(T)\mathscr{D}_{\bar{N}'_{2}n'_{2}}^{*}(T)\cdots \mathscr{D}_{\bar{N}_{1}n_{1}}(T)\mathscr{D}_{\bar{N}_{2}n_{2}}(T)\cdots\nonumber\\
+&\times S_{p'_{1}\sigma'_{1}\bar{N}'_{1};p'_{2}\sigma'_{2}\bar{N}'_{2};\cdots;p_{1}\sigma_{1}\bar{N}_{1};p_{2}\sigma_{2}\bar{N}_{2};\cdots}\nonumber\\
+&=S_{p'_{1}\sigma'_{1}n'_{1};p'_{2}\sigma'_{2}n'_{2};\cdots;p_{1}\sigma_{1}n_{1};p_{2}\sigma_{2}n_{2};\cdots}\nonumber\label{3.3.24}.\\
+\end{align}
+This exactly implies that $q$s are conserved: $S_{\beta\alpha}$ vanishes unless
+\begin{equation}\label{3.3.25}
+q_{n'_{1}}+q_{n'_{2}}+\cdots=q_{n_{1}}+q_{n_{2}}+\cdots.
+\end{equation}
+\end{Proof}
+\begin{Note}
+The classic example of such a conservation law is that of conservation of \emph{electric charge}. Also, all known process conserved \emph{baryon number}\footnote{The number of baryons, such as protons, neutrons, and hyperons, minus the number of their antiparticles.} and \emph{lepton number}\footnote{The number of leptons, such as electrons, muons and neutrinos, minus the number of their antiparticles.}. But as we shall see in Volume Ⅱ, these conservation laws are believed to be only very good \emph{approximations}. There are other conservation laws of this type that are definitely only approximate, such as the conservation of the quantity known as \emph{strangeness}.
+\end{Note}
+
+\section{Decay Rates and Cross-Sections}
+The $S$-matrix $S_{\beta\alpha}$ is the probability amplitude for the transition $\alpha\rightarrow\beta$.
+\section{Perturbation Theory}
+In perturbation theory,
+\begin{equation}\label{5.1.27}
+S=1+\sum_{n=1}^{\infty}\dfrac{(-i)^{n}}{n!}\int\,\dd^{4}x_{1}\cdots\int\,\dd^{4}x_{n}\,T\left\{\mathscr{H}(x_{1})\cdots\mathscr{H}(x_{n})\right\}.
+\end{equation}
+Since in non-perturbation theory we have proved that S-matrix is Lorentz-invariant, the same conclusion should also go to the time order $T\{\mathscr{H}(x_{1}\mathscr{H}(x_{2}))\mathscr{x_{2}}\}$ if $(x_{1}-x_{2})^{2}\geqslant0$, which gives that
+\section{Implication of Unitary}
+\begin{Theorem}[(Optical Theorem)]
+\begin{equation}\label{3.6.1}
+\Gamma_{\alpha}=-\dfrac{1}{\pi}(2\pi)^{3N_{\alpha}-2}V^{1-N_{\alpha}}\mathrm{Im}M_{\alpha\alpha}
+\end{equation}
+\end{Theorem}
+\begin{Proof}
+By \eqref{3.3.2} we have
+$$S_{\beta\alpha}=\delta(\beta-\alpha)-2\pi i\delta^{4}(p_{\beta}-p_{\alpha})M_{\beta\alpha}.$$
+The unitary condition then gives
+\begin{align*}
+\delta(\gamma-\alpha)&=\int\,\dd\beta\,S^{*}_{\beta\alpha}S_{\beta\alpha}=\delta(\gamma-\alpha)-2\pi i\delta^{4}(p_{\gamma}-p_{\alpha})M_{\gamma\alpha}\\
+&+2\pi i\delta^{4}(p_{\gamma}-p_{\alpha})M^{*}_{\alpha\gamma}+4\pi^{2}\int\,\dd\beta\,\delta^{4}(p_{\beta}-p_{\alpha})\delta(p_{\beta}-p_{\gamma})M^{*}_{\beta\alpha}M_{\beta\alpha}.
+\end{align*}
+Cancelling the term $\delta(\gamma-\alpha)$ and a factor $2\pi\delta^{4}(p_{\gamma}-p_{\alpha})$, we find that for $p_{\gamma}=p_{\alpha}$
+\end{Proof}
+\begin{center}*~*~*\end{center}
+The same result goes to
+
+\chapter{The Cluster Decomposition Principle}
+There is a deep reason for constructing the Hamiltonian out of creation and annihilation operators, which goes beyond the need to quantize any pre-existing field theory like electrodynamics, and has nothing to do with whether particles can actually be produced or destroyed. The great advantage of this formalism is that if we express the Hamiltonian as a sum of products of creation and annihilation operators, with suitable non-singular coefficients, then the S-matrix will automatically satisfy a crucial physical requirement, the cluster decomposition principle , which says in effect that distance experiments yield uncorrelated results.\par
+In relativistic quantum field theory, the cluster decomposition principle plays a crucial part in making field theory inevitable. There have been many attempts to formulate a relativistically invariant theory that would not be a local field theories, and it is indeed possible to construct theories that are not field theories and yet yield a Lorentz-invariant S-matrix for two-particles scattering, but such efforts have always run into trouble in sectors with more than two particles: either the three-particle S-matrix is not Lorentz-invariant, or else it violate the cluster decomposition principle.
+\section{Bosons and Fermions}
+\begin{Def}[(Identical Particle)]
+Two particles with \emph{the same species label} $n$ and momenta and spins $\bm{p},\sigma$ and $\bm{p'},\sigma'$ are called the \emph{identical particles}.
+\end{Def}
+\begin{Axiom}[(Identity Principle)]
+Two free multi-particle states gotten by interchanging two \emph{identical particles} are physically indistinguishable, they must belong to the same \emph{Ray} $\mathscr{R}$, and so by the first axiom of QM
+\begin{equation}\label{4.1.2}
+\Phi_{\cdots\bm{p}\sigma n\cdots\bm{p'}\sigma'n\cdots}=\alpha(\bm{p},\bm{p'};\sigma,\sigma';n;n_{1},n_{2},\cdots)\Phi_{\cdots\bm{p'}\sigma'n\cdots\bm{p}\sigma n\cdots},
+\end{equation}
+where $\alpha$ is a complex number of unit absolute value.
+\end{Axiom}
+\begin{Axiom}[(Fundamental Principle of non-entangled Experiments)]
+Non-quantum entanglement experiments that are sufficiently separated in space have unrelated results.
+\end{Axiom}
+\begin{Note}
+This non-trivial axiom makes space interval special. If we discarded this axiom, we may construct another entirely different field theory.
+\end{Note}
+Since the scattering experiments of QFT always involve in a large number of non-entanglement(and minority of entanglement) particles, so we can safely conclude that
+\begin{Lemma}
+The symmetry of free multi-particle states under the interchange of two identical particles do not depend on the presence of other particles, that is,
+$$\alpha(\bm{p},\bm{p'};\sigma,\sigma';n;n_{1},n_{2}\cdots)=\alpha(\bm{p},\bm{p'};\sigma,\sigma';n).$$
+\end{Lemma}
+\begin{Proof}
+Since other particles can be anywhere in the universe, by the fundamental principle of non-entangled experiments, they should have no relation with the two location-fixed particles(even though their distance may be infinity).
+\end{Proof}
+Equipped with this lemma can we get the crucial result that
+\begin{Proposition}[(Bosons and Fermions)]
+\begin{equation}\label{4.1.3}
+\alpha(\bm{p},\bm{p'};\sigma,\sigma';n)=\alpha_{n}=\pm1.
+\end{equation}
+The free multi-particle states with upper sign or lower sign are called \emph{bosons} or \emph{fermions} respectively.
+\end{Proposition}
+\begin{Proof}
+First of all, we will see that $\alpha$ cannot have any non-trivial dependence on the spins of the two interchanged particles. Because these spin-dependent phase factor would have to furnish a representation of the rotation group, and there are non-trivial representations of the three-dimensional rotation group that are one-dimensional, we have $\alpha(\bm{p},\bm{p'};\sigma,\sigma';n)=\alpha(\bm{p},\bm{p'};n)$.\par
+Then we will show that the phase $\alpha$ cannot have any non-trivial dependence on the momenta of the two interchanged particles. Since $\alpha$ is Lorentz-invariant(otherwise by Lorentz transformation can we make the absolute value of $\alpha$ more than one), it depend only on the scalar $p^{\mu}p_{\mu}$, which is symmetric under interchanging of particle one and two, and therefore such dependence would have no observable effect. So we can simply write $\alpha$ as $\alpha_{n}$.\par
+By interchanging the two identical particles again in \eqref{4.1.2}, we find
+$$\Phi_{\cdots\bm{p}\sigma n\cdots\bm{p'}\sigma'n\cdots}=\alpha_{n}^{2}\Phi_{\cdots\bm{p}\sigma n\cdots\bm{p'}\sigma'n\cdots},$$
+which gives $\alpha_{n}=\pm1$.
+\end{Proof}
+It's necessary to carefully discuss the normalization relation \eqref{3.1.2} we overlooked in chapter three. Using a label $q$ to denote all the quantum numbers of a single particle, for $N=1$ condition, in consistency with the normalization of one-particle state, we should have
+\begin{equation}\label{4.1.4}
+\big\langle\Phi_{q'},\Phi_{q}\big\rangle=\delta(q'-q)\equiv\delta^{3}(\bm{p}'-\bm{p})\delta_{\sigma'\sigma}.
+\end{equation}
+This is trivial since there is no effects of the stated symmetry conditions. But for $N=2$, things become complex because \emph{normalization of states should be compatible with the symmetry condition}. So here we must take(verify)
+$$\big\langle\Phi_{q'_{1}q'_{2}},\Phi_{q_{1}q_{2}}\big\rangle:=\delta(q_{1}-q'_{1})\delta(q_{2}-q'_{2})\pm\delta(q_{1}-q'_{2})\delta(q_{2}-q'_{1}),$$
+with sign being $-$ if both particles are fermions and $+$ otherwise. More generally, we have:
+\begin{Assertion}[(Compatibility)]
+The normalization of Multi-particle states, defined as
+\begin{equation}\label{4.1.5}
+\bigg\langle\Phi_{q'_{1}\cdots q'_{M}},\Phi_{q_{1}\cdots q'_{N}}\bigg\rangle:=\delta_{NM}\sum_{\mathscr{P}}\delta_{\mathscr{P}}\prod_{i}\delta(q_{i}-q'_{\mathscr{P}i}),
+\end{equation}
+where the sum is over all the permutations $\mathscr{P}$ of the sequence $\{1,2,\cdots,N\}$, is compatible with the symmetry conditions of bosons and fermions.
+\end{Assertion}
+\begin{Proof}
+Randomly exchange two integers of sequence $\{1,2,\cdots,N\}$ and both the left and right of \eqref{4.1.5} come out a minus sign for fermions. Similar discussion goes to bosons.
+\end{Proof}
+For convenience in the next section, we need to extra introduce the vacuum Hilbert space $V_{0}$, in which the element is called \emph{vacuum state}, denoted $\Phi_{0}$, representing the physical system with no particles. Since \eqref{4.1.5} does not tell us the normalization of vacuum state, we have to define it in addition:
+\begin{equation}\label{4.1.6}
+\big\langle\Phi_{0},\Phi_{0}\big\rangle:=1.
+\end{equation}
+\section{Creation and Annihilation Operator}
+\begin{Def}[(Creation Operators)]
+Denote the one-particle Hilbert space as $V_{i}$, the \emph{creation operators} $\displaystyle a^{\dagger}(\bm{p},\sigma,n):\bigotimes_{i=0}^{N}V_{i}\rightarrow\bigotimes_{i=0}^{N+1}V_{i}$, $N\geqslant0$ are then defined as the operators that simply adds a particle with quantum numbers $q$ at the front of the list of $N$ particles in the state
+\begin{equation}\label{4.2.1}
+a^{\dagger}(q)\Phi_{q_{1}\cdots q_{N}}:=\Phi_{qq_{1}\cdots q_{N}},
+\end{equation}
+particularly, the N-particle state can be obtained by acting on the vacuum state with $N$ creation operators
+\begin{equation}\label{4.2.2}
+a(q_{1})\cdots a(q_{N})\Phi_0=\Phi_{q_{1}\cdots q_{N}}.
+\end{equation}
+\end{Def}
+\begin{Note}
+Here is one mathematical motivation why we define this operator\footnote{A more physically profound motivation are relevant to \emph{Lorentz invariance} and \emph{cluster decomposition principle}, which will be discussed in the future sections}: Since all the self-adjoint operators we have encountered so far, such as $P^{\mu}$ and $J^{\mu\nu}$, belong to the entirety of transformation $\displaystyle\mathrm{End}\left(\bigotimes_{i=0}^{N}V_{i}\right)$, we never bring in any Linear maps between two different direct product of Hilbert spaces. So it's necessary to add new kinds, and creation and annihilation operators manage to complete this task and a theorem to be prove latter tells that we have no necessity to define more other operators.
+\end{Note}
+\begin{Proposition}
+The adjoint of creation operator, called \emph{annihilation operators} and denoted $a(\bm{q},\sigma,n)$, satisfies that
+\begin{equation}\label{4.2.3}
+a(q)\Phi_{q_{1}\cdots q_{N}}=\sum_{r=1}^{N}(\pm1)^{r+1}\delta(q-q_{r})\Phi_{q_{1}\cdots q_{r-1}q_{r+1}\cdots q_{N}},
+\end{equation}
+with a sign $+1$ or $-1$ for bosons and fermions, respectively.
+\end{Proposition}
+\begin{Proof}
+By equation \eqref{4.2.1},
+$$\bigg\langle\Phi_{q'_{1}\cdots q'_{M}},a(q)\Phi_{q_{1}\cdots q_{N}}\bigg\rangle\equiv\bigg\langle a^{\dagger}(q)\Phi_{q'_{1}\cdots q'_{M}},\Phi_{q_{1}\cdots q_{N}}\bigg\rangle=\bigg\langle\Phi_{qq'_{1}\cdots q'_{M}},\Phi_{q_{1}\cdots q_{N}}\bigg\rangle.$$
+We now use \eqref{4.1.5}. Note the sum over permutation $\mathscr{P}$ of the sequence can be written as a sum over the integer $r$ that is permuted into the first place, i.e., $\mathscr{P}r=1$, and over mappings $\bar{\mathscr{P}}$ of the remaining integers $1,\cdots,r-1,r+1,\cdots,N$ into $1,\cdots,N$. Furthermore, the sign factor is easy to see that
+$$\delta_{\mathscr{P}}=(\pm1)^{r-1}\delta_{\bar{\mathscr{P}}}$$
+with upper and lower signs for bosons and fermions, respectively. Hence, using \eqref{4.1.5} twice, we have
+\begin{align*}
+\bigg\langle\Phi_{q'_{1}\cdots q'_{M}},a(q)\Phi_{q_{1}\cdots q_{N}}\bigg\rangle&=\delta_{N,M+1}\sum_{r=1}^{N}\sum_{\mathscr{P}}(\pm1)^{r-1}\delta_{\bar{\mathscr{P}}}\delta(q-q_{r})\prod_{i=1}^{N}\delta(q'_{i}-q_{
+\mathscr{P}i})\\
+&=\delta_{N,M+1}\sum_{r=1}^{N}(\pm1)^{r-1}\delta(q-q_{r})\bigg\langle\Phi_{q'_{1}\cdots q'_{M}},\Phi_{q_{1}\cdots q_{r-1}q_{r+1}\cdots q_{N}}\bigg\rangle.
+\end{align*}
+Both sides of \eqref{4.2.3} thus have the same matrix element with any state $\Phi_{q'_{1}\cdots q'_{M}}$, and are therefore equal, as is to be shown.
+\end{Proof}
+\begin{Corollary}
+Operator $a$ annihilate the vacuum state:
+\begin{equation}\label{4.2.4}
+a(q)\Phi_{0}=0.
+\end{equation}
+\end{Corollary}
+\begin{Proof}
+Since for any non-vacuum state $\Phi_{q_{1}\cdots q_{M}}$,
+$$\bigg\langle\Phi_{q_{1}\cdots q_{M}},a(q)\Phi_{0}\bigg\rangle\equiv\bigg\langle a^{\dagger}(q)\Phi_{q_{1}\cdots q_{M}},\Phi_{0}\bigg\rangle=\bigg\langle\Phi_{qq'_{1}\cdots q'_{M}},\Phi_{0}\bigg\rangle=0.$$
+So we must have $a(q)\Psi_{0}=0$.
+\end{Proof}
+\begin{Proposition}[(Commutation and Anticommutation Relation)]
+\begin{align}
+[a(q'),a^{\dagger}(q)]_{\mp}&=\delta(q'-q),\label{4.2.5}\\
+[a^{\dagger}(q'),a^{\dagger}(q)]_{\mp}&=0,\label{4.2.6}\\
+[a(q'),a(q)]_{\mp}&=0,\label{4.2.7}
+\end{align}
+\end{Proposition}
+\begin{Proof}
+
+\end{Proof}
+\begin{Theorem}[(Fundamental Theorem)]
+Any operator(particularly, not necessary to be Hermitian one) $\mathcal{O}$ may be expressed as a sum of products of creation and annihilation operators:
+\begin{align}\label{4.2.8}
+\mathcal{O}=\sum_{N=1}^{\infty}\sum_{M=1}^{\infty}\int\,\dd q'_{1}\cdots\dd q'_{N}\dd q_{1}\cdots\dd q_{M}&\,a^{\dagger}(q'_{1})\cdots a^{\dagger}(q'_{N})a(q_{M})\cdots a(q_{1})\nonumber\\
+&\times C_{NM}(q'_{1}\cdots q'_{N}q_{1}\cdots q_{M}).
+\end{align}
+That is, we want to show that $C_{NM}$ coefficients can be chosen to give the matrix elements of this expression any desired values.
+\end{Theorem}
+\begin{Proof}
+Prove by mathematical induction. First, it is trivial that by choosing $C_{00}$ properly, we can given $\big\langle\Phi_{0},\mathcal{O}\Phi_{0}\big\rangle$ any desired value, irrespective of the values of $C_{NM}$ with $N>0$ and $M>0$. We need only use the truth that $a$ annihilate the vacuum expectation value and \eqref{4.2.8} shows that:
+$$\big\langle\Phi_{0},\mathcal{O}\Phi_{0}\rangle=C_{00}.$$
+Now suppose that the same is true for all matrix elements of $\mathcal{O}$ between $N$- and $M$-particle states, with $N<L,M\leqslant K$ or $N\leqslant L,M<K$. That is, that these matrix elements have been given some desired values by an appropriate choice of the corresponding coefficients $C_{NM}$. To see that the same is true then also true of matrix elements of the $\mathcal{O}$ between any $L$- and $K$-particle states, use equation \eqref{4.2.8} to evaluate
+\begin{align*}
+\bigg\langle\Phi_{q'_{1}\cdots q'_{L}},\mathcal{O}\Phi_{q_{1}\cdots q_{k}}\bigg\rangle&=L!K!C_{LK}(q'_{1}\cdots q'_{L}q_{1}\cdots q_{k})\\
+&+\text{ terms involving }C_{NM}\text{ with }N<L,M\leqslant K\text{ or }N\leqslant L,M<K.
+\end{align*}
+Whatever values have already been given to $C_{NM}$ with $N<L,M\leqslant K\text{ or }N\leqslant L,M<K$, there is clearly some residue choice(bijective maps) of $C_{LK}$ which gives this matrix element any desired value.
+\end{Proof}
+Physically, we will always concern on self-adjoint operators, instead of general ones. But self-adjointness give some confinement on the expression of \eqref{4.2.8}. So we have
+\begin{Corollary}
+Any observables, or self-adjoint operators, can be expressed as a sum of products of creation and annihilation operators as
+\begin{align}\label{4.2.9}
+\mathcal{O}=\sum_{N=0}^{\infty}\int\,\dd q'_{1}\cdots\dd q'_{N}\dd q_{1}\cdots\dd q_{N}&\,a^{\dagger}(q'_{1})\cdots a^{\dagger}(q'_{N})a(q_{M})\cdots a(q_{1})\nonumber\\
+& C_{N}(q'_{1}\cdots q'_{N}q_{1}\cdots q_{N}).
+\end{align}
+\end{Corollary}
+\begin{Example}[(Additive Operators)]
+Operators like momentum, charge, etc, satisfying
+\begin{equation}\label{4.2.10}
+F\Phi_{q_{1}\cdots q_{N}}=(f(q_{1})+\cdots+f(q_{N}))\Phi_{q_{1}\cdots q_{N}}
+\end{equation}
+is called \emph{additive operators}. One can check that $F$ can be written as \eqref{4.2.8}, but using only the term with $N=M=1$:
+\begin{equation}\label{4.2.11}
+F=\int\,\dd{q}\,a^{\dagger}(q)a(q)f(q).
+\end{equation}
+In particular, the free-particle Hamiltonian is always
+\begin{equation}\label{4.2.12}
+H_{0}=\int\,\dd{q}\,a^{\dagger}(q)a(q)E(q),
+\end{equation}
+where $E(q)$ is the single-particle energy
+$$E(\bm{p},\sigma,n)=\sqrt{\bm{p}^{2}+m_{n}^{2}}.$$
+\end{Example}
+We will need the transformation properties of the creation and annihilation operators for various symmetries for future use.
+\begin{Proposition}
+The creation(or annihilation) operator has the transformation rule
+\begin{align}\label{4.2.13}
+U_{0}(\Lambda,\alpha)a^{\dagger}(\bm{p}\sigma n)U_{0}^{-1}(\Lambda,\alpha)&=e^{-i(\Lambda p)\cdot\alpha}\sqrt{(\Lambda p)^{0}/p^{0}}\nonumber\\
+&\times\sum_{\bar{\sigma}}D_{\bar{\sigma}\sigma}^{(j)}\bigg(W(\Lambda,p)\bigg)a^{\dagger}(\bm{p}_{\Lambda}\bar{\sigma}n).
+\end{align}
+\end{Proposition}
+\begin{Proof}
+Apply transformation of multi-particle state \eqref{3.1.1} to \eqref{4.2.1} and use the fact that the vacuum state is Lorentz invariant
+$$U(\Lambda,a)\Phi_{0}=\Phi_{0},$$
+in order that the state \eqref{4.2.2} should transform properly, it is necessary and sufficient that the creation operator have the transformation rule \eqref{4.2.13}.
+\end{Proof}
+In the same way, the operators $\mathsf{C}$, $\mathsf{P}$ and $\mathsf{T}$, that induce charge-conjugation, space inversion, and time-reversal transformation on free particle states, transform the creation operators as:
+\begin{Corollary}
+\begin{align}
+\mathsf{C}a^{\dagger}(\bm{p},\sigma,n)&\mathsf{C}^{-1}=\xi_{n}a^{\dagger}(\bm{p},\sigma,n^{c}),\label{4.2.14}\\
+\mathsf{P}a^{\dagger}(\bm{p},\sigma,n)&\mathsf{P}^{-1}=\eta_{n}a^{\dagger}(-\bm{p},\sigma,n^{c}),\label{4.2.15}\\
+\mathsf{T}a^{\dagger}(\bm{p},\sigma,n)&\mathsf{T}^{-1}=\zeta_{n}(-1)^{j-\sigma}a^{\dagger}(-\bm{p},-\sigma,n^{c})\label{4.2.16}.
+\end{align}
+\end{Corollary}
+\section{Cluster Decomposition Principle}
+The principle of non-entangled experiments is fundamental to the whole science. Specifically, in S-matrix theory, we have
+\begin{Corollary}[(Cluster Decomposition Principle)]
+If multi-particle processes $\alpha_{1}\rightarrow\beta_{1}, \alpha_{2}\rightarrow\beta_{2}, \cdots\alpha_{N}\rightarrow\beta_{N}$ are studied in $N$ very distant laboratories, then the S-matrix element for the overall processes factorizes. That is,
+\begin{equation}\label{4.3.1}
+S_{\beta_{1}+\beta_{2}+\cdots+\beta_{N},\alpha_{1}+\alpha_{2}+\cdots+\alpha_{N}}= S_{\beta_{1}\alpha_{1}}S_{\beta_{2}\alpha_{2}}\cdots S_{\beta_{N}\alpha_{N}}.
+\end{equation}
+\end{Corollary}
+
+\section{The Structure of Interaction}
+
+\chapter{Quantum Field and Antiparticle}
+Equipped with all the pieces needed to motivate the introduction of quantum fields, we shall encounter some of the most remarkable and universal consequences of the union of relativity with quantum mechanics: the connection between spin and statistics, the existence of antiparticles, and various relationship between particles and antiparticles, including the celebrated $\mathsf{CPT}$ theorem.
+\section{Free Fields}
+\begin{Def}[(Annihilation and Creation Fields)]
+The \emph{annihilation field} $\psi_{l}^{+}$ and \emph{creation fields} $\psi_{l}^{-}$ are defined as:
+\begin{align}
+\psi_{l}^{+}&:=\sum_{\sigma,n}\int\,\dd^{3}p\,u_{l}(x;\bm{p},\sigma,n)a(\bm{p},\sigma,n),\label{5.1.1}\\
+\psi_{l}^{-}&:=\sum_{\sigma,n}\int\,\dd^{3}p\,v_{l}(x;\bm{p},\sigma,n)a^{\dagger}(\bm{p},\sigma,n),\label{5.1.2}
+\end{align}
+with coefficients $u_{l}(x;\bm{p},\sigma,n)$ and $v_{l}(x;\bm{p},\sigma,n)$ chosen such that under Lorentz transformations each field is multiplied with a position-independent matrix:
+\begin{equation}\label{5.1.3}
+U_{0}(\Lambda,a)\psi_{l}^{\pm}U^{-1}(\Lambda,a)=\sum_{\bar{l}}D_{\bar{l}l}(\Lambda^{-1})\psi_{\bar{l}}^{\pm}(\Lambda x+a).
+\end{equation}
+\end{Def}
+\begin{Note}
+To see that $\psi_{l}^{\pm}$ are well-defined, we will show the existence of coefficients $u_{l}$ and $v_{l}$ by finding out them.
+\end{Note}
+\begin{Assertion}
+Matrix $D_{\bar{l}l}$ furnishes a representation of $\mathrm{SO}(1,3)_{+}$.
+\end{Assertion}
+\begin{Proof}
+By applying a second Lorentz transformation $\bar{\Lambda}$, i.e., $$U_{0}(\bar{\Lambda},\bar{a})U_{0}(\Lambda,a)\psi_{l}^{\pm}U_{0}^{-1}(\bar{\Lambda},\bar{a})U_{0}^{-1}(\Lambda,a),$$ we find
+$$D(\Lambda^{-1})D(\bar{\Lambda}^{-1})=D((\bar{\Lambda}\Lambda)^{-1})$$
+through the semi-product rule. So taking $\Lambda_{1}=\Lambda^{-1}$ and $\Lambda_{2}=\bar{\Lambda}^{-1}$, we see that
+$$D(\Lambda_{1})D(\Lambda_{2})=D(\Lambda_{1}\Lambda_{2}).$$
+\end{Proof}
+There are many such representations, including the scalar $D(\Lambda)=1$, the vector $D(\Lambda)^{\mu}_{\nu}=\Lambda^{\mu}_{\nu}$, and a host of tensor and spinor representations.
+
+\begin{Proposition}
+If the representation $D_{\bar{l}l}(\Lambda)$ is given, then coefficient $u_{l}$ and $v_{l}$ can be entirely determined.
+\end{Proposition}
+\begin{Proof}
+Equation \eqref{4.2.10} and its adjoint give the transformation rules for the annihilation and creation operators
+\begin{align}
+U_{0}(\Lambda,\alpha)a(\bm{p}\sigma n)U_{0}^{-1}(\Lambda,\alpha)&=e^{i(\Lambda p)\cdot\alpha}\sqrt{(\Lambda p)^{0}/p^{0}}\nonumber\\
+&\times\sum_{\bar{\sigma}}D_{\bar{\sigma}\sigma}^{(j)}\bigg(W(\Lambda,p)\bigg)a(\bm{p}_{\Lambda}\bar{\sigma}n),\label{5.1.4}\\
+U_{0}(\Lambda,\alpha)a^{\dagger}(\bm{p}\sigma n)U_{0}^{-1}(\Lambda,\alpha)&=e^{-i(\Lambda p)\cdot\alpha}\sqrt{(\Lambda p)^{0}/p^{0}}\nonumber\\
+&\times\sum_{\bar{\sigma}}D_{\bar{\sigma}\sigma}^{(j)}\bigg(W(\Lambda,p)\bigg)a^{\dagger}(\bm{p}_{\Lambda}\bar{\sigma}n),\label{5.1.5}
+\end{align}
+where $j_{n}$ is the spin of particles of species $n$, and $\bm{p}_{\Lambda}$ is the three-vector part of $\Lambda p$. Also, as we saw in chapter two, the volume element $\dd^{3}p/p^{0}$ is Lorentz-invariant, so we can replace $\dd^{3}p$ in \eqref{5.1.1} and \eqref{5.1.2} with $\dd^{3}(\Lambda p)p^{0}/(\Lambda p)^{0}$. Put these all together, we find
+\begin{align*}
+U_{0}(\Lambda,\alpha)\psi_{l}^{+}(x)U_{0}^{-1}(\Lambda,\alpha)&=\sum_{\sigma\bar{\sigma}n}\int\,\dd^{3}(\Lambda p)\,u_{l}(x;\bm{p},\sigma,n)\exp\bigg(i(\Lambda p)\cdot\alpha\bigg)\nonumber\\
+&\times D_{\bar{\sigma}\sigma}^{(j_{n})}\bigg(W^{-1}(\Lambda,p)\bigg)\sqrt{p^{0}/(\Lambda p)^{0}}a(\bm{p}_{\Lambda}\bar{\sigma}n).\\
+U_{0}(\Lambda,\alpha)\psi_{l}^{-}(x)U_{0}^{-1}(\Lambda,\alpha)&=\sum_{\sigma\bar{\sigma}n}\int\,\dd^{3}(\Lambda p)\,v_{l}(x;\bm{p},\sigma,n)\exp\bigg(-i(\Lambda p)\cdot\alpha\bigg)\nonumber\\
+&\times D_{\bar{\sigma}\sigma}^{(j_{n})}\bigg(W^{-1}(\Lambda,p)\bigg)\sqrt{p^{0}/(\Lambda p)^{0}}a(\bm{p}_{\Lambda}\bar{\sigma}n).
+\end{align*}
+Substitute \eqref{5.1.3} into the left part, we have then
+\begin{align*}
+\sum_{\bar{l}}D_{l\bar{l}}(\Lambda^{-1})u_{\bar{l}}(\Lambda x+b;\bm{p}_{\Lambda},\sigma,n)&=\sqrt{p^{0}/(\Lambda p)^{0}}\sum_{\bar{\sigma}}D^{(j_{n})}_{\sigma\bar{\sigma}}\bigg(W^{-1}(\Lambda,p)\bigg)\nonumber\\
+&\times\exp\bigg(+i(\Lambda p)\cdot b\bigg)u_{l}(x;\bm{p},\bar{\sigma},n)
+\end{align*}
+and
+\begin{align*}
+\sum_{\bar{l}}D_{l\bar{l}}(\Lambda^{-1})v_{\bar{l}}(\Lambda x+b;\bm{p}_{\Lambda},\sigma,n)&=\sqrt{p^{0}/(\Lambda p)^{0}}\sum_{\bar{\sigma}}D^{(j_{n})*}_{\sigma\bar{\sigma}}\bigg(W^{-1}(\Lambda,p)\bigg)\nonumber\\
+&\times\exp\bigg(-i(\Lambda p)\cdot b\bigg)v_{l}(x;\bm{p},\bar{\sigma},n).
+\end{align*}
+Or somewhat more conveniently\footnote{Here we use the property of Homomorphism:$$D_{\bar{l}l}(\Lambda^{-1})D_{\bar{l}l}(\Lambda)\equiv D_{\bar{l}l}(\mathbbold{1})=1,$$
+so $\displaystyle D_{\bar{l}l}(\Lambda^{-1})=D_{\bar{l}l}(\Lambda)^{-1}$. Similarly $\displaystyle D_{\bar{\sigma}\sigma}^{(j_{n})}(W^{-1})=D_{\bar{\sigma}\sigma}^{(j_{n})}(W)^{-1}$.}
+\begin{align}
+\sum_{\bar{\sigma}}D^{(j_{n})}_{\sigma\bar{\sigma}}\bigg(W(\Lambda,p)\bigg)u_{\bar{l}}(\Lambda x+b;\bm{p}_{\Lambda},\bar{\sigma},n)&=\sqrt{p^{0}/(\Lambda p)^{0}}\sum_{l}D_{\bar{l}l}(\Lambda)\nonumber\\
+&\times\exp\bigg(+i(\Lambda p)\cdot b\bigg)u_{l}(x;\bm{p},\sigma,n)\label{5.1.6}
+\end{align}
+and
+\begin{align}
+\sum_{\bar{\sigma}}D^{(j_{n})}_{\sigma\bar{\sigma}}\bigg(W(\Lambda,p)\bigg)v_{\bar{l}}(\Lambda x+b;\bm{p}_{\Lambda},\bar{\sigma},n)&=\sqrt{p^{0}/(\Lambda p)^{0}}\sum_{l}D_{\bar{l}l}(\Lambda)\nonumber\\
+&\times\exp\bigg(-i(\Lambda p)\cdot b\bigg)v_{l}(x;\bm{p},\sigma,n).\label{5.1.7}
+\end{align}
+These two fundamental requirements will allow us to calculate the coefficient $u_{l}$ and $v_{l}$ in terms of a finite number of free parameters by considering three different types of transformation of $\mathrm{SO}_{+}(1,3)$ as follows:\par
+\begin{center}
+\emph{Translations}
+\end{center}
+First we consider \eqref{5.1.6} and \eqref{5.1.7} with $\Lambda=1$ and $b$ arbitrary. Then equations holds if $u_{l}(x;\bm{p},\sigma,n)$ and $v_{l}(x;\bm{p},\sigma,n)$ take the form\footnote{The factor $(2\pi)^{-3/2}$ could be absorbed into the definition of $u_{l}$ and $v_{l}$, but it is conventional to show them explicitly in these Fourier integrals.}
+\begin{align}
+u_{l}(x;\bm{p},\sigma,n)&=(2\pi)^{-3/2}e^{ip\cdot x}u_{l}(\bm{p},\sigma,n),\label{5.1.8}\\
+v_{l}(x;\bm{p},\sigma,n)&=(2\pi)^{-3/2}e^{-ip\cdot x}v_{l}(\bm{p},\sigma,n),\label{5.1.9}
+\end{align}
+so the relation between creation(or annihilation) operators and fields are exactly Fourier transformations:
+\begin{align}
+\psi_{l}^{+}(x)&=\sum_{\sigma,n}(2\pi)^{-3/2}\int\,\dd^{3}p\,u_{l}(\bm{p},\sigma,n)e^{ip\cdot x}a(\bm{p},\sigma,n),\label{5.1.10}\\
+\psi_{l}^{-}(x)&=\sum_{\sigma,n}(2\pi)^{-3/2}\int\,\dd^{3}p\,v_{l}(\bm{p},\sigma,n)e^{-ip\cdot x}a^{\dagger}(\bm{p},\sigma,n).\label{5.1.11}
+\end{align}
+Now that in \eqref{5.1.8} and \eqref{5.1.9} we successfully eliminate one parameter $x$ through consideration of translation. In terms of \eqref{5.1.8}, $\displaystyle u_{\bar{l}}(\Lambda x+b;\bm{p}_{\Lambda},\sigma,n)=(2\pi)^{-3/2} \exp\bigg(i\Lambda p\cdot(\Lambda x+b)\bigg)u_{\bar{l}}(\bm{p}_{\Lambda},\sigma,n)$, but by definition $\displaystyle\Lambda x\cdot\Lambda p\equiv\langle\Lambda x,\Lambda p\rangle=\langle p,x\rangle\equiv p\cdot x$, so
+$$\displaystyle u_{\bar{l}}(\Lambda x+b;\bm{p}_{\Lambda},\sigma,n)=(2\pi)^{-3/2} e^{i\Lambda p\cdot b}u_{\bar{l}}(\bm{p}_{\Lambda},\sigma,n).$$
+Therefore, the coefficient equation \eqref{5.1.6} and \eqref{5.1.7} now become
+\begin{align}
+\sum_{\bar{\sigma}}u_{\bar{l}}(\bm{p}_{\Lambda},\bar{\sigma},n)D_{\bar{\sigma}\sigma}^{(j_{n})}\bigg(W(\Lambda,p)\bigg)&=\sqrt{\dfrac{p^{0}}{(\Lambda p)^{0}}}\sum_{l}D_{\bar{l}l}(\Lambda)u_{l}(\bm{p},\sigma,n)\label{5.1.12},\\
+\sum_{\bar{\sigma}}v_{\bar{l}}(\bm{p}_{\Lambda},\bar{\sigma},n)D_{\bar{\sigma}\sigma}^{(j_{n})}\bigg(W(\Lambda,p)\bigg)&=\sqrt{\dfrac{p^{0}}{(\Lambda p)^{0}}}\sum_{l}D_{\bar{l}l}(\Lambda)v_{l}(\bm{p},\sigma,n)\label{5.1.13},
+\end{align}
+for arbitrary homogeneous Lorentz transformation $\Lambda$ with \eqref{5.1.8} and \eqref{5.1.9} connecting $u_{l}(x;\bm{p},\sigma,n)$ and $v_{l}(x;\bm{p},\sigma,n)$ with $u_{l}(\bm{p},\sigma,n)$ and $v_{l}(x;\bm{p},\sigma,n)$.
+\hfill\par
+\begin{center}
+\emph{Boosts}
+\end{center}
+Next take $\bm{p}=0$ in \eqref{5.1.12} and \eqref{5.1.13}, then $p^{\mu}=(m,\bm{0})$ is standard momentum(for massive particles) satisfying $p^{\mu}=L(p)^{\mu}_{~\nu}p^{\nu}$ with $L(p)=1$. For any four-momentum $q^{\mu}$ define $\Lambda$ to be the standard boosts $L(q)$ which takes a particle of mass $m$ from rest(i.e., with momentum $p^{\mu}$) to momentum $q^{\mu}$. That is, $q^{\mu}=L(q)^{\mu}_{~\nu}p^{\nu}=:\Lambda^{\mu}_{~\nu}p^{\nu}$. Therefore,
+$$W(\Lambda,p)\equiv L^{-1}(\Lambda p)\Lambda L(p)=L^{-1}(q)L(q)\equiv\mathbbold{1}.$$
+Hence in this cases, \eqref{5.1.12} and \eqref{5.1.13} give(note that in this case $D_{\bar{\sigma}\sigma}$ still degenerate)
+\begin{align}
+u_{\bar{l}}(\bm{q},\sigma,n)&=(m/q^{0})^{1/2}\sum_{l}D_{\bar{l}l}(L(q))u_{l}(0,\sigma,n),\label{5.1.14}\\
+v_{\bar{l}}(\bm{q},\sigma,n)&=(m/q^{0})^{1/2}\sum_{l}D_{\bar{l}l}(L(q))v_{l}(0,\sigma,n).\label{5.1.15}
+\end{align}
+So we successfully eliminate one parameter $\bm{p}$ by choosing one special homogeneous Lorentz transformation. In other words, if we know the quantities $u_{l}(0,\sigma,n)$ and $v_{l}(0,\sigma,n)$ for zero momentum, then for a given representation $D(\Lambda)$ of the homogeneous Lorentz group, we know the function $u_{l}(\bm{p},\sigma,n)$ and $v_{l}(\bm{p},\sigma,n)$ for all $\bm{p}$.\par
+\begin{center}
+\emph{Rotations}
+\end{center}
+Lastly we will show that coefficients $u_{l}$ and $v_{l}$ can be entirely determined by given representation $D_{\bar{l}l}(\Lambda)$. Still take $\bm{p}=0$, but this time Let $\Lambda$ be a Lorentz transformation with $\bm{p}_{\Lambda}=0$; that is, take $\Lambda$ as a rotation $R$. Here as in chapter two $W(\Lambda,p)=R$, and so equation \eqref{5.1.12} and \eqref{5.1.13} read\footnote{Here both $D_{\bar{\sigma}\sigma}$ and $D_{\bar{l}l}$ are representations of $\mathrm{SO}(3)$.}
+$$\sum_{\bar{\sigma}}u_{\bar{l}}(0,\bar{\sigma},n)D_{\bar{\sigma}\sigma}^{(j_{n})}=\sum_{l}D_{\bar{l}l}(R)u_{l}(0,\sigma,n),$$
+and
+$$\sum_{\bar{\sigma}}v_{\bar{l}}(0,\bar{\sigma},n)D_{\bar{\sigma}\sigma}^{(j_{n})*}=\sum_{l}D_{\bar{l}l}(R)v_{l}(0,\sigma,n),$$
+or equivalently
+\begin{align}
+\sum_{\bar{\sigma}}u_{\bar{l}}(0,\bar{\sigma},n)\mathbf{J}_{\bar{\sigma}\sigma}^{(j_{n})}&=\sum_{l}\pmb{\mathscr{J}}_{\bar{l}l}(R)u_{l}(0,\sigma,n),\label{5.1.16}\\
+\sum_{\bar{\sigma}}v_{\bar{l}}(0,\bar{\sigma},n)\mathbf{J}_{\bar{\sigma}\sigma}^{(j_{n})*}&=\sum_{l}\pmb{\mathscr{J}}_{\bar{l}l}(R)v_{l}(0,\sigma,n).\label{5.1.17}
+\end{align}
+Since any representation $D(\Lambda)$ of the homogeneous Lorentz group obviously yields a representation of the rotation group when $\Lambda$ is restrict to rotations $R$, so by solving \eqref{5.1.6} and \eqref{5.1.7} we can entirely determine\footnote{We have not show the existence of solution here, which will be shown in the following section.} coefficient $u_{l}$ and $v_{l}$.
+\end{Proof}
+With creation and annihilation fields can we now study the interaction more deeply:
+\begin{Def}[(Density of Interaction)]
+Given potential of interaction $V(t)$, any function $\mathscr{H}(\bm{x},t)$ satisfying
+\begin{equation}\label{5.1.18}
+V(t)=\int\,\dd^{3}x\,\mathscr{H}(\bm{x},t).
+\end{equation}
+is called the corresponding \emph{interaction density}.
+\end{Def}
+\begin{Property}
+Interaction density has many good properties as follows:\par
+1) $\mathscr{H}(x)$ can be  constructed by creation and annihilation fields as
+\begin{align}\label{5.1.19}
+\mathscr{H}(x)=\sum_{N,M}\sum_{l_{1}'\cdots l_{N}'}\sum_{l_{1}\cdots l_{M}}\,g_{l_{1}'\cdots l_{N}',l_{l}\cdots l_{M}}\psi_{l_{1}'}^{-}(x)\cdots\psi_{l_{N}'}^{-}(x)\psi_{l_{1}}^{+}(x)\cdots\psi_{l_{M}}^{+}(x).
+\end{align}
+with $N\equiv M$.
+\indent 2) $\mathscr{H}(x)$ is a \emph{scalar} in the sense that
+\begin{equation}\label{5.1.20}
+U_{0}(\Lambda,a)\mathscr{H}(x)U_{0}^{-1}(\Lambda,a)=\mathscr{H}(\Lambda x+a).
+\end{equation}
+\indent 3) $\mathscr{H}(x)$ commutes at time-like or light-like separations:
+\begin{equation}\label{5.1.21}
+[\mathscr{H}(x),\mathscr{H}(x')]=0\quad\text{for}\quad(x-x')^{2}\leqslant0.
+\end{equation}
+\end{Property}
+\begin{Proof}
+For the property 1), by the fundamental theorem and cluster decomposition principle, in chapter four we have split the interaction $V(t)$ as
+\begin{align}
+V&=\sum_{N,M}\int\,\dd^{3}\bm{p'}_{1}\cdots\dd^{3}\bm{p'}_{N}\dd^{3}\bm{p}_{1}\cdots\dd^{3}\bm{p}_{M}\,\sum_{\sigma'_{1}\cdots\sigma'_{N}}\sum_{\sigma_{1}\cdots\sigma_{M}}\sum_{n'_{1}\cdots n'_{N}}\sum_{n_{1}\cdots n_{N}}\nonumber\\
+&\times a^{\dagger}(\bm{p'}_{1}\sigma'_{1}n'_{1})\cdots a^{\dagger}(\bm{p'}_{N}\sigma'_{N}n'_{N})a(\bm{p}_{1}\sigma_{1}n_{1})\cdots a(\bm{p}_{M}\sigma_{M}n_{M})\nonumber\\
+&\times\mathscr{V}_{NM}(\bm{p'}_{1}\sigma'_{1}n'_{1}\cdots\bm{p'}_{N}\sigma'_{N}n'_{N}, \bm{p}_{1}\sigma_{1}n_{1}\cdots\bm{p}_{M}\sigma_{M}n_{M})\label{5.1.22}
+\end{align}
+with coefficient function given by
+\begin{align}
+\mathscr{V}_{NM}(\bm{p'}_{1}\sigma'_{1}n'_{1}\cdots, \bm{p}_{1}\sigma_{1}n_{1}\cdots)&=\delta^{3}(\bm{p'}_{1}+\cdots-\bm{p}_{1}-\cdots)\nonumber\\
+&\times\tilde{\mathscr{V}}_{NM}(\bm{p'}_{1}\sigma'_{1}n'_{1}\cdots, \bm{p}_{1}\sigma_{1}n_{1}\cdots).\label{5.1.23}
+\end{align}
+Rewrite the delta function in \eqref{5.1.23} as a Fourier transformation of exponential function
+$$\delta^{3}(\bm{p'}_{1}+\cdots-\bm{p}_{1}-\cdots)\equiv\int\,\dd^{3}x\,\exp\bigg(x\cdot(\bm{p'}_{1}+\cdots-\bm{p}_{1}-\cdots)\bigg),$$
+and if we can separate the variables of $\tilde{\mathscr{V}}$ as\footnote{The feasibility is guaranteed by the fundamental principle of unentangled experiments. And constants are added for convenience of comparison.}
+\begin{align}
+\tilde{\mathscr{V}}&=(2\pi)^{3-3N/2-3M/2}\sum_{l'_{1}\cdots l'_{N}}\sum_{l_{1}\cdots l_{M}}g_{l_{1}\cdots l_{N},l_{1}\cdots l_{M}}\nonumber\\
+&\times v_{l'_{1}}(\bm{p'}_{1}\sigma'_{1}n'_{1})\cdots v_{l'_{N}}(\bm{p'}_{N}\sigma'_{N}n'_{N})u_{l_{1}}(\bm{p}_{1}\sigma_{1}n_{1})\cdots u_{l_{M}}(\bm{p}_{M}\sigma_{M}n_{M}),\label{5.1.24}
+\end{align}
+then by \eqref{5.1.8} and \eqref{5.1.9} we can get \eqref{5.1.19}.\par
+For property 2), note that by definition both the creation and annihilation operator satisfy the unitary transformation relation \eqref{5.1.3}. Since by property 1) $\mathscr{H}$ can always be constructed by them, it automatically satisfy the relation \eqref{5.1.20}.\par
+As for property 3), we will prove it by the symmetry of S-matrix. For an infinitesimal boosts, equation \eqref{5.1.20} gives
+\begin{equation}\label{5.1.25}
+-i[\bm{K}_{0},\mathscr{H}(\bm{x},t)]=t\nabla\mathscr{H}(\bm{x},t)+\bm{x}\dfrac{\partial}{\partial t}\mathscr{H}(\bm{x},t),
+\end{equation}
+so integrating over $\bm{x}$, setting $t=0$ and working in the interaction picture\footnote{Recall that in this picture state $\psi^{I}(t)$ and operator $\mathcal{O}^{I}$ evolve respectively as
+$$i\hbar\dfrac{\partial}{\partial t}\psi^{I}(t)=H_{i}^{I}\psi^{I}(t),\quad i\hbar\dfrac{\partial}{\partial t}\mathcal{O}^{I}(t)=[\mathcal{O}^{I}(t),H^{I}_{0}]$$
+with $H^{I}_{0}\equiv H^{S}_{0}$ and $H^{I}_{i}(t)=U_{0}^{-1}(t)H_{i}^{S}U_{0}(t)$.}, we have
+\begin{align}
+[\bm{K}_{0},V]&=\left[\bm{K}_{0},\int\,\dd^{3}x\,\mathscr{H}(\bm{x},0)\right]=\int\,\dd^{3}x[\bm{K}_{0},\mathscr{H}(\bm{x},0)]\nonumber\\
+&=i\dfrac{\partial}{\partial t}\int\,\dd^{3}x\, \bm{x}\mathscr{H}(\bm{x},0)=:-i\dfrac{\partial}{\partial t}\bm{W}=[H_{0},\bm{W}].\label{5.1.26}
+\end{align}
+Apply this result to the commutation relation \eqref{3.3.12}, we have
+\begin{equation}\label{5.1.27}
+0\equiv[\bm{W},V]=\int\,\dd^{3}x\,\int\,\dd^{3}y\,\bm{x}[\mathscr{H}(\bm{x},0),\mathscr{H}(\bm{y},0)].
+\end{equation}
+Since there still leaves some residue freedom\footnote{Suppose $\mathscr{H'}(x)=\mathscr{H}(x)+f(x)$, with scalar function $f$ merely needing to have the integrative property and the asymptotic property:
+$$\displaystyle\int\,\dd^{3}x\,f(\bm{x})=0,\quad\displaystyle \lim_{t\rightarrow\infty}f(\bm{x},t)=0.$$
+The existence of $f(x)$ is obvious. For instance, $f(x)=\bm{x}^{2k+1}/t$ for any integer $k$.} in the definition of $\mathscr{H}$, and \eqref{5.1.27} holds for any scalar function $\mathscr{H}$, we can safely conclude that \eqref{5.1.27} gives
+\begin{equation}\label{5.1.28}
+[\mathscr{H}(\bm{x},0),\mathscr{H}(\bm{y},0)]=0.
+\end{equation}
+\indent Next we will apply unitary transformation on equation \eqref{5.1.28} to get the form of \eqref{5.1.21}. We first make a translation: $\displaystyle 0=U(1,-\bm{x})[\mathscr{H}(\bm{x},0),\mathscr{H}(\bm{y},0)]U^{-1}(1,-\bm{x})=[\mathscr{H}(0),\mathscr{H}(\bm{y}-\bm{x},0)]$, so \eqref{5.1.28} is equivalent to
+\begin{equation}\label{5.1.29}
+[\mathscr{H}(\bm{r},0),\mathscr{H}(0)]=0.
+\end{equation}
+Also, the same transformation changes \eqref{5.1.21} into
+\begin{equation}\label{5.1.30}
+[\mathscr{H}(x),\mathscr{H}(0)]=0,
+\end{equation}
+with $x$ space-like. To connect \eqref{5.1.30} with \eqref{5.1.29}, we should find one transformation that holds $(0,0,0,0)$ invariant and eliminate the last coordinate of $x=(x^{1},x^{2},x^{3},x^{4})$. \par
+We do it as follows:
+First perform one rotation $R$ to $z$ axis such that the only non-zero coordinate is of $z$ component(Existence is apparent). That is, $RxR^{-1}=(b,0,0,a)$. Since vector $x$ space-like and Lorentz transformation hold this property, we should notice that $b^{2}-a^{2}<0$. Suppose the subsequent transformation $\Lambda$ has the form of boosts:
+$$\Lambda=\begin{bmatrix}A&0&0&B\\0&1&0&0\\0&0&1&0\\B&0&0&A\end{bmatrix},$$
+and since equation
+$$U(\Lambda)(b,0,0,a)^{T}U^{-1}(\Lambda)=\begin{bmatrix}A&0&0&B\\0&1&0&0\\0&0&1&0\\B&0&0&A\end{bmatrix}\begin{bmatrix}b\\0\\0\\a\end{bmatrix}=\begin{bmatrix}0\\0\\0\\ \sqrt{a^{2}-b^{2}}\end{bmatrix}$$
+has one nonzero solution that $A=a/\sqrt{a^{2}-b^{2}}$ and $B=-b/\sqrt{a^{2}-b^{2}}$, we conclude that the validity of \eqref{5.1.28} necessarily and sufficiently guarantees the validity of \eqref{5.1.21} through unitary transformation $U(\Lambda)RU(1,-\bm{x})$ and therefore the whole proof is done.
+\end{Proof}
+\begin{Note}
+We can see from the proof that the cluster decomposition principle together with Lorentz invariance thus makes it natural that the interaction density should be constructed out of annihilation and creation fields.
+\end{Note}
+\begin{Note}
+Note that these property of $\mathscr{H}$ are utterly not relevant to the Hermitian property. In fact, as is done in chapter four, by Hermitian property we must have $M\equiv N$, i.e., each term of interaction density $\mathscr{H}$ in \eqref{5.1.19} has the same number of annihilation and creation operators\footnote{I have to admit that I misunderstood the logic here for the first time I learn. I notice that condition $u_{l}^{*}=v_{l}$ gives ${\psi_{l}^{+}}^{\dagger}=\psi_{l}^{-}$, and I didn't recall the Hermitian until this time. So I wrongly think that it is the coefficients condition that confines the number of annihilation and creation operators to equal. And by coincidence both the scalar and vector fields have this property. So I have not realized this mistake until I met the Dirac fields, which even took me several days to suspect the correctness of the whole standard model of physics.}, and thus a more explicit expression of interaction density is
+\begin{align}
+\mathscr{H}(x)=\sum_{N}^{\infty}\sum_{l_{1}'\cdots l_{N}'}\sum_{l_{1}\cdots l_{N}}\,g_{l_{1}'\cdots l_{N}',l_{l}\cdots l_{N}}\psi_{l_{1}'}^{-}(x)\cdots\psi_{l_{N}'}^{-}(x)\psi_{l_{1}}^{+}(x)\cdots\psi_{l_{N}}^{+}(x).\label{5.1.31}
+\end{align}
+\end{Note}
+Additionally, apply one unitary transformation $U(\Lambda,a)$ to the interaction density \eqref{5.1.19}, and substitute in \eqref{5.1.1} and \eqref{5.1.2}, we have
+\begin{Corollary}
+The coupling coefficients $g_{l'_{1}\cdots l'_{N},l_{1}\cdots l_{M}}$ satisfies
+\begin{align}
+\sum_{l'_{1}\cdots l'_{N}}\sum_{l_{1}\cdots l_{M}}D_{l'_{1}\bar{l}'_{1}}(\Lambda^{-1})\cdots D_{l'_{N}\bar{l}'_{N}}(\Lambda^{-1})&D_{l_{1}\bar{l}_{1}}(\Lambda^{-1})\cdots D_{l_{M}\bar{l}_{M}}(\Lambda^{-1})\nonumber\\
+&\times g_{l'_{1}\cdots l'_{N}l_{1}\cdots l_{M}}=g_{\bar{l}'_{1}\cdots\bar{l}'_{N}\bar{l}_{1}\cdots\bar{l}_{M}}.\label{5.1.32}
+\end{align}
+\end{Corollary}
+\hfill\par
+
+If all we needed were to constructed a scalar interaction density that satisfies the cluster decomposition principle, then we could combine annihilation and creation operators in arbitrary polynomials \eqref{5.1.32}, with coupling coefficients $g_{l'_{1}\cdots l'_{N},l_{1}\cdots l_{M}}$ subject the invariance condition \eqref{5.1.31} and Hermitian condition \eqref{5.1.32}. However, for the Lorentz invariance of the S-matrix, it is necessary also that the interaction density satisfy the commutation condition \eqref{5.1.21}. This condition is not satisfied for arbitrary functions of the creation and annihilation fields because
+$$[\psi_{l}^{+}(x),\phi_{\bar{l}}^{-}(y)]_{\mp}=(2\pi)^{-3}\sum_{\sigma,n}\int\,\dd^{3}p\,u_{l}(\bm{p},\sigma,n)v_{\bar{l}}(\bm{p},\sigma,n)e^{ip\cdot(x-y)}$$
+and in general this does not vanish even for $x-y$ space-like\footnote{For example, one can take $\mathscr{H}(x)=\psi^{+}(x)\psi^{-}(x)$, $\mathscr{H}(y)=\psi^{+}(y)\psi^{-}(y)$ and check that $[\mathscr{H}(x),\mathscr{H}(y)]\neq0$ for $x-y$ space-like.}. So the only way out of this difficulty is to combine annihilation and creation fields in linear combinations:
+\begin{Corollary}[(Causality Condition)]
+The interaction density of any system with conservative quantum numbers $a$ and its corresponding operator $\mathsf{A}$ must be constructed with the linear combination of annihilation and creation field operators under(or not) the transformation of $\mathsf{A}$. That is\footnote{Here \eqref{5.1.33} is the general form of $\psi_{l}$. Whether to introduce $\mathsf{A}$ is determined by the system itself. If there is no conservative quantum number, \eqref{5.1.33} reduces to the trivial form as $$\psi_{l}(x)\equiv\kappa_{l}\psi_{l}^{+}(x)+\lambda_{l}\psi_{l}^{-}(x).$$},
+\begin{equation}\label{5.1.33}
+\psi_{l}(x)\equiv\kappa_{l}\psi_{l}^{+}(x)+\lambda_{l}\mathsf{A}\psi_{l}^{-}(x)\mathsf{A}^{-1}
+\end{equation}
+with the constants $\kappa$ and $\lambda$ and any other arbitrary constants in the fields adjust and $\mathsf{A}$ to be determined such that for $x-y$ space-like
+\begin{equation}\label{5.1.34}
+[\psi_{l}(x),\psi_{l'}(y)]_{\mp}=[\psi_{l}(x),\psi_{l'}^{\dagger}(y)]_{\mp}=0.
+\end{equation}
+\end{Corollary}
+\begin{Note}
+%Denote the nonzero commutator $[\psi_{l}^{+}(x),\psi_{\bar{l}}^{-}(y)]$ as $f(l;\bar{l})$, which may not be complex numbers but any algebra objects\footnote{We will see in the future that this is determined by the choose of the type of representation.}, then
+The existence and solvability of $\kappa_{l}$ and $\lambda_{l}$ will be demonstrated latter.
+\end{Note}
+\begin{Note}
+The reason why we freely bring in $\mathsf{A}$ is that in the previous discussion we never consider the case where there is conservative quantum numbers, and so our introduction of $\mathsf{A}$ would never influence any previous results(but will profoundly influence some special cases in the future). And system with conservative quantum charge is vastly existed in nature, for example, scalar fields.
+\end{Note}
+\begin{Note}
+The point of view taken here is that the causality condition is needed for the Lorentz invariance of the S-matrix, without any ancillary assumptions about measurability of causality, as is done in the other books such as Michael E.Peskin's and Mark Srednicki's.
+\end{Note}
+\hfill\par
+Up to now we have make our theory satisfying all the properties required for interaction density, scalar fields and commuting relation. However, since the former consideration only involves in Lorentz groups, there still exists another obstacle to the construction of $\mathscr{H}$: If we are confronted with the case that the particles that are destroyed and created by these fields carry non-zero values of one or more conserved quantum numbers like the electric charge, then the conservation property also ask the interaction density to commute with them. This is indeed an \emph{extra} requirements, which gives more confinement on $\mathscr{H}$ and will finally help us to determine the true form of it.\par
+First of all we need one important lemma for our proof:
+\begin{Lemma}[(Commutation Relation between Charge Operator and Annihilation and Creation Operators)]
+\begin{align}
+[Q,a(\bm{p},\sigma,n)]&=-q(n)a(\bm{p},\sigma,n),\label{5.1.35}\\
+[Q,a^{\dagger}(\bm{p},\sigma,n)]&=+q(n)a^{\dagger}(\bm{p},\sigma,n).\label{5.1.36}
+\end{align}
+\end{Lemma}
+\begin{Proof}
+Recall that in \eqref{3.3.23} we've already had
+$$\mathscr{D}_{n'n}(T(\theta))=\delta_{n'n}\exp(iq_{n}\theta),$$
+which by definition of inner symmetry group implies that
+\begin{align*}
+U(T(\theta))\Phi_{\bm{p}_{1}\sigma_{1}n_{1},\bm{p}_{2}\sigma_{2}n_{2},\cdots}=\exp(i(q_{1}+q_{2}+\cdots)\theta)\Phi_{\bm{p}_{1}\sigma_{1}n_{1},\bm{p}_{2}\sigma_{2}n_{2},\cdots}.
+\end{align*}
+Expand the multi-particle state by the fundamental theorem and insert unitary matrix $U(T(\theta))$ we get
+\begin{equation}\label{5.1.37}
+U(T(\theta))a^{\dagger}(\bm{p}\sigma n)U^{-1}(T(\theta))=\exp(iq_{n}\theta)a^{\dagger}(\bm{p}\sigma n).
+\end{equation}
+By the Baker-Hausdorff formula, the left part of \eqref{5.1.37} is
+$$\text{Left part }=\sum_{n=0}^{\infty}\dfrac{1}{n!}C_{n},$$
+where $\displaystyle C_{n}=\overbrace{[Q,[\cdots[Q,[Q,a^{\dagger}]]\cdots]}^{n\text{ Multiples of Commutators}}(i\theta)^{n}$. On the other hand, expand the right part in Taylor series
+$$\text{Right part }=\sum_{n=0}^{\infty}\dfrac{1}{n!}(iq_{n}\theta)^{n},$$
+then it can be seen that the commutation relation \eqref{5.1.37} sufficiently and necessarily make the left part equals to the right part. The same goes to the other commutation relation, so we are done.
+\end{Proof}
+With this commutation relation we will show that the only way of constructing fields operators as \eqref{5.1.33} is to choose $A$ as charge transformation, which sequently prove the existence of antiparticles. But before our proof, we need to set one convention that from now on we just temporarily concentrate on the cases where there is only \emph{one} kind of particles. The point we take here is that we will entirely solve one-kind cases in the first place and then the other cases are just superposition of this, as is seen in the definition of $\psi^{+}$ and $\psi^{-}$.
+\begin{Proposition}
+For the system with conservative quantum numbers, in order to make the interaction density commute with charge operator, we must choose the transformation of $A$ in the fields operator $\psi(x)$ of \eqref{5.1.33} as charge transformation, i.e.,
+\begin{equation}\label{5.1.38}
+\psi_{l}(x)=\kappa\psi_{l}^{+}(x)+{\lambda\psi_{l}^{c-}},
+\end{equation}
+where
+$$\psi^{c-}:=\mathsf{C}\psi_{l}^{-1}\mathsf{C}^{-1}=\sum_{\sigma,n}(2\pi)^{3/2}\int\,\dd^{3}p\,v_{l}(\bm{p},\sigma,\bar{n})e^{-ip\cdot x}a^{\dagger}(\bm{p},\sigma,\bar{n})$$
+with $\bar{n}\equiv \mathsf{C}n\mathsf{C}^{-1}$.
+\end{Proposition}
+\begin{Proof} The former note of interaction density's structure shows that $\mathscr{H}$ is constructed by products of $\psi_{l'_{1}}\cdots\psi_{l'_{N}}\psi^{\dagger}_{l_{1}}\cdots\psi^{\dagger}_{l_{N}}$. Since the factor is arbitrary, we must have each term commute with charge $Q$, i.e., $[Q,\psi^{N}(\psi^{\dagger})^{M}]\equiv0$ for any $N$ and $M$. Expand the commutator, we have
+\begin{align*}
+0&\equiv\sum_{n=1}^{N}\psi^{n-1}[Q,\psi]\psi^{N-n}(\psi^{\dagger})^{N}+\sum_{m=1}^{\infty}\psi^{N}(\psi^{\dagger})^{N-m}[Q,\psi^{\dagger}](\psi^{\dagger})^{m-1}\\
+&\equiv\sum_{n,m}^{N}\psi^{n-1}\bigg([Q,\psi]\psi^{N-n}(\psi^{\dagger})^{N-m+1}+\psi^{N-n-1}(\psi^{\dagger})^{N-m}[Q,\psi^{\dagger}]\bigg)(\psi^{\dagger})^{m-1}.
+\end{align*}
+Make up the original subscript index of fields operator makes it explicitly\footnote{Subscript index makes each term of sum independent, and our conclusion holds because we can uniquely and independently adjust each term of sum.} that this equation holds if and only if
+$$[Q,\psi]\psi^{N-n}(\psi^{\dagger})^{N-m+1}+\psi^{N-n-1}(\psi^{\dagger})^{N-m}[Q,\psi^{\dagger}]\equiv0,\quad\forall m,n,$$
+which gives
+\begin{align}
+[Q,\psi]&=\alpha\psi,\label{5.1.39}\\
+[Q,\psi^{\dagger}]&=-\alpha\psi^{\dagger}.\label{5.1.40}
+\end{align}
+But the general form of fields \eqref{5.1.33} gives\footnote{We reserve the term $Aq(n)A^{-1}$ here since there is no evidence that $q(n)$ do not change under the transformation of $A$.}:
+\begin{align*}
+[Q,\psi_{l}]&=-q_{l}\psi_{l}^{+}+\mathsf{A}q(n)\mathsf{A}^{-1}\cdot \mathsf{A}\psi_{l}^{-}\mathsf{A}^{-1},\\
+[Q,\psi_{l}^{\dagger}]&=+q_{l}{\psi_{l}^{+}}^{\dagger}-\mathsf{A}q(n)\mathsf{A}^{-1}\cdot \mathsf{A}{\psi_{l}^{-}}^{\dagger}\mathsf{A}^{-1}.
+\end{align*}
+Compare them to \eqref{5.1.39} and \eqref{5.1.40}, we can see that quantum number operator $\mathsf{A}$ must satisfy that:
+\begin{equation}
+\alpha=-q_{l},\quad \mathsf{A}q(n)\mathsf{A}^{-1}=\alpha.
+\end{equation}
+Denote $q(\bar{n})\equiv \mathsf{A}q(n)\mathsf{A}^{-1}$, then we see that the only function of this operator is to reverse the sign of charge quantum numbers. Therefore, $\mathsf{A}$ is exactly the charge operator $C$, and thus fields operator take the form of \eqref{5.1.38}.
+\end{Proof}
+%However, a quick check of the original expression of fields operators in \eqref{5.1.33} shows that it violate these two requirement\footnote{Another understanding of this judgement is by directly checking of the commutation relation step by step.}: in our case where $u_{l}^{*}=v_{l}$, $v_{l}^{*}=u_{l}$ and $n$ holds, \eqref{5.1.33} makes $\psi_{l}^{\dagger}={\psi_{l}^{+}}^{\dagger}+{\psi_{l}^{-}}^{\dagger}=\psi_{l}$, substitute this into \eqref{5.1.39} and \eqref{5.1.40}, we conclude that $\alpha$ must be zero, which is impossible since $a(\bm{p},\sigma,n)\neq a^{\dagger}(\bm{p},\sigma,n)$. \par
+%In fact, equation \eqref{5.1.39} and \eqref{5.1.40} implies that the fields operator \emph{cannot} be self-adjoint as other observables. Because here we only concentrate on the case with $n$ fixed, the only possible changes of $\psi$ is to bring in the antiparticles such that it takes the form of \eqref{5.1.38}. Denote $q(n)=q_{l}$ for convenience, and because now that
+%\begin{align}
+%[Q,\psi^{+}_{l}]&=-q(n)\psi^{+}_{l}=-q_{l}\psi^{+}_{l},\label{5.1.41}\\
+%[Q,\psi^{c-}_{l}]&=+q(\bar{n})\psi^{c-}_{l}=-q_{l}\psi^{c-}_{l},\label{5.1.42}
+%\end{align}
+%and
+%\begin{align}
+%[Q,{\phi^{+}_{l}}^{\dagger}]&=+q(n){\psi^{+}_{l}}^{\dagger}=q_{l}{\psi^{+}_{l}}^{\dagger},\label{5.1.43}\\
+%[Q,{\phi^{c-}_{l}}^{\dagger}]&=-q(\bar{n}){\psi^{c-}_{l}}^{\dagger}=q_{l}{\psi^{c-}_{l}}^{\dagger},\label{5.1.44}
+%\end{align}
+%one can check that the demands of commutation relation \eqref{5.1.39} and \eqref{5.1.40} are sufficiently and necessarily met. \par
+%Therefore, \eqref{5.1.38} is the only true form of fields operators.
+%\end{Proof}
+\begin{Note}
+Since annihilation and creation fields operators in \eqref{5.1.33} can differ a transformation under quantum number operators from each other, one should remember that it is the demand of commutation between $\mathscr{H}$ and $\mathsf{A}$, or in other words, conservation of quantum numbers, that determine the true form of fields operator.
+\end{Note}
+\begin{Note}
+From the proof we can see that although here we only concentrate on one kind of particles, \eqref{5.1.39} and \eqref{5.1.40}, which are just derived from the commutation of interaction density, do demands an extra kind to make the theory \emph{self-consistent}, we call these particles of inverse charge numbers \emph{antiparticles}. And to some extent, this gives the \emph{existence of antiparticles} from the angle of theory's requirements.
+\end{Note}
+Fortunately, experiments results is utterly in conformity with our theory's prediction:
+\begin{Experiment}[(Existence of Antiparticles)]
+For any particles labeled $n$ of non-zero\footnote{The trivial case of zero-charge particles are still included here.} charge quantum numbers $q(n)$, there exists another kind of particles labeled $\bar{n}$ with the same mass, spin, lifetime and other properties except charges $q(\bar{n})=-q(n)$.
+\end{Experiment}
+
+%\begin{Proposition}[(Commutation Relation between Annihilation Fields and Charge Operator)]
+%Consider the case of the least kinds of particles with stable $n$, that is, charge number $q(n)$ has nothing to do with fields label $l$\footnote{Our point of view taken here is that, we choose to firstly completely solve the problem of one kind of particle, and then by definition of annihilation and creation operators the case of multi-kind of particles is just the superposition of one kind case.}, then the fields operator has the commutation relation:
+%\begin{equation}
+%[Q,\psi_{l}(x)]=-q_{l}\psi_{l}(x).
+%\end{equation}
+%\end{Proposition}
+%\begin{Proof}
+%Now that the dummy parameter $n$ of charge quantum number $q(n)$ in the definition \eqref{5.1.10} and \eqref{5.1.11} holds, then by the commutation relation between charge operator and annihilation and creation operator, we then have
+%\begin{equation}
+%[Q,\psi_{l}^{+}(x)]=-q_{l}\psi_{l}^{+}.
+%\end{equation}
+%By definition, ${a^{c}}^{\dagger}(\bm{p},\sigma,n)\equiv{a}^{\dagger}(\bm{p},\sigma,\bar{n})$, and note that $Q$ commute with\footnote{Always be aware that inner symmetry group has nothing to do with Lorentz group. So
+%$$[Q,Ca^{\dagger}(\bm{p},\sigma,n)C^{-1}]=C[Q,a^{\dagger}(\bm{p},\sigma,n)]C^{-1}=+q_{l}{a^{c}}^{\dagger}(\bm{p},\sigma,n).$$} $C$, we also have
+%\begin{equation}
+%[Q,\psi_{l}^{c-}(x)]=+q_{l}\psi_{l}^{-}.
+%\end{equation}
+%\end{Proof}
+
+
+\section{Causal Scalar Fields}
+\begin{Proposition}[(Quantization of Scalar Field)]
+If we choose the \emph{scalar} representation of Lorentz group $D(\Lambda)=1$, then the corresponding creation and annihilation fields of particles have the form of
+\begin{align}
+\phi(x)^{+}&=\int\,\dfrac{\dd^{3}p}{(2\pi)^{3/2}}\,\dfrac{1}{2p^{0}}a(\bm{p})e^{ip\cdot x},\label{5.2.1}\\
+\phi(x)^{-}&=\int\,\dfrac{\dd^{3}p}{(2\pi)^{3/2}}\,\dfrac{1}{2p^{0}}a^{\dagger}(\bm{p})e^{-ip\cdot x}.\label{5.2.2}
+\end{align}
+Besides, a scalar field can only describe particles of spin zero.
+\end{Proposition}
+\begin{Proof}
+Restricting $\Lambda$ to rotations $\mathscr{R}$ naturally induces a representation of rotation group $D_{2}(\mathscr{R})$. That is, regard $D$ as a \emph{tensor product of representation}, then by definition\footnote{See B.Hall \textbf{definition 5.22}: Let $G$ and $H$ be matrix Lie group and representation $\Pi_{1}:G\rightarrow U$ and $\Pi_{2}:H\rightarrow V$, then the \emph{tensor product} of $\Pi_{1}$ and $\Pi_{2}$, acting on $G\times H$, is defined as $$\Pi_{1}\otimes\Pi_{2}(A,B):=\Pi_{1}(A)\otimes\Pi_{2}(B).$$
+Additionally, to see tensor product of representation is well-defined, we have to show the uniqueness of $\Pi_{1}\otimes\Pi_{2}$, which is proved in B.Hall \textbf{proposition 5.21}.} we have
+$$D(\Lambda)\equiv\left(D_{1}\otimes D_{2}\right)(1\otimes\mathscr{R}):=D_{1}(1)\otimes D_{2}(\mathscr{R}).$$
+But by homomorphism $D(1)=1$, so we conclude that $D_{2}(\mathscr{R})=0$, or $\pmb{\mathscr{J}}_{\bar{l}l}=0$. However, because on the left of equation \eqref{5.1.16} and \eqref{5.1.17} $\mathbf{J}_{\bar{\sigma}\sigma}^{(j_{n})}$ are matrices of dimension $(2j_{n}+1)$, to get a nonzero solution of coefficients we must restrict $j_{n}$ to be zero. In other words, in this case of representation we can only describe particles of spin zero\footnote{On the contrary, however, we \emph{cannot} say spinless particles, with $j=0$, can be only described by scalar fields because there exists other non-trivial representation that makes $\pmb{\mathscr{J}}=0$, for example, causal vector fields in the next section.}.\par
+Since we only concentrate on one kind of particles, the parameters of coefficients now reduce to only one left. That is, $u_{l}(\bm{p}\sigma n)=u_{l}(\bm{p})$. It is conventional to adjust the overall scales of the annihilation and creation fields so that these constants both have the values $(2m)^{-1/2}$. Equation \eqref{5.1.14} and \eqref{5.1.15} then give simple(since our result do not involve subscript index $l$, for convenience we just neglect it.)
+\begin{align}
+u(\bm{p})&=(2p^{0})^{-1/2},\label{5.2.3}\\
+v(\bm{p})&=(2p^{0})^{-1/2}.\label{5.2.4}
+\end{align}
+The fields \eqref{5.1.10} and \eqref{5.1.11} are then, in the scalar case, \eqref{5.2.1} and \eqref{5.2.2}.
+\end{Proof}
+\begin{Note}
+It is valuable to notice the truth that ${\phi^{+}}^{\dagger}(x)=\phi^{-}(x)$ because $u_{l}^{*}=v_{l}$.
+\end{Note}
+By the causal fields proposition, we must have
+\begin{Corollary}[(Causal Scalar Fields)]
+\begin{equation}
+\phi(x)=\kappa\phi^{+}(x)+\lambda{\phi^{c-}}^{\dagger}(x).\label{5.2.5}
+\end{equation}
+\end{Corollary}
+Now we utilize the requirement of commutation relation \eqref{5.1.34} to determine constants $\kappa$ and $\lambda$.
+\begin{Lemma}
+Commutator
+\begin{equation}\label{5.2.6}
+[\phi^{+}(x),\phi^{-}(y)]_{\mp}=\int\,\dfrac{\dd^{3}p\,\dd^{3}p'}{(2\pi)^{3}(2p^{0}\cdot2{p'}^{0})^{1/2}}e^{ip\cdot x}e^{-ip'\cdot y}\delta^{3}(\bm{p}-\bm{p'})
+\end{equation}
+does not vanish for space-like $x-y$.
+\end{Lemma}
+\begin{Proof}
+Denote the commutator as
+\begin{equation}\label{5.2.7}
+[\phi^{+}(x),\phi^{-}(y)]_{\mp}=\Delta_{+}(x-y),
+\end{equation}
+with $\Delta_{+}$ a standard function:
+\begin{equation}\label{5.2.7}
+\Delta_{+}(x)\equiv\dfrac{1}{(2\pi)^{3}}\int\,\dfrac{\dd^{3}p}{2p^{0}}e^{ip\cdot x}.
+\end{equation}
+This integral is manifestly Lorentz-invariant, and therefore for space-like $x$ it can depend only on the invariant square $x^{2}>0$. We can be thus evaluate $\Delta_{+}(x)$ for space-like $x$ by choosing the coordinate system so that
+$$x^{0}=0,\quad |\bm{x}|=\sqrt{x^{2}}.$$
+\eqref{5.2.6} then gives
+\begin{align*}
+\Delta_{+}(x)&=\dfrac{1}{(2\pi)^{3}}\int\,\dfrac{\dd^{3}p}{2\sqrt{\bm{p}^{2}+m^{2}}}e^{i\bm{p}\cdot\bm{x}}\\
+&=\dfrac{4\pi}{(2\pi)^{3}}\int_{0}^{\infty}\,\dfrac{p^{2}\dd p}{2\sqrt{\bm{p}^{2}+m^{2}}}\dfrac{\sin(p\sqrt{x^{2}})}{p\sqrt{x^{2}}}.
+\end{align*}
+Changing the variable of integration to $u\equiv p/m$, this is
+$$\Delta_{+}(x)=\dfrac{m}{4\pi^{2}\sqrt{x^{2}}}\int_{0}^{\infty}\,\dfrac{u\dd u}{\sqrt{u^{2}+1}}\sin(m\sqrt{x^{2}}u),$$
+or, in in terms of a standard Hankel function,
+\begin{equation}\label{5.2.7}
+\Delta_{+}(x)=\dfrac{m}{4\pi^{2}\sqrt{x^{2}}}K_{1}(m\sqrt{x^{2}}),
+\end{equation}
+which is not zero\footnote{Denote $\sqrt{x^{2}}=r$, a more accurate analysis performed by \emph{Mathematica}$^{\text{@}}$ tell us that $\Delta_{+}(x)$ has one asymptotic form of
+$$\Delta_{+}(x)\sim\dfrac{1}{4}\left(\dfrac{m}{2\pi^{3}}\right)^{1/2}\dfrac{e^{-mr}}{r\sqrt{r}}.$$}.
+\end{Proof}
+\begin{Proposition}
+Scalar fields can only describe particles of \emph{bosons}, or in other words, particles of spin zero must be \emph{bosons}.
+\end{Proposition}
+\begin{Proof}
+Utilizing the truth that ${\phi^{+}}^{\dagger}=\phi^{-}$, then direct calculation of the commutation relations gives\footnote{The subscript $c$ has no influence on the commutation relation of annihilation and creation fields operators because it only changes the label $n$ of $a$ or $a^{\dagger}$. For example,
+$$[a(\bm{p},\sigma,n),{a^{c}}^{\dagger}(\bm{p'},\sigma,n)]=\delta_{\bar{n}n}\delta^{3}(\bm{p}-\bm{p'}).$$}:
+\begin{align*}
+[\phi(x),\phi^{\dagger}(y)]_{\mp}&=|\kappa|^{2}[\phi^{+}(x),\phi^{-}(y)]+\kappa\lambda\bigg([\phi^{+}(x),\phi^{c+}(y)]+[\phi^{c-},\phi^{-}(y)]\bigg)\\
+&\quad+|\lambda|^{2}[\phi^{c-}(x),\phi^{c+}(y)]_{\mp}\\
+&=|\kappa^{2}|[\phi^{+}(x),{\phi^{+}}^{\dagger}(y)]_{\mp}+|\lambda|^{2}[{\phi^{c-}}(x),\phi^{c+}(y)]_{\mp}\\
+&=(|\kappa|^{2}\mp|\lambda|^{2})\Delta_{+}(x-y),
+\end{align*}
+and
+\begin{align*}
+[\phi(x),\phi(y)]_{\mp}&=|\kappa|^{2}[\phi^{+}(x),\phi^{+}(y)]+\kappa\lambda\bigg([\phi^{+}(x),\phi^{c-}(y)]_{\mp}+[\phi^{c-},\phi^{+}(y)]_{\mp}\bigg)\\
+&\quad+|\lambda|^{2}[\phi^{c-}(x),\phi^{c-}(y)]\\
+&=\kappa\lambda\bigg([\phi^{+}(x),\phi^{c-}(y)]_{\mp}+[\phi^{c-}(x),\phi^{+}(y)]_{\mp}\bigg)\\
+&=\kappa\lambda(1\mp1)\Delta_{+}(x-y).
+\end{align*}
+Both of these will vanish if and only if the particle is a \emph{boson}(i.e., it is the top sign that applies). Fermi statistics is ruled out here since it is not possible that $\phi(x)$ should anticommute with $\phi^{\dagger}(y)$ at space-like separations unless $\kappa=\lambda=0$, in which case the fields simply vanish. So a spinless particle must be a boson.
+\end{Proof}
+\begin{Corollary}
+and $\kappa$ and $\lambda$ can be chosen equal in magnitude by redefining the phases:
+$$|\kappa|=|\lambda|$$
+such that the fields operator becomes
+\begin{equation}\label{5.2.8}
+\phi(x)=\phi^{+}(x)+\phi^{c-}(x)=\int\,\dfrac{d^{3}p}{(2\pi)^{3/2}(2p^{0})^{1/2}}\bigg[a(\bm{p})e^{ip\cdot x}+{a^{c}}^{\dagger}(\bm{p})e^{-ip\cdot x}\bigg].
+\end{equation}
+\end{Corollary}
+\begin{Proof}
+Change the relative phase of $\kappa$ and $\lambda$ by redefining the phases of the states so that $a(\bm{p})\rightarrow e^{i\alpha}a(\bm{p})$, $a^{\dagger}(\bm{p})\rightarrow e^{-i\alpha}a^{\dagger}(\bm{p})$, and hence $\kappa\rightarrow\kappa e^{i\alpha}$, $\lambda\rightarrow\lambda e^{-i\alpha}$. In this way can we make $\kappa$ and $\lambda$ equal, and thus causal scalar fields $\phi(x)$ takes the form of \eqref{5.2.8}.
+\end{Proof}
+\begin{Note}
+This formula can also be used both for purely neutral spinless particles that are their own antiparticles (in which case we take $a^{c}(\bm{p})=a(\bm{p})$), and for particles with distinct antiparticles (in which case we take $a^{c}(\bm{p})\neq a(\bm{p})$).
+\end{Note}
+For future use, we note here that the commutator of complex scalar field with its adjoint is
+\begin{equation}\label{5.2.9}
+[\phi(x),\phi^{\dagger}(y)]=\Delta(x-y),
+\end{equation}
+where
+\begin{equation}\label{5.2.10}
+\Delta(x-y)\equiv\Delta_{+}(x-y)-\Delta_{+}(y-x)=\int\,\dfrac{\dd^{3}p}{2p^{0}(2\pi)^{3}}\big[e^{ip\cdot(x-y)}-e^{-i\cdot(y-x)}\big].
+\end{equation}
+\hfill\par
+Up to now, every time we mentioned Lorentz transformation before, we actually merely consider the symmetry group $\mathrm{SO}(1,3)_{+}$ rather than the complete $\mathrm{SO}(1,3)$, let along other inner symmetries. So, we also need to consider the properties of scalar fields under the transformation of space reversal, time reversal, and charge conjugation.
+\begin{Lemma}
+In order to make the scalar fields commute with others for space-like separations, we must have the intrinsic parity $\eta^{c}=\eta^{*}$, the time-reversal phase $\zeta^{c}=\zeta^{*}$, and charge-conjugation phase $\xi^{c}=\xi^{*}$. And so
+\begin{align}
+\mathsf{P}\phi(x)\mathsf{P}^{-1}&=\eta^{*}\phi(\mathscr{P}x),\label{5.2.11}\\
+\mathsf{C}\phi(x)\mathsf{C}^{-1}&=\xi^{*}\phi^{\dagger}(x),\label{5.2.12}\\
+\mathsf{T}\phi(x)\mathsf{T}^{-1}&=\zeta^{*}\phi(-\mathscr{P}x).\label{5.2.13}
+\end{align}
+\end{Lemma}
+\begin{Proof}
+For space reversal, recall the effect of the space-inversion operator on the annihilation and creation operators:
+\begin{align*}
+\mathsf{P}a(\bm{p})\mathsf{p}^{-1}&=\eta^{*}a(-\bm{p}),\\
+\mathsf{P}a^{c\dagger}(\bm{p})\mathsf{p}^{-1}&=\eta^{c*}a^{c\dagger}(-\bm{p}),
+\end{align*}
+and substitute them into the definition of the scalar fields, we get
+\begin{align}
+\mathsf{P}\phi^{+}(\mathscr{P}x)\mathsf{p}^{-1}&=\eta^{*}\phi^{+}(\mathscr{P}x),\label{5.2.14}\\
+\mathsf{P}{\phi^{+c}}^{\dagger}(\mathscr{P}x)\mathsf{p}^{-1}&=\eta^{c}{\phi^{+}}^{\dagger}(\mathscr{P}x).\label{5.2.15}
+\end{align}
+\end{Proof}
+\section{Causal Vector Fields}
+\begin{Proposition}[(Quantization of Vector Fields)]
+If we choose the simplest non-trivial representation of the homogeneous Lorentz group with $D(\Lambda)^{\mu}_{~\nu}=\Lambda^{\mu}_{~\nu}$, then the corresponding creation and annihilation fields of particles, called \emph{vector fields}, have the form of
+\begin{align}
+\phi^{+\mu}(x)&=\sum_{\sigma}(2\pi)^{3/2}\int\,\dd^{3}p\,u^{\mu}(\bm{p},\sigma)a(\bm{p},\sigma)e^{ip\cdot x},\label{5.3.1}\\
+\phi^{-\mu}(x)&=\sum_{\sigma}(2\pi)^{3/2}\int\,\dd^{3}p\,v^{\mu}(\bm{p},\sigma)a^{\dagger}(\bm{p},\sigma)e^{-ip\cdot x},\label{5.3.2}
+\end{align}
+with coefficient function $u^{\mu}(\bm{p},\sigma)$ and $v^{\mu}(\bm{p},\sigma)$ for arbitrary momentum are given in terms of those for zero momentum by
+\begin{align}
+u^{\mu}(\bm{p},\sigma)&=(m/p^{0})^{1/2}L(p)^{\mu}_{~\nu}u^{\nu}(0,\sigma),\label{5.3.3}\\
+v^{\mu}(\bm{p},\sigma)&=(m/p^{0})^{1/2}L(p)^{\mu}_{~\nu}v^{\nu}(0,\sigma),\label{5.3.4}
+\end{align}
+and $u^{\nu}(0,\sigma)$ and $v^{\nu}(0,\sigma)$ determined by
+\begin{align}
+\sum_{\bar{\sigma}}u^{0}(0,\bar{\sigma})(\bm{J}^{(j)})^{2}_{\bar{\sigma}\sigma}&=0,\label{5.3.5}\\
+\sum_{\bar{\sigma}}u^{i}(0,\bar{\sigma})(\bm{J}^{(j)})^{2}_{\bar{\sigma}\sigma}&=2u^{i}(0,\sigma),\label{5.3.6}\\
+\sum_{\bar{\sigma}}v^{0}(0,\bar{\sigma})(\bm{J}^{(j)})^{2}_{\bar{\sigma}\sigma}&=0,\label{5.3.7}\\
+\sum_{\bar{\sigma}}v^{i}(0,\bar{\sigma})(\bm{J}^{(j)})^{2}_{\bar{\sigma}\sigma}&=2v^{i}(0,\sigma).\label{5.3.8}
+\end{align}
+Besides, a vector field can only describe particles of spin zero and spin one.
+\end{Proposition}
+\begin{Proof}
+The proof is easy. Equation \eqref{5.3.1} and \eqref{5.3.2} comes from the general result of \eqref{5.1.10} and \eqref{5.1.11}, and \eqref{5.3.3} and \eqref{5.3.4} come from \eqref{5.1.14} and \eqref{5.1.15}. As for \eqref{5.3.5} to \eqref{5.3.8}, first note that the coefficient functions at zero momentum are subjected to the conditions \eqref{5.1.16} and \eqref{5.1.17} as:
+\begin{align}
+\sum_{\bar{\sigma}}u^{\mu}\bm{J}^{(j)}_{\bar{\sigma}\sigma}=\pmb{\mathscr{J}}^{\mu}_{~\nu}u^{\nu}(0,\sigma),\label{5.3.9}\\
+-\sum_{\bar{\sigma}}v^{\mu}\bm{J}^{(j)*}_{\bar{\sigma}\sigma}=\pmb{\mathscr{J}}^{\mu}_{~\nu}v^{\nu}(0,\sigma),\label{5.3.10}
+\end{align}
+where the rotation generators $\pmb{\mathscr{J}}^{\mu}_{~\nu}$ in the four-dimensional\footnote{Recall that group $\mathrm{SO}(3)$ has three generators, so its representation, both $\bm{J}^{j}_{\bar{\sigma}\sigma}$ and $\pmb{\mathscr{J}}^{\mu}_{~\nu}$, also has three independent components, while this has nothing to do with the dimension of representation. In our case, for example, representation is of four-dimensional.} representation are given by $D(\Lambda)=\Lambda$ as
+\begin{equation}\label{5.3.11}
+({\mathscr{J}}_{k})^{0}_{~0}=({\mathscr{J}}_{k})^{0}_{~i}=({\mathscr{J}}_{k})^{i}_{~0}=0,\quad({\mathscr{J}}_{k})^{i}_{~j}=-\varepsilon_{ijk},
+\end{equation}
+or
+\begin{align*}
+\mathscr{J}_{1}=\begin{bmatrix}0&&&\\&0&0&0\\&0&0&-i\\&0&i&0\end{bmatrix},\quad\mathscr{J}_{2}=\begin{bmatrix}0&&&\\&0&0&i\\&0&0&0\\&-i&0&0\end{bmatrix},\quad\mathscr{J}_{3}=\begin{bmatrix}0&&&\\&0&-i&0\\&i&0&0\\&0&0&0\end{bmatrix}.
+\end{align*}
+It is easy to check that $\pmb{\mathscr{J}}^{2}$ takes the form
+$$\pmb{\mathscr{J}}^{2}\equiv(\mathscr{J}_{1})^{2}+(\mathscr{J}_{2})^{2}+(\mathscr{J}_{3})^{2}=\begin{bmatrix}0&&&\\&2&&\\&&2&\\&&&2\end{bmatrix}.$$
+Then by iterating equation \eqref{5.3.9} and \eqref{5.3.10} twice, we get the result \eqref{5.3.5} and \eqref{5.3.8}.\par
+Also, recall the familiar result that $(\bm{J}^{(j)})^{2}_{\bar{\sigma}\sigma}=j(j+1)\delta_{\bar{\sigma}\sigma}$. From \eqref{5.3.5} to \eqref{5.3.8} we can see that there are just two possibilities for the spin of particles described by the vector field:
+\begin{itemize}
+\item $j=0$, for which at $\bm{p}=0$ only $u^{0}$ and $v^{0}$ are non-zero;
+\item $j=1$, for which at $\bm{p}=0$ only $u^{i}$ and $v^{i}$ are non-zero.
+\end{itemize}
+\end{Proof}
+\begin{Corollary}[(Spin Zero)]
+The form of vector fields describing spinless particles can be neatly derived form the causal scalar fields as:
+\begin{equation}\label{5.3.12}
+\phi^{\mu}(x)=\phi^{+\mu}(x)+\phi^{c-\mu}(y)=\partial^{\mu}\phi(x),
+\end{equation}
+where $\phi(x)$ is defined in \eqref{5.2.8}.
+\end{Corollary}
+\begin{Proof}
+By an appropriate choice of normalization of fields, we can take the only non-vanishing component of $u^{\mu}(0)$ and $v^{\mu}(0)$ to have the conventional values\footnote{I have to admit that notation $\phi^{c-\mu}$ is a little confusing here. You can discern it by admit that superscript $c$ means charge inverse and $\mu$ means components of fields.}:
+\begin{align*}
+u^{0}(0,0)&=+i(m/2)^{1/2},\\
+v^{0}(0,0)&=-i(m/2)^{1/2}.
+\end{align*}
+Now that we choose the representation $D(\Lambda)=\Lambda$, then $D(L(p))$ in \eqref{5.1.14} and \eqref{5.1.15} becomes $L(p)$, which is easily to be determined: By definition standard boosts $L(p)$ takes the particles of standard momentum $k^{\mu}=(m,\bm{0})$ to some four-momentum $p^{\mu}$, so
+$$p^{\mu}:=L(p)^{\mu}_{~\nu}k^{\nu}=L(p)^{\mu}_{~0}k^{0}\Rightarrow L(p)^{\mu}_{~0}=p^{\mu}/m,$$
+and thus we get
+\begin{align}
+u^{\mu}(\bm{p})&=+ip^{\mu}(2p^{0})^{1/2},\label{5.3.13}\\
+v^{\mu}(\bm{p})&=-ip^{\mu}(2p^{0})^{1/2}.\label{5.3.14}
+\end{align}
+By causal field proposition we must have the causal vector fields as
+\begin{equation}\label{5.3.15}
+\phi^{\mu}(x)=\phi^{+\mu}(x)+\phi^{c-\mu}(x).
+\end{equation}
+And it can be seen that the vector annihilation and creation fields here are nothing but the derivatives of the scalar annihilation and creation fields $\phi^{\pm}$ for a spinless particles that were defined in the previous section:
+\begin{equation}\label{5.3.16}
+\phi^{+\mu}(x)=\partial^{\mu}\phi^{+},\quad\phi^{c-\mu}(x)=\partial^{\mu}\phi^{c-}(x).
+\end{equation}
+Hence
+\begin{equation}\label{5.3.17}
+\phi^{\mu}(x)=\partial^{\mu}\phi(x)=\int\,\dfrac{d^{3}p}{(2\pi)^{3/2}(2p^{0})^{1/2}}\,p^{\mu}\bigg[a(\bm{p})e^{ip\cdot x}+{a^{c}}^{\dagger}(\bm{p})e^{-ip\cdot x}\bigg].
+\end{equation}
+and we need not explore this case any further here.
+\end{Proof}
+\begin{Corollary}[(Spin One)]
+The form of vector fields describing spin one particles takes the form of
+\begin{equation}\label{5.3.18}
+\phi^{\mu}(x)=\phi^{+\mu}(x)+\phi^{c-\mu}(y),
+\end{equation}
+where $\phi^{+}(x)$ is
+\begin{equation}\label{5.3.19}
+\phi^{+\mu}={\phi^{-\mu}}^{\dagger}=(2\pi)^{-3/2}\sum_{\sigma}\int\,\dfrac{\dd^{3}p}{\sqrt{2p^{0}}}e^{\mu}(\bm{p},\sigma)a(\bm{p},\sigma)e^{ip\cdot x},
+\end{equation}
+with
+\begin{equation}\label{5.3.20}
+e^{\mu}(0,0)=\begin{bmatrix}~0~\\0\\0\\1\end{bmatrix},\quad e^{\mu}(0,+1)=-\dfrac{1}{\sqrt{2}}\begin{bmatrix}0\\1\\+i\\0\end{bmatrix},\quad
+e^{\mu}(0,-1)=\dfrac{1}{\sqrt{2}}\begin{bmatrix}0\\1\\-i\\0\end{bmatrix}.
+\end{equation}
+Besides, spin one vector fields can only describe the bosons, and Fermi statistics is again ruled out.
+\end{Corollary}
+\begin{Proof}
+By a suitable normalization of the fields, we can take these vectors to have the values
+\begin{equation}\label{5.3.21}
+u^{\mu}(0,0)=v^{\mu}(0,0)=(2m)^{-1/2}(0,0,0,1)^{T}.
+\end{equation}
+To find other components, we use the familiar three generators of $\mathrm{SO}(3)$, obtained by the raising and lowering operators\footnote{Recall that
+$$J_{\pm}|j,m\rangle=\sqrt{(j\pm m)(j\pm m+1)}|j,m\rangle$$
+and $$J_{+}=\dfrac{1}{2}(J_{x}+iJ_{y}),\quad J_{-}=\dfrac{1}{2}(J_{x}-iJ_{y}).$$
+Now that $j=1$, our representation is of three dimensional.},
+\begin{equation}
+(J_{x}^{(1)})_{\bar{\sigma}\sigma}=\dfrac{1}{\sqrt{2}}\begin{bmatrix}&1&\\~1&&1~\\&1&\end{bmatrix},\quad(J_{y}^{(1)})_{\bar{\sigma}\sigma}=\dfrac{1}{\sqrt{2}}\begin{bmatrix}&-i&\\~i&&-i\\&i&\end{bmatrix},\quad(J_{z}^{(1)})_{\bar{\sigma}\sigma}=\begin{bmatrix}~1&&\\&0&\\&&-1\end{bmatrix}.
+\end{equation}
+and equation \eqref{5.3.9}, \eqref{5.3.10} and \eqref{5.3.11}. Set $\sigma=0$ in \eqref{5.3.9}, then
+$$\text{Left Part }=\dfrac{u^{\mu}(0,1)}{\sqrt{2}}\big(1,-i,0\big)+u^{\mu}(0,0)\big(0,0,0\big)+\dfrac{u^{\mu}(0,-1)}{\sqrt{2}}\big(1,i,0\big),$$
+and
+$$\text{Right Part }=\bigg((\mathscr{J}_{1})^{\mu}_{~\nu},(\mathscr{J}_{2})^{\mu}_{~\nu},(\mathscr{J}_{3})^{\mu}_{~\nu}\bigg).$$
+Respectively let $\mu$ be $0,1,2$ and $3$, and notice the only non-zero component of $u^{\nu}(0,0)$ is of $\nu=3$, then we get the linear equations of the components of $u^{\mu}(0,\sigma)$ (the same goes to $v^{\mu}(0,\sigma)$):
+\begin{align*}
+&\begin{cases}
+u^{0}(0,1)+u^{0}(0,-1)=\sqrt{2}(\mathscr{J}_{1})^{0}_{~3}u^{3}(0,0)=0,\\
+(-i)u^{0}(0,1)+iu^{0}(0,-1)=\sqrt{2}(\mathscr{J}_{2})^{0}_{~3}u^{3}(0,0)=0,
+\end{cases}\\
+&\begin{cases}
+u^{1}(0,1)+u^{1}(0,-1)=\sqrt{2}(\mathscr{J}_{1})^{1}_{~3}u^{3}(0,0)=0,\\
+(-i)u^{2}(0,1)+iu^{2}(0,-1)=\sqrt{2}(\mathscr{J}_{2})^{1}_{~3}u^{3}(0,0)=i(2m)^{-1/2}\sqrt{2},
+\end{cases}\\
+&\begin{cases}
+u^{2}(0,1)+u^{2}(0,-1)=\sqrt{2}(\mathscr{J}_{1})^{2}_{~3}u^{3}(0,0)=-i(2m)^{-1/2}\sqrt{2},\\
+(-i)u^{2}(0,1)+iu^{2}(0,-1)=\sqrt{2}(\mathscr{J}_{2})^{2}_{~3}u^{3}(0,0)=0,
+\end{cases}\\
+&\begin{cases}
+u^{3}(0,1)+u^{3}(0,-1)=\sqrt{2}(\mathscr{J}_{1})^{3}_{~3}u^{3}(0,0)=0,\\
+(-i)u^{3}(0,1)+iu^{3}(0,-1)=\sqrt{2}(\mathscr{J}_{2})^{3}_{~3}u^{3}(0,0)=0,
+\end{cases}
+\end{align*}
+whose solution is
+\begin{align}
+u^{\mu}(0,+1)&=-v^{\mu}(0,-1)=-\dfrac{1}{\sqrt{2}}(2m)^{1/2}\begin{bmatrix}0\\1\\+i\\0\end{bmatrix},\label{5.3.22}\\
+u^{\mu}(0,-1)&=-v^{\mu}(0,+1)=\dfrac{1}{\sqrt{2}}(2m)^{1/2}\begin{bmatrix}0\\1\\-i\\0\end{bmatrix}.\label{5.3.23}
+\end{align}
+Define $e^{\mu}(\bm{p},\sigma):=L(\bm{p})^{\mu}_{~\nu}e^{\mu}(0,\sigma)$, where $e^{\mu}(0,\sigma)$ has defined in \eqref{5.3.20}, then apply \eqref{5.3.3} and \eqref{5.3.4} now yields
+\begin{equation}\label{5.3.24}
+u^{\mu}(\bm{p},\sigma)=v^{\mu*}(\bm{p},\sigma)=(2p^{0})^{-1/2}e^{\mu}(\bm{p},\sigma),
+\end{equation}
+where the conjugate relation comes from \eqref{5.3.22} and \eqref{5.3.23}. And thus the annihilation and creation fields \eqref{5.3.1} and \eqref{5.3.2} here are \eqref{5.3.19}. So by causal fields proposition we must have vector fields to be \eqref{5.3.18}, or in more detail
+\begin{equation}\label{5.3.25}
+\phi^{\mu}=(2\pi)^{-3/2}\sum_{\sigma}\int\,\dfrac{\dd^{3}p}{\sqrt{2p^{0}}}\bigg[e^{\mu}(\bm{p},\sigma)a(\bm{p},\sigma)e^{ip\cdot x}+e^{\mu*}(\bm{p},\sigma)a^{c\dagger}(\bm{p},\sigma)e^{ip\cdot x}\bigg].
+\end{equation}
+\indent In our previous proof of causal scalar fields theory, constants $\lambda$ and $\mu$ have been determined by making the commutator of fields vanishes for space-like interval, with choosing the commutative sign and ruling out the anti-commutative sign. So our spin one vector fields can also only to describe bosons.
+\end{Proof}
+\begin{Note}
+Although we have prove that vector fields can only describe bosons, it is still valuable to write out the commutator of fields. One can check from \eqref{5.3.19} that
+\begin{equation}\label{5.3.26}
+[\phi^{+\mu},\phi^{-\nu}]_{\mp}=\int\,\dfrac{\dd^{3}p}{(2\pi)^{3}2p^{0}}\,e^{ip\cdot(x-y)}\Pi^{\mu\nu}(\bm{p}),
+\end{equation}
+where
+$$\Pi^{\mu\nu}(\bm{p})\equiv\sum_{\sigma}e^{\mu}(\bm{p},\sigma)e^{\nu*}(\bm{p},\sigma).$$
+By substitute the standard boost defined in chapter two in $e^{\mu}(\bm{p},\sigma)$, one can show that $\Pi^{\mu\nu}(\bm{p})$ is the projection matrix on the space orthogonal to the four-vetor $p^{\mu}$:
+\begin{equation}\label{5.3.27}
+\Pi^{\mu\nu}(\bm{p})=\eta^{\mu\nu}+p^{\mu}p^{\nu}/m^{2}.
+\end{equation}
+So the commutator(or anticommutator) \eqref{5.3.26} may then be written in terms of the $\Delta_{+}$ function defined in the previous section, as
+\begin{equation}\label{5.3.28}
+[\phi^{+\mu},\phi^{-\nu}]_{\mp}=\left[\eta^{\mu\nu}-\dfrac{\partial^{\mu}\partial^{\nu}}{m^{2}}\right]\Delta_{+}(x-y).
+\end{equation}
+And the commutator of a vector field with its adjoint is
+\begin{equation}\label{5.3.29}
+[\phi^{\mu}(x),{\phi^{\nu}}^{\dagger}(y)]=\left[\eta^{\mu\nu}-\dfrac{\partial^{\mu}\partial^{\nu}}{m^{2}}\right]\Delta(x-y),
+\end{equation}
+where $\Delta(x-y)$ is defined in \eqref{5.2.10}.
+\end{Note}
+\begin{Note}
+The complex(or more trivially real with no conservative quantum number) fields we have constructed satisfy interesting fields equation. First, since $p^{\mu}$ in the exponential satisfies $p^{2}=m^{2}$, the fields satisfies the Klein-Gordon equation
+\begin{equation}\label{5.3.30}
+(\Box-m^{2})v^{\mu}(x)=0
+\end{equation}
+just as for the scalar field. In addition, since by definition of $e^{\mu}(\bm{p},\sigma)$,
+$$e^{\mu}(\bm{p},\sigma)p_{\mu}=0,$$
+we now have another equation
+\begin{equation}\label{5.3.31}
+\partial_{\mu}\phi^{\mu}(x)=0.
+\end{equation}
+In the limit of small mass, equations \eqref{5.3.30} and \eqref{5.3.31} are just the equation for the \emph{potential four-vector of electrodynamics} in what is called \emph{Lorentz gauge}.
+\end{Note}
+
+
+\section{The Dirac Formalism}
+From our point of view, the structure and properties of any quantum field are dictated by the representation of the homogeneous Lorentz group under which it transforms. Among all the representations, there is one called \emph{spinor representation} that plays an special role in physics, which provides the basis of one of two broad classes of representations of the rotation or Lorentz groups(actually, their covering groups).\par
+Since we have complexified the \emph{bi-connected} Homogeneous Lorentz group to its double cover which is {simple connected}, by a crucial theorem of representation theory there exists a natural one-to-one correspondence between the representation of Lie group and the representation of its Lie algebra\footnote{\textbf{Theorem 3.28 }of \textbf{B.Hall: }Let $G$ and $H$ be matrix Lie groups, with Lie algebras $\mathfrak{g}$ and $\mathfrak{h}$, respectively. Suppose that $\Phi:G\rightarrow H$ is a Lie group homomorphism. Then there exists a unique real-linear map $\phi:\mathfrak{g}\rightarrow\mathfrak{h}$ such that:
+$$\Phi(e^{X})=e^{\phi(x)}$$
+for all $X\in\mathfrak{g}$.\par
+And \textbf{Theorem 5.6 }of \textbf{B.Hall}: Let $\phi:\mathfrak{g}\rightarrow\mathfrak{h}$ be a Lie algebra homomorphism. If $G$ is simply connected, there exists a unique Lie group homomorphism $\Phi:G\rightarrow H$ such that $\Phi(e^{X})=e^{\phi(X)}$ for all $X\in\mathfrak{g}$.}.\par
+So as a special case of group homomorphism, for one representation of the double cover of homogeneous Lorentz group $D:G\rightarrow GL(n;\mathbb{C})$, we can \emph{naturally} define a unique corresponding homomorphism between their Lie algebras $\mathscr{J}:\mathfrak{g}\rightarrow \mathsf{gl}(n;\mathbb{C})$. And in chapter two we have gotten the the whole commutative relation of Lie algebra of homogeneous Lorentz group
+$$[J^{\mu\nu},J^{\rho\sigma}]=i(\eta^{\nu\rho}J^{\mu\sigma}-\eta^{\mu\rho}J^{\nu\sigma}-\eta^{\nu\sigma}J^{\mu\rho}+\eta^{\sigma}J^{\nu\rho}).$$ Then by the properties of the induced Lie algebra homomorphism\footnote{The Lie algebra homomorphism $\phi:\mathfrak{g}\rightarrow\mathfrak{h}$ has the following additional properties, as is seen in \textbf{Property 5.6 }in \textbf{B.Hall}:\par
+1) $\phi(AXA^{-1})=\Phi(A)\Phi(X)\Phi(A)^{-1}$ for all $X\in\mathfrak{g},A\in G$;\par
+2) $\phi([X,Y])=[\phi(X),\phi(Y)]$ for all $X,Y\in G$;\par
+3) $\displaystyle\phi(X)=\left.\dfrac{\dd}{\dd t}\Phi\big(e^{tX}\big)\right|_{t=0}$ for all $X\in\mathfrak{g}$.}, we also should have
+\begin{Proposition}
+Given one representation of homogeneous Lorentz group $D$, the natural induced representation of its Lie algebra has the same commutation relation as Lie algebra does:
+\begin{equation}\label{5.4.1}
+[\mathscr{J}^{\mu\nu},\mathscr{J}^{\rho\sigma}]=i(\eta^{\nu\rho}\mathscr{J}^{\mu\sigma}-\eta^{\mu\rho}\mathscr{J}^{\nu\sigma}-\eta^{\nu\sigma}\mathscr{J}^{\mu\rho}+\eta^{\sigma}\mathscr{J}^{\nu\rho}).
+\end{equation}
+\end{Proposition}
+\begin{Proof}
+This is easily derived from the commutation relation of Lie algebra of Lorentz group according to the second property of the induced representation of Lie algebra, i.e., $\phi([X,Y])=[\phi(X),\phi(Y)]$.
+\end{Proof}
+\begin{Def}[(Clifford Algebra)]
+A \emph{Clifford algebra} $\mathcal{C}\ell(V,Q)$ is a unital associative algebra\footnote{I would like to add some foundations of algebra here.\par
+Definition of \emph{Ring}: A nonempty set $\mathcal{R}$ defined addition and multiplication, with addition forms an Abel group, multiplication satisfies the associativity(semi-group) and both satisfies the distributivity, is called \emph{Ring}.\par
+Definition of \emph{Algebra}: An \emph{algebra} is both a linear space and ring, i.e., algebra has an extra structure of scalar multiplication than ring does.\par
+Definition of \emph{Modular}: There is only addition and scalar multiplication on the \emph{modular}. Note that terminology the modular over ring $\mathcal{R}$ is similar to our familiar term the linear space over field $K$.} that contains and is generated by a vector space $V$ over a field $K$, where $V$ is equipped with a quadratic form $Q$ such that
+\begin{equation}\label{5.4.2}
+v^{2}=Q(v),\quad\forall v\in V.
+\end{equation}
+Particularly, if the characteristic of $K$ is not $2$, then one can rewrite \eqref{5.4.1} as
+\begin{equation}\label{5.4.3}
+\{u,v\}=2\langle u,v\rangle ,\quad\forall u,v\in V.
+\end{equation}
+\end{Def}
+\begin{Note}
+In our case, the space-time metric is $g^{\mu\nu}=\mathrm{diag}(+,-,-,-)$. Consider the representation of Clifford algebra $\gamma^{\mu}:\mathcal{C}\ell_{1,3}\rightarrow\mathrm{End}(V)$ and rewrite \eqref{5.4.3} for $\gamma$ matrices, we have a more usual expression of definition:
+\begin{equation}\label{5.4.4}
+\{\gamma^{\mu},\gamma^{\nu}\}=2g^{\mu\nu}.
+\end{equation}
+\end{Note}
+\begin{Def}
+Given $\gamma$ matrices, we can generate important
+\begin{equation}\label{5.4.5}
+\mathscr{J}^{\mu\nu}:=\dfrac{i}{4}[\gamma^{\mu},\gamma^{\nu}].
+\end{equation}
+\end{Def}
+\begin{Lemma}
+\begin{equation}\label{5.4.6}
+[\mathscr{J}^{\mu\nu},\gamma^{\rho}]=g^{\rho\nu}\gamma^{\mu}-g^{\mu\rho}\gamma^{\nu}.
+\end{equation}
+\end{Lemma}
+\begin{Proof}
+\begin{align*}
+[\mathscr{J}^{\mu\nu},\gamma^{\rho}]&=\dfrac{i}{4}[\gamma^{\mu}\gamma^{\nu}-\gamma^{\nu}\gamma^{\nu},\gamma^{\rho}]=\dfrac{i}{4}[2g^{\mu\nu}-2\gamma^{\nu}\gamma^{\mu},\gamma^{\rho}]\\
+&=-\dfrac{i}{2}\bigg(\gamma^{\nu}(2g^{\mu\rho}-\gamma^{\rho}\gamma^{\mu}-(2g^{\rho\nu}-\gamma^{\nu}\gamma^{\rho})\gamma^{\mu})\bigg)\\
+&=g^{\rho\nu}\gamma^{\mu}-g^{\mu\rho}\gamma^{\nu}.
+\end{align*}
+\end{Proof}
+\begin{Proposition}[(Representation of Lie Algebra)]
+The defined $\mathscr{J}^{\mu\nu}$ in \eqref{5.4.5} satisfies the commutation relation \eqref{5.4.1}, i.e., $\mathscr{J}$ furnishes one representation of the Lorentz algebra.
+\end{Proposition}
+\begin{Proof}
+Utilizing \eqref{5.4.6}, we can gain \eqref{5.4.1} through direct computation:
+\begin{align*}
+[\mathscr{J}^{\mu\nu},\mathscr{J}^{\rho\sigma}]=\dfrac{i}{4}\bigg(\gamma^{\rho}[\mathscr{J}^{\mu\nu},\gamma^{\rho}]+[\mathscr{J}^{\mu\nu},\gamma^{\rho}]\gamma^{\sigma}-\gamma^{\sigma}[\mathscr{J}^{\mu\nu},\gamma^{\rho}]-[\mathscr{J}^{\mu\nu},\gamma^{\sigma}]\gamma^{\rho}\bigg).
+\end{align*}
+Expand and rearrange it(note that gamma matrices are not commutative), we can immediately get \eqref{5.4.1}.
+\end{Proof}
+Since our symmetry group is the complexification of homogeneous Lorentz group (adding the inner symmetry), which is simply connected, then the representation of Lorentz algebra here can also induce a one-to-one representation of the whole symmetry group, denoted $D$. And it can be easily seen that the exponential map of the representation of Lie algebra is also the representation of the Lie group. Specifically, for infinitesimal group element $\Lambda=1+\omega$, we have the expansion of group representation to the first order:
+$$D(\Lambda)=1+\dfrac{i}{2}\omega_{\mu\nu}\mathscr{J}^{\mu\nu}.$$
+\begin{Proposition}
+The commutation \eqref{5.4.6} can be summarized by saying that $\gamma^{\sigma}$ is a \emph{vector}, in the sense that(for infinitesimal $\Lambda$)
+\begin{equation}\label{5.4.7}
+D(\Lambda)\gamma^{\rho}D^{-1}(\Lambda)=\Lambda_{\sigma}^{~\rho}\gamma^{\sigma},
+\end{equation}
+and $\mathscr{J}^{\rho\sigma}$ an antisymmetric \emph{tensor}, in the sense that
+\begin{equation}\label{5.4.8}
+D(\Lambda)\mathscr{J}^{\rho\sigma}D^{-1}(\Lambda)=\Lambda_{\mu}^{~\rho}\Lambda_{\nu}^{~\sigma}\mathscr{J}^{\mu\nu}.
+\end{equation}
+\begin{Proof}
+Easy to prove by expanding \eqref{5.4.7} and \eqref{5.4.8} to the first order. Here we just show the first case \eqref{5.4.7}. On the one hand,
+\begin{align*}
+D(\Lambda)\gamma^{\rho}D^{-1}(\Lambda)&=\bigg(1+\dfrac{i}{2}\omega_{\alpha\beta}\mathscr{J}^{\alpha\beta}\bigg)\gamma^{\rho}\bigg(1-\dfrac{i}{2}\omega_{\alpha\beta}\mathscr{J}^{\alpha\beta}\bigg)\\
+&=\gamma^{\rho}+\dfrac{i}{2}\omega_{\alpha\beta}\bigg(-i\gamma^{\alpha}g^{\beta\rho}+i\gamma^{\beta}g^{\alpha\rho}\bigg).
+\end{align*}
+On the other hand
+\begin{align*}
+\Lambda^{~\rho}_{\sigma}\gamma^{\sigma}&=\gamma^{\rho}+\dfrac{1}{2}(\omega_{\alpha}^{~\rho}\gamma^{\alpha}+\omega_{\beta}^{~\rho}\gamma^{\beta})\\
+&=\gamma^{\rho}+\dfrac{1}{2}\omega_{\alpha\beta}\bigg(g^{\beta\rho}\gamma^{\alpha}-g^{\alpha\rho}\gamma^{\beta}\bigg).
+\end{align*}
+Apparently these two results are equal to each other.\par
+Similar procedure goes to the case of $\mathscr{J}^{\rho\sigma}$.
+\end{Proof}
+
+Define the
+and the \emph{parity} transforamtion
+\begin{equation}\label{5.4.9}
+\beta:=i\gamma^{0},
+\end{equation}
+where $\gamma^{0}$ is defined as in \eqref{5.4.4}. Then we have some interesting properties:
+\begin{Property}
+The parity transformation applying to any products of $\gamma$ matrices yields just a plus or minus sign, according to whether the products contains an even or an odd number of $\gamma$s with space-like indices, respectively. In particular, we have
+\begin{equation}\label{5.4.10}
+\beta\gamma^{i}\beta^{-1}=-\gamma^{i},\quad\beta\gamma^{0}\beta^{-1}=+\gamma^{0},
+\end{equation}
+and
+\begin{align}
+\beta\mathscr{J}^{ij}\beta^{-1}&=+\mathscr{J}^{ij},\label{5.4.11}\\
+\beta\mathscr{J}^{i0}\beta^{-1}&=-\mathscr{J}^{i0}.\label{5.4.12}
+\end{align}
+\end{Property}
+\begin{Proof}
+Equation \eqref{5.4.10} is equivalent to $i\{\gamma^{0},\gamma^{\mu}\}=\delta^{0\mu}$, which is obviously true for our choose of metric. And since
+$$\beta\bigg(\dfrac{i}{4}[\gamma^{i},\gamma^{j}]\bigg)\beta^{-1}=\dfrac{i}{4}\bigg[\beta\gamma^{i}\beta^{-1},\beta\gamma^{j}\gamma^{-1}\bigg],$$
+apply \eqref{5.4.10} in it we can get \eqref{5.4.11}. The same goes to \eqref{5.4.12}.
+\end{Proof}
+
+Now we turn to the question that what is the least dimension of Clifford algebra. To solve this problem, we should bing in the totally antisymmetric\footnote{This is a standard notation. For example,$$\mathscr{A}^{\rho\sigma\tau}=\gamma^{\rho}\gamma^{\sigma}\gamma^{\tau}-\gamma^{\rho}\gamma^{\tau}\gamma^{\sigma}-\gamma^{\sigma}\gamma^{\rho}\gamma^{\tau}+\gamma^{\tau}\gamma^{\rho}\gamma^{\sigma}+\gamma^{\sigma}\gamma^{\tau}\gamma^{\rho}-\gamma^{\tau}\gamma^{\sigma}\gamma^{\rho}.$$} tensor at first
+\begin{align}
+\mathscr{A}^{\rho\sigma\tau}&:=\gamma^{[\rho}\gamma^{\sigma}\gamma^{\tau]},\label{5.4.13}\\
+\mathscr{P}^{\rho\sigma\tau\eta}&:=\gamma^{[\rho}\gamma^{\sigma}\gamma^{\tau}\gamma^{\eta]}.\label{5.4.14}
+\end{align}
+\begin{Lemma}
+Any products of gamma matrices can be rewrite as a sum of linear combinations of totally antisymmetric tensors.
+\end{Lemma}
+\begin{Proof}
+One can promote our proof to higher dimensions, but here  we just concentrate on the case of dimension four, which is physical. We prove this Lemma by discussion.\par
+The cases where there are repetitive gamma matrix is trivial since by \eqref{5.4.4} all of them vanish.
+And the case of simple one gamma matrices is also trivial because themselves are antisymmetric. For cases of two gamma matrices, such as $\gamma^{1}\gamma^{2}$, by using of definition, we have
+$$\gamma^{1}\gamma^{2}=\dfrac{1}{2}(\gamma^{1}\gamma^{2}-\gamma^{2}\gamma^{1}+\eta^{12})=\dfrac{1}{2}\mathscr{J}^{12},$$
+where the second equality comes from the fact that $\eta^{12}\equiv0$. The cases of three gamma matrices is more tedious. Take $\gamma^{1}\gamma^{2}\gamma^{3}$ for example,
+\begin{align*}
+\gamma^{1}\gamma^{2}\gamma^{3}&=\dfrac{1}{2}\bigg((\gamma^{1}\gamma^{2}-\gamma^{2}\gamma^{1}+\eta^{12})\gamma^{3}\bigg)=\dfrac{1}{4}\bigg(\gamma^{1}(\gamma^{2}\gamma^{3}-\gamma^{3}\gamma^{2})-\gamma^{2}(\gamma^{1}\gamma^{3}-\gamma^{3}\gamma^{1})\bigg)\\
+&=\dfrac{1}{4}\left(\left(\gamma^{1}\gamma^{2}\gamma^{3}-(\gamma^{1}\gamma^{3}-\gamma^{3}\gamma^{1})\dfrac{\gamma^{2}}{2}\right)-\left(\gamma^{2}\gamma^{1}\gamma^{3}-(\gamma^{2}\gamma^{3}-\gamma^{3}\gamma^{2})\dfrac{\gamma^{1}}{2}\right)\right)\\
+&=\dfrac{1}{4}\left(\gamma^{1}\gamma^{2}\gamma^{3}-\dfrac{1}{2}\gamma^{1}\gamma^{3}\gamma^{2}+\dfrac{1}{2}\gamma^{3}\gamma^{1}\gamma^{2}-\gamma^{2}\gamma^{1}\gamma^{3}+\dfrac{1}{2}\gamma^{2}\gamma^{3}\gamma^{1}-\dfrac{1}{2}\gamma^{3}\gamma^{2}\gamma^{1}\right).
+\end{align*}
+There seems to be some errors on the coefficients at the first glimpse of the result. However, note that the residue term $\gamma^{1}\gamma^{2}\gamma^{3}-\gamma^{2}\gamma^{1}\gamma^{3}=2\gamma^{1}\gamma^{2}\gamma^{3}$, transfer it to the left side of equation, we find that
+$$\gamma^{1}\gamma^{2}\gamma^{3}=C\mathscr{A}^{123},$$
+where $C$ is some constant. The similar proof goes to the case of four gamma matrices, here we just leave it as an exercise.
+\end{Proof}
+\begin{Note}
+The last property and proposition say that different orders of tensors formed from products of gamma matrices cannot transform to each other, which, in other words, tell us that antisymmetric tensors $\mathbbold{1},\gamma^{\mu},\mathscr{J}^{\mu\nu},\mathscr{A}^{\mu\nu\sigma},\mathscr{P}^{\mu\nu\rho\sigma}$ are linear independent. And this crucial Lemma makes these antisymmetric tensors the maximal linear groups. Thus, the dimension of $\mathcal{C}\ell_{1,3}$ can be directly read from the number of them.
+\end{Note}
+\begin{Proposition}[(Dimension of $\mathcal{C}\ell_{1,3}$)]
+The dimension of $\mathcal{C}\ell_{1,3}$ in the four dimensional space-time is sixteen, and the gamma matrices have the least form of $4\times4$ matrices.
+\end{Proposition}
+\begin{Proof}
+Now that the dimension of space-time is limited to four, the indices of totally antisymmetric tensors cannot be more than four, which means that these tensors must termite at $\mathscr{P}^{\mu\nu\rho\sigma}$. And therefore we conclude that the dimension of $\mathcal{C}\ell_{1,3}$ is $16$, one from $\mathbbold{1}$, four from $\gamma^{\mu}$, six from $\mathscr{J}^{\mu\nu}$, six from $\mathscr{P}^{\mu\nu\rho}$, and one from $\mathscr{P}^{\mu\nu\rho\sigma}$. For gamma matrices, there are at most $n^{2}$ independent ones, so the least number of columns and rows is $\sqrt{16}=4$.
+\end{Proof}
+Besides this, we have a general result of the dimension of the Clifford algebra as follows:
+\end{Proposition}
+\begin{Lemma}[(Dimension of Clifford Algebra)]
+The dimension $n$ of a finite dimensional representation $V:\mathcal{C}\ell(V,Q)\rightarrow GL(n;\mathbb{C})$ be a multiple of $2^{p}$.
+\end{Lemma}
+\begin{Proof}
+Denote $\displaystyle p\equiv\bigg[\dfrac{d}{2}\bigg]$. If $C\subset\mathrm{End}(V)$ and $V$ itself are both real, we may complexify, so we may from now on assume that they are both complex. Then the signature of $C$ is irrelevant and hence we might as well assume positive signature. In other words, we assume we are give $n\times n$ matrices $\gamma^{1}\cdots\gamma^{d}$, that satisfy
+\begin{equation}\label{5.4.15}
+\{\gamma^{\mu},\gamma^{\nu}\}=2\delta_{\mu\nu}\mathbbold{1},\quad\mu,\nu\in\{1,\cdots,d\}.
+\end{equation}
+Define
+\begin{equation}\label{5.4.16}
+\Sigma_{\mu\nu}:=\dfrac{i}{2}[\gamma^{\mu},\gamma^{\nu}]=-\Sigma_{\mu\nu},
+\end{equation}
+and $p$ involution\footnote{In linear algebra, an involution is an linear operator $T$ such that $T^{2}=\mathbbold{1}$.} elements $H_{1}\cdots H_{p}$ such that
+$$H_{r}:=\Sigma_{r,r+p},\quad r\in\{1,\cdots,p\},$$
+then according to Lie theorem $H_{1},\cdots,H_{p}$ must have a common eigenvector $v$, i.e.,
+$$H_{1}v=(-1)^{j_{1}}v,\cdots,H_{p}v=(-1)^{j_{p}}v,$$
+with $\{j_{1},\cdots.j_{p}\}\in[0,1]$.
+\end{Proof}
+\hfil\par
+From now on, we shall choose  an explicit sets of $4\times4$ gamma matrices. One very conventional choice is \begin{equation}\label{5.4.17}
+\gamma^{0}=\begin{bmatrix}&\mathbbold{1}~\\~\mathbbold{1}&\end{bmatrix}=\sigma_{0}\otimes\sigma_{1},\quad\bm{\gamma}=\begin{bmatrix}&\bm{\sigma}~\\-\bm{\sigma}&\end{bmatrix}=\sigma^{i}\otimes\sigma^{2},
+\end{equation}
+where $\bm{\sigma}$ are Pauli matrices
+\begin{equation}\label{5.4.18}
+\sigma_{1}=\begin{bmatrix}~0&1~\\~1&0~\end{bmatrix},\quad\sigma_{2}=\begin{bmatrix}~0&-i\\~i&0~\end{bmatrix},\quad\sigma_{3}=\begin{bmatrix}~1&0~\\~0&-1\end{bmatrix}.
+\end{equation}
+One can immediately check that ${\gamma^{0}}^{\dagger}=\gamma^{0}$ and ${\gamma^{i}}^{\dagger}=-\gamma^{i}$. Also, from \eqref{5.4.5} one can easily calculate the Lorentz group generator
+\begin{align}
+\mathscr{J}^{ij}=\dfrac{1}{2}\varepsilon_{ijk}\begin{bmatrix}~\sigma_{k}&0\\0&\sigma_{k}~\end{bmatrix},\label{5.4.19}\\
+\mathscr{J}^{i0}=+\dfrac{i}{2}\begin{bmatrix}~\sigma_{i}&0\\0&-\sigma_{i}\end{bmatrix}.\label{5.4.20}
+\end{align}
+
+\section{Causal Dirac Fields}
+\begin{Proposition}[(Quantization of Dirac Fields)]
+If we choose the Dirac representation of the homogeneous Lorentz group with $\displaystyle D(\Lambda)=1+\dfrac{i}{2}\omega_{\mu\nu}\mathscr{J}^{\mu\nu}$, then the corresponding creation and annihilation fields of particles, called \emph{Dirac fields}, have the form of\footnote{Not like vector fields $\phi^{\mu}(x)$, for Dirac fields we will not mark out the components of both fields and coefficients any more. And subscript label $l$, which can also be ignored as what we have done for scalar and vector fields, just implies that it is one sum term of the fundamental theorem.}
+\begin{align}
+\phi^{+}_{l}(x)&=\sum_{\sigma}(2\pi)^{3/2}\int\,\dd^{3}p\,u_{l}(\bm{p},\sigma)a(\bm{p},\sigma)e^{ip\cdot x},\label{5.5.1}\\
+\phi^{-}_{l}(x)&=\sum_{\sigma}(2\pi)^{3/2}\int\,\dd^{3}p\,v_{l}(\bm{p},\sigma)a^{\dagger}(\bm{p},\sigma)e^{-ip\cdot x},\label{5.5.2}
+\end{align}
+with coefficient function $u(\bm{p},\sigma)$ and $v(\bm{p},\sigma)$ for arbitrary momentum are given in terms of those for zero momentum by
+\begin{align}
+u(\bm{p},\sigma)&=\sqrt{(m/p^{0})}D\bigg(L(p)\bigg)u(0,\sigma),\label{5.5.3}\\
+v(\bm{p},\sigma)&=\sqrt{(m/p^{0})}D\bigg(L(p)\bigg)v(0,\sigma),\label{5.5.4}
+\end{align}
+and $u(0,\sigma)$ and $v(0,\sigma)$ determined by
+\begin{align}
+\sum_{\bar{\sigma}}u_{\bar{m},\pm}(0,\bar{\sigma})\bm{J}_{\bar{\sigma}\sigma}^{(j)}&=\sum_{m=1}^{2}\dfrac{1}{2}\bm{\sigma}_{\bar{m}m}u_{m,\pm}(0,\sigma),\label{5.5.5}\\
+-\sum_{\bar{\sigma}}v_{\bar{m},\pm}(0,\bar{\sigma})\bm{J}_{\bar{\sigma}\sigma}^{(j)*}&=\sum_{m=1}^{2}\dfrac{1}{2}\bm{\sigma}_{\bar{m}m}v_{m,\pm}(0,\sigma).\label{5.5.6}
+\end{align}
+Besides, a Dirac field can only describe particles of spin one half.
+\end{Proposition}
+\begin{Proof}
+
+\end{Proof}
+\section{$\mathsf{CPT}$ Theorem}
+\begin{Theorem}[($\mathsf{CPT}$ Symmetry)]
+$\mathsf{CPT}$ symmetry, i.e. the commutation between $\mathsf{CPT}$ and interactive Hamiltonian
+\begin{equation}\label{5.6.1}
+[\mathsf{CPT}]H[\mathsf{CPT}]^{-1}\equiv\mathscr{H},
+\end{equation}
+holds for all physical phenomena. Or more precisely, that any Lorentz invariant local quantum field theory with a Hermitian Hamiltonian must have $\mathsf{CPT}$ symmetry.
+\end{Theorem}
+\begin{Proof}
+As a first step in the proof, let us work out the effect of the product $\mathsf{CPT}$ on free fields of various types. For a scalar, vector, or Dirac field the results of previous sections give
+\begin{align}
+[\mathsf{CPT}]\phi(x)[\mathsf{CPT}]^{-1}&=\zeta^{*}\xi^{*}\eta^{*}\phi^{\dagger}(-x),\label{5.6.2}\\
+[\mathsf{CPT}]\phi^{\mu}(x)[\mathsf{CPT}]^{-1}&=-\zeta^{*}\xi^{*}\eta^{*}{\phi^{\mu}}^{\dagger}(-x),\label{5.6.3}\\
+[\mathsf{CPT}]\psi(x)[\mathsf{CPT}]^{-1}&=-\zeta^{*}\xi^{*}\eta^{*}\gamma_{5}{\psi}^{*}(-x).\label{5.6.4}
+\end{align}
+We are going to choose the phases so that for all particles
+$$\zeta\xi\eta=1.$$
+Then any tensor $\phi_{\mu_{1}\cdots\mu_{n}}$ formed from any set of scalar and vector fields and their derivatives transforms into
+\begin{equation}\label{5.6.5}
+[\mathsf{CPT}]\phi_{\mu_{1}\cdots\mu_{n}}(x)[\mathsf{CPT}]^{-1}=(-1)^{n}\phi^{\dagger}_{\mu_{1}\cdots\mu_{n}}(-x).
+\end{equation}
+since any complex numerical coefficients appearing in these tensors is transformed into its complex conjugate due to the anti-unitarity of $\mathsf{CPT}$. Also, we can easily see that the same transformation rule applies to tensors formed from bilinear combinations of Dirac fields: Applying \eqref{5.6.3} to such a bilinear combinations gives
+\begin{align}
+[\mathsf{CPT}]\bigg(\bar{\psi}_{1}(x)M\psi_{2}(x)\bigg)\mathsf{[CPT]}^{-1}&=\psi_{1}^{T}(-x)\gamma_{5}\beta M^{*}\gamma_{5}\psi_{2}^{*}(-x)\nonumber\\
+&=[\bar{\psi}_{1}(-x)\gamma_{5}M\gamma_{5}\psi_{2}(-x)]^{\dagger},\label{5.6.6}
+\end{align}
+where the minus sign from the anticommutation of $\beta$ and $\gamma_{5}$ is cancelled by the minus sign from the communication of fermion operators. If the bilinear is a tensor of rank $n$, then $M$ is a product of $n$ modulo $2$ Dirac representations, so $\gamma_{5}M\gamma_{5}=(-1)^{n}M$, and the bilinear therefore satisfies \eqref{5.6.5}.\par
+A Hermitian scalar interaction density $\mathscr{H}$ must be formed from tensors with an \emph{even} total number of spacetime indices, and therefore we have
+\begin{equation}\label{5.6.7}
+[\mathsf{CPT}]\mathscr{H}[\mathsf{CPT}]^{-1}=\mathscr{H}(-x),
+\end{equation}
+which follows immediately that $\mathsf{CPT}$ commutes with the interaction potential $\displaystyle V\equiv\int\,\dd^{3}x\mathscr{H}(\bm{x},0)$:
+\begin{equation}
+[\mathsf{CPT}]V[\mathsf{CPT}]^{-1}=V.
+\end{equation}
+Also, in any theory $\mathsf{CPT}$ commutes with the free-particle state Hamiltonian $H_{0}$. Thus the operator $\mathsf{CPT}$ always commutes with interactive Hamiltonian $H\equiv H_{0}+V$.
+\end{Proof}
+\begin{Note}
+In the proof of $\mathsf{CPT}$ theorem we just discuss scalar, vector, and spinor fields. But in fact, for Hermitian scalar $\mathscr{H}$ formed from the general fields $\psi_{ab}^{AB}$ belonging to one or more of the general irreducible representations of homogenous Lorentz group, it still satisfies equation \eqref{5.6.7}.\par
+It can be seen form our results in the
+\end{Note}
+\section{Massless Particles Fields}
+
+\chapter{Interaction Fields and Feynmann Diagrams}
+\section{Overview}
+\hfill\par
+%\begin{fmfgraph}(180,120) %调用fmfchar环境,阻止编号,图片大小为180*120
+%\fmfleft{i1,i2}
+%\fmfright{o1,o2,o3,o4}
+%\fmf{fermion}{i1,v1,i2}
+%\fmf{boson}{v1,v2}
+%\fmf{fermion}{o1,v2,v3,o4}
+%\fmf{boson}{v3,v4}
+%\fmf{fermion}{o3,v4,o2}
+%\end{fmfgraph}
+
+\section{Perturbation Expansion of Correlation Function}
+\subsection{Interaction Picture}
+We only consider the $\phi^{4}$ interaction fields unless I point out the changes.\par
+We're to calculate the \emph{two-points Correlation Function} $\langle\Omega|T\phi(x)\phi(y)|\Omega\rangle$, where $|\Omega\rangle$ denotes the ground state of the interaction fields, compared with $|0\rangle$,the ground state of the free theory.\par
+Recall that we've had
+\begin{equation}\label{3.2.1}\langle0|T\phi(x)\phi(y)|0\rangle_{\text{free}}=D_{F}(x-y)=\int\dfrac{dp^{4}}{(2\pi)^{4}}\dfrac{ie^{-ip\cdot(x-y)}}{p^{2}-m^{2}+i\varepsilon}.\end{equation}
+Split Hamiltonian into two pieces such that
+$$H=H_{0}+H_{\text{int.}}=H_{\text{klein-Gordan}}+\int d^{3}x\dfrac{\lambda}{4!}\phi^{4}(x).$$
+Here we bring in $\lambda$ to express the two-points Green Function as its power series(as we will show in the future, $\lambda$ is exactly the coupling constant). $H_{\text{int.}}$ influence two things, one is $\phi(x)=e^{iHt}\phi(\bm{x})e^{-iHt}$, another one is the definition of interaction ground state $|\Omega\rangle$.\par
+For fixed $t_{0}$, as we known in chapter one,
+$$\phi(t_{0},\bm{x})=\int\dfrac{d^{3}p}{(2\pi)^{3}}\dfrac{1}{\sqrt{E_{\bm{p}}}}\big(a_{\bm{p}}e^{i\bm{p}\cdot\bm{x}}+a_{\bm{p}}^{\dagger}e^{-i\bm{p}\cdot\bm{x}}\big).$$
+\indent To obtain the condition that $t\neq t_{0}$, we switch to Heisenberg picture as usual that $\displaystyle\phi(t,\bm{x})=e^{iH(t-t_{0})}\phi_{0}(t_{0},\bm{x})e^{iH(t-t_{0})}$. If $\lambda=0$, $H$ reduces to $H_{0}$, and we call this quantity as \emph{interaction picture field}, denoted as $\phi_{I}(x)$. Since we can diagonalize $H_{0}$, it's easy to construct $\phi_{I}$ explicitly:
+\begin{equation}\label{3.2.2}\phi_{I}(x)=\left.\int\dfrac{d^{3}p}{(2\pi)^{3}}\dfrac{1}{\sqrt{E_{\bm{p}}}}\big(a_{\bm{p}}e^{ip\cdot x}+a_{\bm{p}}^{\dagger}e^{-ip\cdot x}\big)\right|_{x^{0}=t-t_{0}}.\end{equation}
+\indent Finally, we can express $\phi$ in terms of $\phi_{I}$:
+\begin{align}\label{3.2.3}
+\phi(t,\bm{x})&=\underbrace{e^{iH(t-t_{0})} \overbrace{e^{-iH_{0}(t-t_{0})}\underbrace{\phi_{I}(t,\bm{x})}_{\text{Interaction pic.}}e^{iH_{0}(t-t_{0})}}^{\text{change back into Sch\"{o}rdinger pic.}}e^{iH(t-t_{0})}}_{\text{Heisenberg pic.}}\nonumber\\
+&\equiv\mathcal{U}^{\dagger}(t,t_{0})\phi_{I}(t,\bm{x})\mathcal{U}(t,t_{0}),
+\end{align}
+where $\displaystyle\mathcal{U}(t,t_{0}):=e^{iH_{0}(t-t_{0})}e^{iH(t-t_{0})}$. It's easy to check that(leave as an exercise)
+\begin{equation}\label{3.2.4}
+i\dfrac{\partial}{\partial t}\mathcal{U}(t,t_{0})=H_{I}\mathcal{U}(t,t_{0}),
+\end{equation}
+where $\displaystyle H_{I}\equiv e^{iH(t-t_{0})}H_{int.}e^{-iH(t-t_{0})}=\int d^{3}\dfrac{\lambda}{4!}\phi_{I}^{4}$. Use $T$ to denote the \emph{Chronological Operator}, and thus we have(check it!)
+\begin{equation}\label{3.2.5}
+\mathcal{U}(t,t')=T\left\{\exp\left[-i\int_{t'}^{t}d\tau H_{I}(\tau)\right]\right\}.
+\end{equation}
+\begin{Property}
+$\mathcal{U}$ has some properties of \emph{chronology}, that is,(verify it!)
+\begin{align*}
+\mathcal{U}(t_{1},t_{2})\mathcal{U}(t_{2},t_{3})&=\mathcal{U}(t_{1},t_{3});\\
+\mathcal{U}(t_{1},t_{3})\left(\mathcal{U}(t_{2},t_{3})\right)^{\dagger}&=\mathcal{U}(t_{1},t_{2}).
+\end{align*}
+\end{Property}
+\subsection{Express two-points Green Function into $|0\rangle$}
+Assume that $|\Omega\rangle$ has some overlap with $|0\rangle$, that is, $\langle\Omega|0\rangle\neq0$. Imagine starting with $|0\rangle$, the ground state of $H_{0}$, and involving with $H$:
+\begin{align*}
+e^{-iHT}|0\rangle&=\sum_{n}e^{-iE_{n}T}|n\rangle\langle n|0\rangle.\\
+&=e^{-iE_{0}T}|\Omega\rangle\langle\Omega|0\rangle+\sum_{n\neq0}e^{-iE_{n}T}|n\rangle\langle n|0\rangle,\quad\text{where } E_{0}\equiv\langle\Omega|H|\Omega\rangle.
+\end{align*}
+\indent Since $E_{n}>E_{0}$ for all $n\neq0$, we can get rid of all the $n\neq0$ terms by sending $T$ to $\infty$ in a slight direction: $T\rightarrow\infty(1-i\varepsilon)$, and we have:
+\begin{align*}
+|\Omega\rangle&=\lim_{T\rightarrow\infty(1-i\varepsilon)}\big(e^{-iE_{0}T}\langle\Omega|0\rangle\big)^{-1}e^{-iHT}|0\rangle\\
+&=\lim_{T\rightarrow\infty(1-i\varepsilon)}\left(e^{-iE_{0}(T+t_{0})}\langle\Omega|0\rangle\right)^{-1}e^{-iH(T+t_{0})}|0\rangle\\
+&=\lim_{T\rightarrow\infty(1-i\varepsilon)}\left(e^{-iE_{0}(t_{0}-(-T))}\langle\Omega|0\rangle\right)^{-1}e^{-iH(t_{0}-(-T))}e^{-iH(-T-t_{0})}|0\rangle\\
+&=\lim_{T\rightarrow\infty(1-i\varepsilon)}\left(e^{-iE_{0}(t_{0}-(-T))}\langle\Omega|0\rangle\right)^{-1}\mathcal{U}(t_{0},T)|0\rangle.
+\end{align*}
+\indent So
+\begin{align*}
+\langle\Omega|\phi(x)\phi(y)|\Omega\rangle&=\lim_{T\rightarrow\infty(1-i\varepsilon)}\left(e^{-iE_{0}(T-t_{0})}\langle0|\Omega\rangle\right)^{-1}\langle0|\mathcal{U}(T,t_{0})\times\mathcal{U}(x^{0},t_{0})^{\dagger}\phi_{I}(x)\mathcal{U}(x^{0},t_{0})\\
+&\quad\quad\times\mathcal{U}(y^{0},t_{0})^{\dagger}\phi_{I}(y)\mathcal{U}(y^{0},t_{0})\times\mathcal{U}(t_{0},-T)|0\rangle\left(e^{-iE_{0}(t_{0}-(-T))}\langle\Omega|0\rangle\right)^{-1}\\
+&=\lim_{T\rightarrow\infty(1-i\varepsilon)}\dfrac{\displaystyle\langle0|\mathcal{U}(T,x^{0})\phi_{I}(x)\mathcal{U}(x^{0},y^{0})\phi_{I}(y)\mathcal{U}(y^{0},-T)|0\rangle}{\displaystyle|\langle0|\Omega\rangle|^{2}e^{-iE_{0}(2T)}}.
+\end{align*}
+\indent And because
+$$1=\langle\Omega|\Omega\rangle=\left(|\langle0|\Omega\rangle|^{2}e^{-iE_{0}(2T)}\right)^{-1}\langle0|\mathcal{U}(T,x^{0})\mathcal{U}(y^{0},-T)|0\rangle,$$
+then for $x^{0}>y^{0}$, we get
+\begin{equation*}
+\langle\Omega|\phi(x)\phi(y)|\Omega\rangle=\dfrac{\langle0|\mathcal{U}(T,x^{0})\phi_{I}(x)\mathcal{U}(x^{0},y^{0})\phi_{I}(y)\mathcal{U}(y^{0},-T)|0\rangle}{\displaystyle\left\langle0|\mathcal{U}(T,-T)|0\right\rangle}.
+\end{equation*}
+\indent Note that all fields on both sides of this expression are in time order $-T<y_{0}<x_{0}<T$. Thus we arrive at our final expression, valid for any $x_{0}$ and $y_{0}$ that
+\begin{equation}\label{3.2.6}
+\langle\Omega|\phi(x)\phi(y)|\Omega\rangle=\dfrac{\displaystyle\left\langle0\left|T\left\{\phi_{I}(x)\phi_{I}(y)\exp\left[-i\int_{-T}^{T}d\tau H_{I}(\tau)\right]\right\}\right|0\right\rangle}{\displaystyle\left\langle0\left|T\left\{\exp\left[-i\int_{-T}^{T}d\tau H_{I}(\tau)\right]\right\}\right|0\right\rangle}
+\end{equation}
+\hfill\\
+
+\section{Wick's Theorem: Bose Cases}
+In the following few sections We will often drop the subscript I for convenience, but remember all the computation involves interaction picture fields.\par
+\begin{Def}
+Such a term (e.g., $a_{\bm{p}}^{\dagger}a_{\bm{q}}^{\dagger}a_{\bm{k}a_{\bm{l}}}$) is said to in \emph{normal order}, which vanishes vacuum expectation value. Denote the operator that re-orders the creation and annihilation operators as $:\cdot:$ or more clearly, $N(\cdot)$, i.e.,
+$$N(a_{\bm{p}}a_{\bm{k}}^{\dagger}a_{\bm{l}})\equiv a_{\bm{k}}^{\dagger}a_{\bm{p}}a_{\bm{l}}.$$
+\end{Def}
+\indent Consider again the case of two fields, $\displaystyle\langle0|T\{\phi(x)\phi(y)\}|0\rangle$. In order to generalize the case of more than two fields, we rewrite it by decomposing $\phi$ into positive- and negative- parts:
+$$\phi(x)=\phi^{+}(x)+\phi^{-}(x),$$
+where
+\begin{align*}
+\phi^{+}(x)=\int\dfrac{d^{3}p}{(2\pi)^{3}}\dfrac{1}{\sqrt{E_{\bm{p}}}}a_{\bm{p}}e^{-ip\cdot x},\quad\phi^{-}(x)=\int\dfrac{d^{3}p}{(2\pi)^{3}}\dfrac{1}{\sqrt{E_{\bm{p}}}}a_{\bm{p}}^{\dagger}e^{ip\cdot x}.
+\end{align*}
+\begin{Note}
+The position of $a$ and $a^{\dagger}$ in the definition of $\phi^{+}$ and $\phi^{-}$ indicate that it's the annihilation(creation) of particles that fields are created(annihilated), and vice versa.
+\end{Note}
+Consider the case $x^{0}>y^{0}$. The time-order product of two fields is then
+\begin{align*}
+T\{\phi(x)\phi(y)\}&=\phi^{+}(x)\phi^{+}(y)+\underbrace{\phi^{+}(x)\phi^{-}(y)}_{\text{Needs to be re-permute}}+\phi^{-}(x)\phi^{+}(y)+\phi^{-}(x)\phi^{+}(y)\\
+&=\phi^{+}(x)\phi^{+}(y)+\phi^{-}(y)\phi^{+}(x)+\phi^{-}(x)\phi^{+}(y)+\phi^{-}(x)\phi^{+}(y)+\left[\phi^{+}(x),\phi^{-}(y)\right].
+\end{align*}
+\begin{Def}
+The \emph{contraction} of two fields is defined as
+$$\contraction{}{\phi}{(x)}{\phi}\phi(x)\phi(y)\equiv%此处使用了\contraction（注意声明收缩标后还要再连起来输入一次）
+\begin{cases}
+\left[\phi^{+}(x),\phi^{-}(y)\right],\quad\text{for }x^{0}>y^{0};\\
+\left[\phi^{+}(y),\phi^{-}(x)\right],\quad\text{for }y^{0}>x^{0}.
+\end{cases}
+$$
+\end{Def}
+\indent So the connection between time-ordering and normal-ordering product is extremely simple, at least for two fields:
+$$T\{\phi(x),\phi(y)\}=N\{\phi(x)\phi(y)+\contraction{}{\phi}{(x)}{\phi}\phi(x)\phi(y)\}.$$
+More generalized, we have
+\begin{Theorem}[(Wick)]
+$$T\{\phi(x_{1})\cdots\phi(x_{n})\}=N\{\phi(x_{1})\cdots\phi(x_{n})+\text{all possible contractions}\}.$$
+\end{Theorem}
+\begin{Proof}
+Skipped.
+\end{Proof}
+\section{Feynmann Diagrams and $S$ Matrix}
+\begin{Def}
+$S$ matrix is the unitary operator evolving from $-T$ to $T$, that is,
+$$S=\mathcal{U}(\infty,-\infty)=T\exp\left[-i\int_{\infty}^{\infty}d\tau H_{I}(\tau)\right].$$
+\end{Def}
+\begin{Axiom}
+In the procedure of scattering, the initial and final states at $T=\pm\infty$ seems like to be in where there is no interactions.
+\end{Axiom}
+\begin{Hypothesis}
+Because the scattering experiments always involve in beams of particles, rather than merely one incident particle and another target, we assume that the two particles taking part in interactions do not entangle with each other. In other words, incident state $|\bm{p}_{1}\cdots\bm{p}_{2}\rangle$ can be decomposed as multiplication of $|\bm{p}_{i}\rangle$. The same discussion also goes to final-state $\langle\bm{p}_{1}\cdots\bm{p}_{n}|$.
+\end{Hypothesis}
+\indent Temporarily skipping the detail of connection between $S$ matrix to cross section, we firstly get a look at a simple example: \emph{Cross Amplitude} of $|\bm{p}\rangle$ and $|\bm{q}\rangle$. i.e., consider
+\begin{align}\label{3.4.1}
+\mathcal{A}&=\langle\bm{q}|\bm{p}\rangle\equiv\lim_{T\rightarrow}\langle\bm{q}|\mathcal{U}(\infty;-\infty)|\bm{p}\rangle=\langle\bm{q}|S|\bm{p}\rangle\nonumber\\
+&=\left\langle\bm{q}\left|T\exp\left[-i\int d^{4}z\mathcal{H}_{I}(z)\right]\right|\bm{p}\right\rangle.
+\end{align}
+\indent The only way to evaluate this term is by expanding it into series:
+$$\mathcal{A}=\left\langle\bm{q}\left|I+(-i)\int d^{4}z\mathcal{H}_{I}(z)+\dfrac{(-i\lambda)^{2}}{2!}\int d^{4}u\int d^{4}v\mathcal{H}_{I}(u)\mathcal{H}_{I}(v)+\cdots\right|\bm{q}\right\rangle.$$
+\indent We take the first-order and first nontrivial term as an example. Recall that basing on some consideration of Lorentz invariant, we have $|\bm{p}\rangle=\sqrt{2E_{\bm{p}}}a_{\bm{p}}^{\dagger}|0\rangle$. So\footnote{$\phi^{4}$ theory.}
+\begin{equation}
+\mathcal{A}^{(1)}=\dfrac{-i\lambda}{4!}\sqrt{2E_{\bm{p}}}\sqrt{2E_{\bm{q}}}\int d^{4}z\langle0|T\{a_{\bm{q}}\phi(z)\phi(z)\phi(z)\phi(z)a_{\bm{p}}^{\dagger}\}|0\rangle,
+\end{equation}
+Here I enclose $a_{\bm{q}}$ and $a_{\bm{p}}^{\dagger}$ in the time order operator without any obstruction because initial particles has been already created at $T=-\infty$, which automatically caters for the chronological demand, and vice versa.
+\begin{Corollary}[(Wick)]
+Only full contraction terms of time order operator contribute to the evaluation of the $S$ matrix elements $\langle0|T\{\phi(x_{1})\cdots\phi(x_{n})\}|0\rangle.$
+\end{Corollary}
+\begin{Proof}
+Since $T\{\cdots\}=N\{\cdots+\text{contraction terms}\}$, and normal order operator rearranges $a$ to the end and $a^{\dagger}$ to the front, so $N\{\cdots\}|0\rangle\equiv0$.
+\end{Proof}
+\indent Now take a look back to $\mathcal{A}^{(1)}$, clearly there are two kinds of contractions:
+\begin{align}
+\text{Three}\quad&\langle0\contraction[1em]{|}{\hat{a}}{\contraction{_{\bm{q}}}{\phi}{(z)}{\phi} _{\bm{q}}\phi(z)\phi\contraction{(z)}{\phi}{(z)}{\phi}(z)\phi(z)\phi(z)}{\hat{a}}|\hat{a}\contraction{_{\bm{q}}}{\phi}{(z)}{\phi} _{\bm{q}}\phi(z)\phi\contraction{(z)}{\phi}{(z)}{\phi}(z)\phi(z)\phi(z)\hat{a}_{\bm{p}}^{\dagger}|0\rangle;\\
+\text{Twelve}\quad&\langle0\contraction{|}{\hat{a}}{_{\bm{q}}}{\phi}|\hat{a}_{\bm{q}}\phi\contraction{(z)}{\phi}{(z)}{\phi}(z)\phi(z)\phi\contraction{(z)}{\phi}{(z)}{\hat{a}}(z)\phi(z)\hat{a}^{\dagger}_{\bm{p}}|0\rangle.
+\end{align}
+\begin{Lemma}
+$$\contraction{}{\hat{a}}{_{\bm{q}}}{\phi}\hat{a}_{\bm{q}}\phi(z)=[a_{\bm{q}},\phi^{-}(z)],\quad\contraction{}{\phi}{(z)}{\hat{a}}\phi(z)\hat{a}_{\bm{p}}^{\dagger}=[\phi^{+}(z),\hat{a}_{\bm{p}}]$$
+\end{Lemma}
+%\end{fmffile}
+\end{document} 
